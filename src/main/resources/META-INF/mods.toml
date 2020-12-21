@@ -1,0 +1,15 @@
+modLoader="javafml"
+loaderVersion="[34,)"
+#issueTrackerURL="https://github.com/Mrbysco/angrymobs"
+license="MIT"
+
+[[mods]]
+modId="angrymobs"
+version="${file.jarVersion}"
+displayName="Angry Mobs"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/angry-mobs"
+authors="Mrbysco, ShyNieke"
+credits="GentlemanGnu for the idea"
+description='''
+Allows a pack developer to add additional AI goals to existing mobs
+'''
