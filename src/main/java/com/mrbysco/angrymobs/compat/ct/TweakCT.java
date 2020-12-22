@@ -7,15 +7,15 @@ import com.blamejared.crafttweaker.impl.util.MCResourceLocation;
 import org.openzen.zencode.java.ZenCodeType;
 
 @ZenRegister
-@ZenCodeType.Name("mods.angrymobs.Tweaks")
+@ZenCodeType.Name("mods.angrymobs.AITweaks")
 public class TweakCT {
     @ZenCodeType.Method
-    public static void addMeleeAttackTweak(MCEntityType entity, int priority, double speedIn, float damage, boolean useLongMemory) {
-        CraftTweakerAPI.apply(new ActionAddMeleeTweak(entity, priority, speedIn, damage, useLongMemory));
+    public static void addMeleeAttackTweak(MCEntityType entity, int priority, double speedIn, float attackDamage, boolean useLongMemory) {
+        CraftTweakerAPI.apply(new ActionAddMeleeTweak(entity, priority, speedIn, attackDamage, useLongMemory));
     }
 
     @ZenCodeType.Method
-    public static void addProjectileAttackTweak(MCEntityType entity, MCEntityType projectileEntity, MCResourceLocation soundLocation, int priority, float attackDamage, float velocity) {
+    public static void addProjectileAttackTweak(MCEntityType entity, MCEntityType projectileEntity, String soundLocation, int priority, float attackDamage, float velocity) {
         CraftTweakerAPI.apply(new ActionAddProjectileAttackTweak(entity, projectileEntity, soundLocation, priority, attackDamage, velocity));
     }
 

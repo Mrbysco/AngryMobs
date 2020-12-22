@@ -1,6 +1,6 @@
 modLoader="javafml"
 loaderVersion="[34,)"
-#issueTrackerURL="https://github.com/Mrbysco/angrymobs"
+issueTrackerURL="https://github.com/Mrbysco/AngryMobs"
 license="MIT"
 
 [[mods]]
