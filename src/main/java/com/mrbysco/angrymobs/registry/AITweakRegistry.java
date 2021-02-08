@@ -32,24 +32,24 @@ public class AITweakRegistry {
             boolean reinforcements = AngryConfig.SERVER.angryReinforcements.get();
 
             registerTweak(new MeleeAttackTweak(EntityType.CHICKEN, 1, 0.95D, 1.0F, false));
-            registerTweak(new HurtByTargetTweak(EntityType.CHICKEN, 1, false));
+            registerTweak(new HurtByTargetTweak(EntityType.CHICKEN, 1, reinforcements));
             registerTweak(new LeapAtTargetTweak(EntityType.CHICKEN, 4, 0.3F));
             registerTweak(new MeleeAttackTweak(EntityType.COW, 1, 1.0D, 2.0F, false));
-            registerTweak(new HurtByTargetTweak(EntityType.COW, 1, false));
+            registerTweak(new HurtByTargetTweak(EntityType.COW, 1, reinforcements));
             registerTweak(new MeleeAttackTweak(EntityType.DONKEY, 1, 1.5D, 3.0F, false));
-            registerTweak(new HurtByTargetTweak(EntityType.DONKEY, 1, false));
+            registerTweak(new HurtByTargetTweak(EntityType.DONKEY, 1, reinforcements));
             registerTweak(new MeleeAttackTweak(EntityType.HORSE, 1, 1.5D, 3.0F, false));
-            registerTweak(new HurtByTargetTweak(EntityType.HORSE, 1, false));
+            registerTweak(new HurtByTargetTweak(EntityType.HORSE, 1, reinforcements));
             registerTweak(new MeleeAttackTweak(EntityType.MOOSHROOM, 1, 1.0D, 2.0F, false));
-            registerTweak(new HurtByTargetTweak(EntityType.MOOSHROOM, 1, false));
+            registerTweak(new HurtByTargetTweak(EntityType.MOOSHROOM, 1, reinforcements));
             registerTweak(new MeleeAttackTweak(EntityType.MULE, 1, 1.5D, 3.0F, false));
-            registerTweak(new HurtByTargetTweak(EntityType.MULE, 1, false));
+            registerTweak(new HurtByTargetTweak(EntityType.MULE, 1, reinforcements));
             registerTweak(new MeleeAttackTweak(EntityType.PIG, 1, 1.0D, 2.0F, false));
-            registerTweak(new HurtByTargetTweak(EntityType.PIG, 1, false));
+            registerTweak(new HurtByTargetTweak(EntityType.PIG, 1, reinforcements));
             registerTweak(new MeleeAttackTweak(EntityType.RABBIT, 1, 1.4D, 1.0F, false));
-            registerTweak(new HurtByTargetTweak(EntityType.RABBIT, 1, false));
+            registerTweak(new HurtByTargetTweak(EntityType.RABBIT, 1, reinforcements));
             registerTweak(new MeleeAttackTweak(EntityType.SHEEP, 1, 1.0D, 2.0F, false));
-            registerTweak(new HurtByTargetTweak(EntityType.SHEEP, 1, false));
+            registerTweak(new HurtByTargetTweak(EntityType.SHEEP, 1, reinforcements));
         }
         if(AngryConfig.SERVER.aggressiveAnimals.get()) {
             registerTweak(new AttackNearestTweak(EntityType.CAT, EntityType.PLAYER, 2, true));
