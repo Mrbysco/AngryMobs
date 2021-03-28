@@ -12,7 +12,7 @@ public class TweakReloadManager implements IResourceManagerReloadListener {
         AITweakRegistry.instance().initializeTweaks();
     }
 
-    @SubscribeEvent(priority = EventPriority.HIGH)
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onAddReloadListeners(AddReloadListenerEvent event) {
         event.addListener(this);
     }

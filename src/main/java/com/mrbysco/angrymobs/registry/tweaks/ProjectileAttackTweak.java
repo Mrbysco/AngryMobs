@@ -42,7 +42,7 @@ public class ProjectileAttackTweak extends BaseTweak {
 
                 mob.goalSelector.goals.forEach(goal -> {
                     if(goal.getGoal() instanceof RangedBowAttackGoal) {
-                        AngryMobs.LOGGER.error(String.format("Removing existing AI to apply the AI tweak of ID %s for entity %s", getEntityLocation(), getName()));
+                        AngryMobs.LOGGER.info(String.format("Removing existing AI to apply the AI tweak of ID %s for entity %s", getEntityLocation(), getName()));
                     }
                 });
                 mob.goalSelector.goals.removeIf(goal -> goal.getGoal() instanceof RangedBowAttackGoal);

@@ -2,7 +2,6 @@ package com.mrbysco.angrymobs.compat.ct;
 
 import com.blamejared.crafttweaker.api.actions.IRuntimeAction;
 import com.blamejared.crafttweaker.impl.entity.MCEntityType;
-import com.blamejared.crafttweaker.impl.util.MCResourceLocation;
 import com.mrbysco.angrymobs.registry.AITweakRegistry;
 import com.mrbysco.angrymobs.registry.tweaks.ProjectileAttackTweak;
 import net.minecraft.util.ResourceLocation;

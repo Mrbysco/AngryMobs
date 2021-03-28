@@ -14,8 +14,8 @@ public class AngryConfig {
         public final BooleanValue aggressiveAnimals;
 
         Server(ForgeConfigSpec.Builder builder) {
-            builder.comment("Server settings")
-                    .push("Server");
+            builder.comment("Common settings")
+                    .push("Common");
 
             angryAnimals = builder
                     .comment("When true makes all vanilla animals attack you if you hurt them")

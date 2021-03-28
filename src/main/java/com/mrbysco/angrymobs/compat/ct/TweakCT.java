@@ -3,7 +3,6 @@ package com.mrbysco.angrymobs.compat.ct;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.annotations.ZenRegister;
 import com.blamejared.crafttweaker.impl.entity.MCEntityType;
-import com.blamejared.crafttweaker.impl.util.MCResourceLocation;
 import org.openzen.zencode.java.ZenCodeType;
 
 @ZenRegister

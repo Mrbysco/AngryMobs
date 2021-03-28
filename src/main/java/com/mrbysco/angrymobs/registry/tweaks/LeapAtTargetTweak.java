@@ -28,7 +28,7 @@ public class LeapAtTargetTweak extends BaseTweak {
             MobEntity mob = (MobEntity) entity;
             mob.goalSelector.goals.forEach(goal -> {
                 if(goal.getGoal() instanceof LeapAtTargetGoal) {
-                    AngryMobs.LOGGER.error(String.format("Overriding existing AI goal for entity %s using tweak ID %s", getEntityLocation(), getName()));
+                    AngryMobs.LOGGER.info(String.format("Overriding existing AI goal for entity %s using tweak ID %s", getEntityLocation(), getName()));
                 }
             });
             mob.goalSelector.goals.removeIf(goal -> goal.getGoal() instanceof LeapAtTargetGoal);
