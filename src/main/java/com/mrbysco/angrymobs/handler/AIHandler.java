@@ -11,7 +11,7 @@ import java.util.List;
 public class AIHandler {
     @SubscribeEvent
     public void onEntityCreation(EntityJoinWorldEvent event) {
-        if(!event.getWorld().isRemote()) {
+        if(!event.getWorld().isClientSide()) {
             AITweakRegistry tweakRegistry = AITweakRegistry.instance();
             ResourceLocation registryName = event.getEntity().getType().getRegistryName();
             if(tweakRegistry.containsEntity(registryName)) {

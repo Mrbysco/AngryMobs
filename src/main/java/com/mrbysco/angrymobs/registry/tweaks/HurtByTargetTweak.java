@@ -39,7 +39,7 @@ public class HurtByTargetTweak extends BaseTweak {
     }
 
     public boolean canHaveGoal(MobEntity mob) {
-        for(Goal goal : mob.goalSelector.goals) {
+        for(Goal goal : mob.goalSelector.availableGoals) {
             if(goal instanceof MobHurtByTargetGoal) {
                 AngryMobs.LOGGER.error(String.format("Can't apply AI tweak of ID %s for entity %s. Entity already has given AI goal", getName(), getEntityLocation()));
                 return false;

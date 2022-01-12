@@ -32,13 +32,13 @@ public class MeleeAttackTweak extends BaseTweak {
         if(entity instanceof MobEntity) {
             MobEntity mob = (MobEntity) entity;
 
-            mob.goalSelector.goals.removeIf(goal -> goal.getGoal() instanceof PanicGoal);
-            mob.goalSelector.goals.forEach(goal -> {
+            mob.goalSelector.availableGoals.removeIf(goal -> goal.getGoal() instanceof PanicGoal);
+            mob.goalSelector.availableGoals.forEach(goal -> {
                 if(goal.getGoal() instanceof MeleeAttackGoal) {
                     AngryMobs.LOGGER.info(String.format("Removing existing AI to apply the AI tweak of ID %s for entity %s", getEntityLocation(), getName()));
                 }
             });
-            mob.goalSelector.goals.removeIf(goal -> goal.getGoal() instanceof MeleeAttackGoal);
+            mob.goalSelector.availableGoals.removeIf(goal -> goal.getGoal() instanceof MeleeAttackGoal);
             mob.goalSelector.addGoal(goalPriority, new MobMeleeAttackGoal(mob, speedIn, damage, useLongMemory));
         } else {
             AngryMobs.LOGGER.error(String.format("Can't apply AI tweak of ID %s for entity %s. Entity isn't valid for the tweak", getName(), getEntityLocation()));

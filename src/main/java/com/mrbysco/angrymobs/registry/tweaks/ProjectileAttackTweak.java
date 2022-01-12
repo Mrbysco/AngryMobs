@@ -36,16 +36,16 @@ public class ProjectileAttackTweak extends BaseTweak {
     public void adjust(Entity entity) {
         if(entity instanceof MobEntity) {
             MobEntity mob = (MobEntity) entity;
-            Entity foundEntity = ForgeRegistries.ENTITIES.getValue(projectileEntityLocation).create(entity.world);
+            Entity foundEntity = ForgeRegistries.ENTITIES.getValue(projectileEntityLocation).create(entity.level);
             if(foundEntity instanceof ProjectileEntity) {
-                mob.goalSelector.goals.removeIf(goal -> goal.getGoal() instanceof PanicGoal);
+                mob.goalSelector.availableGoals.removeIf(goal -> goal.getGoal() instanceof PanicGoal);
 
-                mob.goalSelector.goals.forEach(goal -> {
+                mob.goalSelector.availableGoals.forEach(goal -> {
                     if(goal.getGoal() instanceof RangedBowAttackGoal) {
                         AngryMobs.LOGGER.info(String.format("Removing existing AI to apply the AI tweak of ID %s for entity %s", getEntityLocation(), getName()));
                     }
                 });
-                mob.goalSelector.goals.removeIf(goal -> goal.getGoal() instanceof RangedBowAttackGoal);
+                mob.goalSelector.availableGoals.removeIf(goal -> goal.getGoal() instanceof RangedBowAttackGoal);
 
                 ProjectileEntity throwable = (ProjectileEntity)foundEntity ;
                 SoundEvent sound = ForgeRegistries.SOUND_EVENTS.getValue(soundLocation);

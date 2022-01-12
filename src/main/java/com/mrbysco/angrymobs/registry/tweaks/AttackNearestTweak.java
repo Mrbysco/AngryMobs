@@ -35,7 +35,7 @@ public class AttackNearestTweak extends BaseTweak {
                 if(targetEntityLocation.toString().equals("minecraft:player")) {
                     mob.targetSelector.addGoal(goalPriority, new NearestAttackableTargetGoal<>(mob, PlayerEntity.class, checkSight));
                 } else {
-                    Entity targetEntity = ForgeRegistries.ENTITIES.getValue(targetEntityLocation).create(entity.world);
+                    Entity targetEntity = ForgeRegistries.ENTITIES.getValue(targetEntityLocation).create(entity.level);
                     if(targetEntity instanceof LivingEntity) {
                         Class<? extends LivingEntity> entityClass = ((LivingEntity)targetEntity).getClass();
                         mob.targetSelector.addGoal(goalPriority, new NearestAttackableTargetGoal<>(mob, entityClass, checkSight));
@@ -51,19 +51,19 @@ public class AttackNearestTweak extends BaseTweak {
     }
 
     public boolean canHaveGoal(MobEntity mob) {
-        for(Goal goal : mob.goalSelector.goals) {
+        for(Goal goal : mob.goalSelector.availableGoals) {
             if(goal instanceof NearestAttackableTargetGoal) {
                 NearestAttackableTargetGoal nearestAttackable = (NearestAttackableTargetGoal)goal;
                 if(targetEntityLocation.toString().equals("minecraft:player")) {
-                    if(nearestAttackable.targetClass == PlayerEntity.class) {
+                    if(nearestAttackable.targetType == PlayerEntity.class) {
                         AngryMobs.LOGGER.error(String.format("Can't apply AI tweak of ID %s for entity %s. Entity already has given AI goal", getName(), getEntityLocation()));
                         return false;
                     }
                 } else {
-                    Entity targetEntity = ForgeRegistries.ENTITIES.getValue(targetEntityLocation).create(mob.world);
+                    Entity targetEntity = ForgeRegistries.ENTITIES.getValue(targetEntityLocation).create(mob.level);
                     if(targetEntity instanceof LivingEntity) {
                         Class<? extends LivingEntity> entityClass = ((LivingEntity) targetEntity).getClass();
-                        if(nearestAttackable.targetClass == entityClass) {
+                        if(nearestAttackable.targetType == entityClass) {
                             AngryMobs.LOGGER.error(String.format("Can't apply AI tweak of ID %s for entity %s. Entity already has given AI goal", getName(), getEntityLocation()));
                             targetEntity.remove();
                             return false;
