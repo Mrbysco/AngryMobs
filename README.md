@@ -1,3 +1,5 @@
+[![build](https://github.com/Mrbysco/AngryMobs/actions/workflows/build.yml/badge.svg)](https://github.com/Mrbysco/AngryMobs/actions/workflows/build.yml) [![](http://cf.way2muchnoise.eu/versions/430225.svg)](https://www.curseforge.com/minecraft/mc-mods/angry-mobs)
+
 # Angry Mobs #
 
 ## About ##
