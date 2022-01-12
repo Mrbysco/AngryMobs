@@ -2,11 +2,11 @@ package com.mrbysco.angrymobs.registry.tweaks;
 
 import com.mrbysco.angrymobs.AngryMobs;
 import com.mrbysco.angrymobs.handler.goals.MobHurtByTargetGoal;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.goal.Goal;
 
 public class HurtByTargetTweak extends BaseTweak {
     protected final int goalPriority;
@@ -18,14 +18,13 @@ public class HurtByTargetTweak extends BaseTweak {
         this.callReinforcements = callReinforcements;
     }
 
-    public HurtByTargetTweak(EntityType<? extends MobEntity> entity, int priority, boolean callReinforcements) {
+    public HurtByTargetTweak(EntityType<? extends Mob> entity, int priority, boolean callReinforcements) {
         this(entity.getRegistryName(), priority, callReinforcements);
     }
 
     @Override
     public void adjust(Entity entity) {
-        if(entity instanceof MobEntity) {
-            MobEntity mob = (MobEntity) entity;
+        if(entity instanceof Mob mob) {
             if(canHaveGoal(mob)) {
                 MobHurtByTargetGoal hurtGoal = new MobHurtByTargetGoal(mob);
                 if(callReinforcements) {
@@ -38,7 +37,7 @@ public class HurtByTargetTweak extends BaseTweak {
         }
     }
 
-    public boolean canHaveGoal(MobEntity mob) {
+    public boolean canHaveGoal(Mob mob) {
         for(Goal goal : mob.goalSelector.availableGoals) {
             if(goal instanceof MobHurtByTargetGoal) {
                 AngryMobs.LOGGER.error(String.format("Can't apply AI tweak of ID %s for entity %s. Entity already has given AI goal", getName(), getEntityLocation()));

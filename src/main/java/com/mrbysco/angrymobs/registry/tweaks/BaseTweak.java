@@ -1,7 +1,7 @@
 package com.mrbysco.angrymobs.registry.tweaks;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
 
 public class BaseTweak implements ITweak {
     private final String uniqueID;

@@ -1,18 +1,18 @@
 package com.mrbysco.angrymobs.handler.goals;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.pathfinding.Path;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EntityPredicates;
-import net.minecraft.util.Hand;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.pathfinder.Path;
 
 import java.util.EnumSet;
 
 public class MobMeleeAttackGoal extends Goal {
-    protected final MobEntity attacker;
+    protected final Mob attacker;
     private final double speedTowardsTarget;
     private final boolean longMemory;
     private Path path;
@@ -26,7 +26,7 @@ public class MobMeleeAttackGoal extends Goal {
     private boolean canPenalize = false;
     private final float ATTACK_DAMAGE;
 
-    public MobMeleeAttackGoal(MobEntity creature, double speedIn, float damage, boolean useLongMemory) {
+    public MobMeleeAttackGoal(Mob creature, double speedIn, float damage, boolean useLongMemory) {
         this.attacker = creature;
         this.speedTowardsTarget = speedIn;
         this.ATTACK_DAMAGE = damage;
@@ -83,7 +83,7 @@ public class MobMeleeAttackGoal extends Goal {
         } else if (!this.attacker.isWithinRestriction(livingentity.blockPosition())) {
             return false;
         } else {
-            return !(livingentity instanceof PlayerEntity) || !livingentity.isSpectator() && !((PlayerEntity)livingentity).isCreative();
+            return !(livingentity instanceof Player) || !livingentity.isSpectator() && !((Player)livingentity).isCreative();
         }
     }
 
@@ -102,7 +102,7 @@ public class MobMeleeAttackGoal extends Goal {
      */
     public void stop() {
         LivingEntity livingentity = this.attacker.getTarget();
-        if (!EntityPredicates.NO_CREATIVE_OR_SPECTATOR.test(livingentity)) {
+        if (!EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(livingentity)) {
             this.attacker.setTarget((LivingEntity)null);
         }
 
@@ -119,7 +119,7 @@ public class MobMeleeAttackGoal extends Goal {
             this.attacker.getLookControl().setLookAt(livingentity, 30.0F, 30.0F);
             double d0 = this.attacker.distanceToSqr(livingentity.getX(), livingentity.getY(), livingentity.getZ());
             this.delayCounter = Math.max(this.delayCounter - 1, 0);
-            if ((this.longMemory || this.attacker.getSensing().canSee(livingentity)) && this.delayCounter <= 0 && (this.targetX == 0.0D && this.targetY == 0.0D && this.targetZ == 0.0D || livingentity.distanceToSqr(this.targetX, this.targetY, this.targetZ) >= 1.0D || this.attacker.getRandom().nextFloat() < 0.05F)) {
+            if ((this.longMemory || this.attacker.getSensing().hasLineOfSight(livingentity)) && this.delayCounter <= 0 && (this.targetX == 0.0D && this.targetY == 0.0D && this.targetZ == 0.0D || livingentity.distanceToSqr(this.targetX, this.targetY, this.targetZ) >= 1.0D || this.attacker.getRandom().nextFloat() < 0.05F)) {
                 this.targetX = livingentity.getX();
                 this.targetY = livingentity.getY();
                 this.targetZ = livingentity.getZ();
@@ -127,7 +127,7 @@ public class MobMeleeAttackGoal extends Goal {
                 if (this.canPenalize) {
                     this.delayCounter += failedPathFindingPenalty;
                     if (this.attacker.getNavigation().getPath() != null) {
-                        net.minecraft.pathfinding.PathPoint finalPathPoint = this.attacker.getNavigation().getPath().getEndNode();
+                        net.minecraft.world.level.pathfinder.Node finalPathPoint = this.attacker.getNavigation().getPath().getEndNode();
                         if (finalPathPoint != null && livingentity.distanceToSqr(finalPathPoint.x, finalPathPoint.y, finalPathPoint.z) < 1)
                             failedPathFindingPenalty = 0;
                         else
@@ -156,7 +156,7 @@ public class MobMeleeAttackGoal extends Goal {
         double d0 = this.getAttackReachSqr(enemy);
         if (distToEnemySqr <= d0 && this.getTicksUntilNextAttack() <= 0) {
             this.resetAttackCooldown();
-            this.attacker.swing(Hand.MAIN_HAND);
+            this.attacker.swing(InteractionHand.MAIN_HAND);
             enemy.hurt(DamageSource.mobAttack(this.attacker), ATTACK_DAMAGE);
         }
     }

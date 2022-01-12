@@ -1,29 +1,28 @@
 package com.mrbysco.angrymobs.handler.goals;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.projectile.Projectile;
 
 import java.util.EnumSet;
 import java.util.function.Supplier;
 
 public class ThrowableAttackGoal extends Goal {
-    private final MobEntity mob;
+    private final Mob mob;
     private int attackStep;
     private int attackTime;
     private int firedRecentlyTimer;
-    private final EntityType<? extends ProjectileEntity> projectile;
+    private final EntityType<? extends Projectile> projectile;
     private final float ATTACK_DAMAGE;
     private final float velocity;
     private final Supplier<SoundEvent> soundEventSupplier;
 
-    public ThrowableAttackGoal(MobEntity mobEntity, EntityType<? extends ProjectileEntity> projectileType, Supplier<SoundEvent> soundEventSupplier, float attackDamage, float projectileVelocity) {
+    public ThrowableAttackGoal(Mob mobEntity, EntityType<? extends Projectile> projectileType, Supplier<SoundEvent> soundEventSupplier, float attackDamage, float projectileVelocity) {
         this.mob = mobEntity;
         this.projectile = projectileType;
         this.soundEventSupplier = soundEventSupplier;
@@ -62,7 +61,7 @@ public class ThrowableAttackGoal extends Goal {
         --this.attackTime;
         LivingEntity livingentity = this.mob.getTarget();
         if (livingentity != null) {
-            boolean flag = this.mob.getSensing().canSee(livingentity);
+            boolean flag = this.mob.getSensing().hasLineOfSight(livingentity);
             if (flag) {
                 this.firedRecentlyTimer = 0;
             } else {
@@ -99,17 +98,17 @@ public class ThrowableAttackGoal extends Goal {
                         }
 
                         for(int i = 0; i < 1; ++i) {
-                            ProjectileEntity projectileEntity = projectile.create(this.mob.level);
+                            Projectile projectileEntity = projectile.create(this.mob.level);
                             if(projectileEntity != null) {
                                 projectileEntity.setOwner(this.mob);
-                                projectileEntity.yRot = this.mob.yRot % 360.0F;
-                                projectileEntity.xRot = this.mob.xRot % 360.0F;
-                                projectileEntity.moveTo(this.mob.getX(), this.mob.getEyeY() - (double)0.1F, this.mob.getZ(), this.mob.yRot, this.mob.xRot);
+                                projectileEntity.setYRot(this.mob.getYRot() % 360.0F);
+                                projectileEntity.setXRot(this.mob.getXRot() % 360.0F);
+                                projectileEntity.moveTo(this.mob.getX(), this.mob.getEyeY() - (double)0.1F, this.mob.getZ(), this.mob.getYRot(), this.mob.getXRot());
 
                                 double projX = livingentity.getX() - this.mob.getX();
                                 double projY = livingentity.getY(0.3333333333333333D) - projectileEntity.getY();
                                 double projZ = livingentity.getZ() - this.mob.getZ();
-                                double projD3 = (double)MathHelper.sqrt(projX * projX + projZ * projZ);
+                                double projD3 = Math.sqrt(projX * projX + projZ * projZ);
                                 projectileEntity.shoot(projX, projY + projD3 * (double)0.2F, projZ, this.velocity, (float)(14 - this.mob.level.getDifficulty().getId() * 4));
 
                                 this.mob.level.addFreshEntity(projectileEntity);

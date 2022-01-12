@@ -1,12 +1,12 @@
 package com.mrbysco.angrymobs.registry.tweaks;
 
 import com.mrbysco.angrymobs.AngryMobs;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.goal.LeapAtTargetGoal;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.goal.LeapAtTargetGoal;
 
 public class LeapAtTargetTweak extends BaseTweak {
     protected final int goalPriority;
@@ -18,14 +18,13 @@ public class LeapAtTargetTweak extends BaseTweak {
         this.leapMotion = leapMotion;
     }
 
-    public LeapAtTargetTweak(EntityType<? extends CreatureEntity> entity, int priority, float leapMotion) {
+    public LeapAtTargetTweak(EntityType<? extends PathfinderMob> entity, int priority, float leapMotion) {
         this(entity.getRegistryName(), priority, leapMotion);
     }
 
     @Override
     public void adjust(Entity entity) {
-        if(entity instanceof MobEntity) {
-            MobEntity mob = (MobEntity) entity;
+        if(entity instanceof Mob mob) {
             mob.goalSelector.availableGoals.forEach(goal -> {
                 if(goal.getGoal() instanceof LeapAtTargetGoal) {
                     AngryMobs.LOGGER.info(String.format("Overriding existing AI goal for entity %s using tweak ID %s", getEntityLocation(), getName()));

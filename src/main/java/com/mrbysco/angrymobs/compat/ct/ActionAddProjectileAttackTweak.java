@@ -1,16 +1,16 @@
 package com.mrbysco.angrymobs.compat.ct;
 
-import com.blamejared.crafttweaker.api.actions.IRuntimeAction;
-import com.blamejared.crafttweaker.impl.entity.MCEntityType;
+import com.blamejared.crafttweaker.api.action.base.IRuntimeAction;
 import com.mrbysco.angrymobs.registry.AITweakRegistry;
 import com.mrbysco.angrymobs.registry.tweaks.ProjectileAttackTweak;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
 
 public class ActionAddProjectileAttackTweak implements IRuntimeAction {
     public final ProjectileAttackTweak projectileTweak;
 
-    public ActionAddProjectileAttackTweak(MCEntityType entity, MCEntityType projectileEntity, String soundLocation, int priority, float attackDamage, float velocity) {
-        this.projectileTweak = new ProjectileAttackTweak(entity.getInternal().getRegistryName(), projectileEntity.getInternal().getRegistryName(), new ResourceLocation(soundLocation),
+    public ActionAddProjectileAttackTweak(EntityType entity, EntityType projectileEntity, String soundLocation, int priority, float attackDamage, float velocity) {
+        this.projectileTweak = new ProjectileAttackTweak(entity.getRegistryName(), projectileEntity.getRegistryName(), new ResourceLocation(soundLocation),
                 priority, attackDamage, velocity);
     }
 

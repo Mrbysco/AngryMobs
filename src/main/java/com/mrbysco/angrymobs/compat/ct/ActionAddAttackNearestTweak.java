@@ -1,15 +1,15 @@
 package com.mrbysco.angrymobs.compat.ct;
 
-import com.blamejared.crafttweaker.api.actions.IRuntimeAction;
-import com.blamejared.crafttweaker.impl.entity.MCEntityType;
+import com.blamejared.crafttweaker.api.action.base.IRuntimeAction;
 import com.mrbysco.angrymobs.registry.AITweakRegistry;
 import com.mrbysco.angrymobs.registry.tweaks.AttackNearestTweak;
+import net.minecraft.world.entity.EntityType;
 
 public class ActionAddAttackNearestTweak implements IRuntimeAction {
     public final AttackNearestTweak attackNearestTweak;
 
-    public ActionAddAttackNearestTweak(MCEntityType entity, MCEntityType targetEntity, int priority, boolean checkSight) {
-        this.attackNearestTweak = new AttackNearestTweak(entity.getInternal().getRegistryName(), targetEntity.getInternal().getRegistryName(), priority, checkSight);
+    public ActionAddAttackNearestTweak(EntityType entity, EntityType targetEntity, int priority, boolean checkSight) {
+        this.attackNearestTweak = new AttackNearestTweak(entity.getRegistryName(), targetEntity.getRegistryName(), priority, checkSight);
     }
 
     @Override

@@ -1,15 +1,15 @@
 package com.mrbysco.angrymobs.compat.ct;
 
-import com.blamejared.crafttweaker.api.actions.IRuntimeAction;
-import com.blamejared.crafttweaker.impl.entity.MCEntityType;
+import com.blamejared.crafttweaker.api.action.base.IRuntimeAction;
 import com.mrbysco.angrymobs.registry.AITweakRegistry;
 import com.mrbysco.angrymobs.registry.tweaks.LeapAtTargetTweak;
+import net.minecraft.world.entity.EntityType;
 
 public class ActionAddLeapTweak implements IRuntimeAction {
     public final LeapAtTargetTweak leapTweak;
 
-    public ActionAddLeapTweak(MCEntityType entity, int priority, float leapMotion) {
-        this.leapTweak = new LeapAtTargetTweak(entity.getInternal().getRegistryName(), priority, leapMotion);
+    public ActionAddLeapTweak(EntityType entity, int priority, float leapMotion) {
+        this.leapTweak = new LeapAtTargetTweak(entity.getRegistryName(), priority, leapMotion);
     }
 
     @Override

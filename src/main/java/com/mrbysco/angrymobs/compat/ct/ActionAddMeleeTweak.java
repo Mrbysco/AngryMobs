@@ -1,15 +1,15 @@
 package com.mrbysco.angrymobs.compat.ct;
 
-import com.blamejared.crafttweaker.api.actions.IRuntimeAction;
-import com.blamejared.crafttweaker.impl.entity.MCEntityType;
+import com.blamejared.crafttweaker.api.action.base.IRuntimeAction;
 import com.mrbysco.angrymobs.registry.AITweakRegistry;
 import com.mrbysco.angrymobs.registry.tweaks.MeleeAttackTweak;
+import net.minecraft.world.entity.EntityType;
 
 public class ActionAddMeleeTweak implements IRuntimeAction {
     public final MeleeAttackTweak meleeTweak;
 
-    public ActionAddMeleeTweak(MCEntityType entity, int priority, double speedIn, float damage, boolean useLongMemory) {
-        this.meleeTweak = new MeleeAttackTweak(entity.getInternal().getRegistryName(), priority, speedIn, damage, useLongMemory);
+    public ActionAddMeleeTweak(EntityType entity, int priority, double speedIn, float damage, boolean useLongMemory) {
+        this.meleeTweak = new MeleeAttackTweak(entity.getRegistryName(), priority, speedIn, damage, useLongMemory);
     }
 
     @Override
