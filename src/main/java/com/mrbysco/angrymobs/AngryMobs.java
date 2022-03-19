@@ -1,31 +1,28 @@
 package com.mrbysco.angrymobs;
 
+import com.mojang.logging.LogUtils;
 import com.mrbysco.angrymobs.config.AngryConfig;
 import com.mrbysco.angrymobs.handler.AIHandler;
-import com.mrbysco.angrymobs.registry.AITweakRegistry;
 import com.mrbysco.angrymobs.registry.TweakReloadManager;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
 
 @Mod(AngryMobs.MOD_ID)
 public class AngryMobs {
-    public static final String MOD_ID = "angrymobs";
-    public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
+	public static final String MOD_ID = "angrymobs";
+	public static final Logger LOGGER = LogUtils.getLogger();
 
-    public AngryMobs() {
-        IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AngryConfig.serverSpec);
-        eventBus.register(AngryConfig.class);
+	public AngryMobs() {
+		IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AngryConfig.serverSpec);
+		eventBus.register(AngryConfig.class);
 
-        MinecraftForge.EVENT_BUS.register(new TweakReloadManager());
-        MinecraftForge.EVENT_BUS.register(new AIHandler());
-    }
+		MinecraftForge.EVENT_BUS.register(new TweakReloadManager());
+		MinecraftForge.EVENT_BUS.register(new AIHandler());
+	}
 }

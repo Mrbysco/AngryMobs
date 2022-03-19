@@ -7,13 +7,13 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class TweakReloadManager implements ResourceManagerReloadListener {
-    @Override
-    public void onResourceManagerReload(ResourceManager resourceManager) {
-        AITweakRegistry.instance().initializeTweaks();
-    }
+	@Override
+	public void onResourceManagerReload(ResourceManager resourceManager) {
+		AITweakRegistry.instance().initializeTweaks();
+	}
 
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public void onAddReloadListeners(AddReloadListenerEvent event) {
-        event.addListener(this);
-    }
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	public void onAddReloadListeners(AddReloadListenerEvent event) {
+		event.addListener(this);
+	}
 }
