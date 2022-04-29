@@ -33,4 +33,9 @@ public class TweakCT {
 	public static void addAttackNearestTweak(EntityType entity, EntityType targetEntity, int priority, boolean checkSight) {
 		CraftTweakerAPI.apply(new ActionAddAttackNearestTweak(entity, targetEntity, priority, checkSight));
 	}
+
+	@Method
+	public static void addBreakDoorTweak(EntityType entity, int priority, int difficulty) {
+		CraftTweakerAPI.apply(new ActionAddBreakDoorTweak(entity, priority, difficulty));
+	}
 }
