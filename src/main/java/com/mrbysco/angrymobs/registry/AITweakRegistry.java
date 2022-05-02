@@ -28,7 +28,7 @@ public class AITweakRegistry {
 
 	public void initializeTweaks() {
 		tweakMap.clear();
-		if(AngryConfig.SERVER.angryAnimals.get() || AngryConfig.SERVER.aggressiveAnimals.get()) {
+		if (AngryConfig.SERVER.angryAnimals.get() || AngryConfig.SERVER.aggressiveAnimals.get()) {
 			registerTweak(new MeleeAttackTweak(EntityType.CHICKEN, 1, 0.95D, 1.0F, false));
 			registerTweak(new LeapAtTargetTweak(EntityType.CHICKEN, 4, 0.3F));
 			registerTweak(new MeleeAttackTweak(EntityType.COW, 1, 1.0D, 2.0F, false));

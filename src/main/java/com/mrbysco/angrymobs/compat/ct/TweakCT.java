@@ -35,6 +35,16 @@ public class TweakCT {
 	}
 
 	@Method
+	public static void addAvoidEntityTweak(EntityType entity, EntityType targetEntity, int priority, float maxDistance, double walkSpeedModifier, double sprintSpeedModifier) {
+		CraftTweakerAPI.apply(new ActionAvoidEntityTweak(entity, targetEntity, priority, maxDistance, walkSpeedModifier, sprintSpeedModifier));
+	}
+
+	@Method
+	public static void addLookAtEntityTweak(EntityType entity, EntityType targetEntity, int priority, float lookDistance) {
+		CraftTweakerAPI.apply(new ActionLookAtEntityTweak(entity, targetEntity, priority, lookDistance));
+	}
+
+	@Method
 	public static void addBreakDoorTweak(EntityType entity, int priority, int difficulty) {
 		CraftTweakerAPI.apply(new ActionAddBreakDoorTweak(entity, priority, difficulty));
 	}
