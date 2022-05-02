@@ -33,9 +33,7 @@ public class BreakDoorTweak extends BaseTweak {
 				}
 			});
 			mob.goalSelector.availableGoals.removeIf(goal -> goal.getGoal() instanceof BreakDoorGoal);
-			Predicate<Difficulty> DOOR_BREAKING_PREDICATE = (dif) -> {
-				return dif == difficulty;
-			};
+			Predicate<Difficulty> DOOR_BREAKING_PREDICATE = (dif) -> dif == difficulty;
 			mob.goalSelector.addGoal(goalPriority, new BreakDoorGoal(mob, DOOR_BREAKING_PREDICATE));
 		} else {
 			AngryMobs.LOGGER.error(String.format("Can't apply AI tweak of ID %s for entity %s. Entity isn't valid for the tweak", getName(), getEntityLocation()));
