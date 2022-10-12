@@ -7,6 +7,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.LeapAtTargetGoal;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class LeapAtTargetTweak extends BaseTweak {
 	protected final int goalPriority;
@@ -19,7 +20,7 @@ public class LeapAtTargetTweak extends BaseTweak {
 	}
 
 	public LeapAtTargetTweak(EntityType<? extends PathfinderMob> entity, int priority, float leapMotion) {
-		this(entity.getRegistryName(), priority, leapMotion);
+		this(ForgeRegistries.ENTITY_TYPES.getKey(entity), priority, leapMotion);
 	}
 
 	@Override

@@ -4,12 +4,13 @@ import com.blamejared.crafttweaker.api.action.base.IRuntimeAction;
 import com.mrbysco.angrymobs.registry.AITweakRegistry;
 import com.mrbysco.angrymobs.registry.tweaks.LeapAtTargetTweak;
 import net.minecraft.world.entity.EntityType;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class ActionAddLeapTweak implements IRuntimeAction {
 	public final LeapAtTargetTweak leapTweak;
 
 	public ActionAddLeapTweak(EntityType entity, int priority, float leapMotion) {
-		this.leapTweak = new LeapAtTargetTweak(entity.getRegistryName(), priority, leapMotion);
+		this.leapTweak = new LeapAtTargetTweak(ForgeRegistries.ENTITY_TYPES.getKey(entity), priority, leapMotion);
 	}
 
 	@Override

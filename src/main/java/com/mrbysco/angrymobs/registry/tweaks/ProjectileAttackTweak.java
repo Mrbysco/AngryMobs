@@ -29,28 +29,33 @@ public class ProjectileAttackTweak extends BaseTweak {
 	}
 
 	public ProjectileAttackTweak(EntityType<? extends Mob> entity, EntityType<? extends Projectile> throwableType, SoundEvent soundEvent, int priority, float attackDamage, float velocity) {
-		this(entity.getRegistryName(), throwableType.getRegistryName(), soundEvent.getRegistryName(), priority, attackDamage, velocity);
+		this(ForgeRegistries.ENTITY_TYPES.getKey(entity), ForgeRegistries.ENTITY_TYPES.getKey(throwableType), ForgeRegistries.SOUND_EVENTS.getKey(soundEvent), priority, attackDamage, velocity);
 	}
 
 	@Override
 	public void adjust(Entity entity) {
 		if (entity instanceof Mob mob) {
-			Entity foundEntity = ForgeRegistries.ENTITIES.getValue(projectileEntityLocation).create(entity.level);
-			if (foundEntity instanceof Projectile throwable) {
-				mob.goalSelector.availableGoals.removeIf(goal -> goal.getGoal() instanceof PanicGoal);
+			EntityType<?> type = ForgeRegistries.ENTITY_TYPES.getValue(projectileEntityLocation);
+			if (type != null) {
+				Entity foundEntity = type.create(entity.level);
+				if (foundEntity instanceof Projectile throwable) {
+					mob.goalSelector.availableGoals.removeIf(goal -> goal.getGoal() instanceof PanicGoal);
 
-				mob.goalSelector.availableGoals.forEach(goal -> {
-					if (goal.getGoal() instanceof RangedBowAttackGoal) {
-						AngryMobs.LOGGER.info(String.format("Removing existing AI to apply the AI tweak of ID %s for entity %s", getEntityLocation(), getName()));
-					}
-				});
-				mob.goalSelector.availableGoals.removeIf(goal -> goal.getGoal() instanceof RangedBowAttackGoal);
+					mob.goalSelector.availableGoals.forEach(goal -> {
+						if (goal.getGoal() instanceof RangedBowAttackGoal) {
+							AngryMobs.LOGGER.info(String.format("Removing existing AI to apply the AI tweak of ID %s for entity %s", getEntityLocation(), getName()));
+						}
+					});
+					mob.goalSelector.availableGoals.removeIf(goal -> goal.getGoal() instanceof RangedBowAttackGoal);
 
-				SoundEvent sound = ForgeRegistries.SOUND_EVENTS.getValue(soundLocation);
-				mob.targetSelector.addGoal(goalPriority, new ThrowableAttackGoal(mob, (EntityType<? extends Projectile>) throwable.getType(), () -> sound, attackDamage, velocity));
-				foundEntity.discard();
+					SoundEvent sound = ForgeRegistries.SOUND_EVENTS.getValue(soundLocation);
+					mob.targetSelector.addGoal(goalPriority, new ThrowableAttackGoal(mob, (EntityType<? extends Projectile>) throwable.getType(), () -> sound, attackDamage, velocity));
+					foundEntity.discard();
+				} else {
+					AngryMobs.LOGGER.error(String.format("Can't apply AI tweak of ID %s for entity %s. Projectile entity isn't valid for the tweak", getName(), getEntityLocation()));
+				}
 			} else {
-				AngryMobs.LOGGER.error(String.format("Can't apply AI tweak of ID %s for entity %s. Projectile entity isn't valid for the tweak", getName(), getEntityLocation()));
+				AngryMobs.LOGGER.error(String.format("Can't apply AI tweak of ID %s for entity %s. Projectile entity could not be found", getName(), getEntityLocation()));
 			}
 		} else {
 			AngryMobs.LOGGER.error(String.format("Can't apply AI tweak of ID %s for entity %s. Entity isn't valid for the tweak", getName(), getEntityLocation()));

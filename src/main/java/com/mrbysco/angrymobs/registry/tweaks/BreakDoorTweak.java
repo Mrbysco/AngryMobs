@@ -7,6 +7,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.BreakDoorGoal;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.function.Predicate;
 
@@ -21,7 +22,7 @@ public class BreakDoorTweak extends BaseTweak {
 	}
 
 	public BreakDoorTweak(EntityType<? extends Mob> entity, int priority, int difficulty) {
-		this(entity.getRegistryName(), priority, difficulty);
+		this(ForgeRegistries.ENTITY_TYPES.getKey(entity), priority, difficulty);
 	}
 
 	@Override

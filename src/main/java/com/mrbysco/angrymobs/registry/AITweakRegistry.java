@@ -9,6 +9,7 @@ import com.mrbysco.angrymobs.registry.tweaks.MeleeAttackTweak;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -83,7 +84,7 @@ public class AITweakRegistry {
 	}
 
 	public boolean containsEntity(EntityType<? extends PathfinderMob> entityType) {
-		return tweakMap.containsKey(entityType.getRegistryName());
+		return tweakMap.containsKey(ForgeRegistries.ENTITY_TYPES.getKey(entityType));
 	}
 
 	public boolean containsEntity(ResourceLocation entityLocation) {
@@ -91,7 +92,7 @@ public class AITweakRegistry {
 	}
 
 	public List<ITweak> getTweaksFromType(EntityType<? extends PathfinderMob> entityType) {
-		return tweakMap.containsKey(entityType.getRegistryName()) ? tweakMap.get(entityType.getRegistryName()) : new ArrayList<>();
+		return tweakMap.containsKey(ForgeRegistries.ENTITY_TYPES.getKey(entityType)) ? tweakMap.get(ForgeRegistries.ENTITY_TYPES.getKey(entityType)) : new ArrayList<>();
 	}
 
 	public List<ITweak> getTweaksFromType(ResourceLocation entityLocation) {

@@ -33,7 +33,7 @@ public class AvoidEntityTweak extends BaseTweak {
 				if (targetEntityLocation.toString().equals("minecraft:player")) {
 					pathfinderMob.targetSelector.addGoal(goalPriority, new AvoidEntityGoal<>(pathfinderMob, Player.class, maxDistance, walkSpeedModifier, sprintSpeedModifier));
 				} else {
-					Entity targetEntity = ForgeRegistries.ENTITIES.getValue(targetEntityLocation).create(entity.level);
+					Entity targetEntity = ForgeRegistries.ENTITY_TYPES.getValue(targetEntityLocation).create(entity.level);
 					if (targetEntity instanceof LivingEntity) {
 						Class<? extends LivingEntity> entityClass = ((LivingEntity) targetEntity).getClass();
 						pathfinderMob.targetSelector.addGoal(goalPriority, new AvoidEntityGoal<>(pathfinderMob, entityClass, maxDistance, walkSpeedModifier, sprintSpeedModifier));
@@ -57,7 +57,7 @@ public class AvoidEntityTweak extends BaseTweak {
 						return false;
 					}
 				} else {
-					Entity targetEntity = ForgeRegistries.ENTITIES.getValue(targetEntityLocation).create(pathfinderMob.level);
+					Entity targetEntity = ForgeRegistries.ENTITY_TYPES.getValue(targetEntityLocation).create(pathfinderMob.level);
 					if (targetEntity instanceof LivingEntity) {
 						Class<? extends LivingEntity> entityClass = ((LivingEntity) targetEntity).getClass();
 						if (avoidEntity.avoidClass == entityClass) {

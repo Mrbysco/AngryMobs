@@ -5,12 +5,13 @@ import com.mrbysco.angrymobs.registry.AITweakRegistry;
 import com.mrbysco.angrymobs.registry.tweaks.ProjectileAttackTweak;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class ActionAddProjectileAttackTweak implements IRuntimeAction {
 	public final ProjectileAttackTweak projectileTweak;
 
 	public ActionAddProjectileAttackTweak(EntityType entity, EntityType projectileEntity, String soundLocation, int priority, float attackDamage, float velocity) {
-		this.projectileTweak = new ProjectileAttackTweak(entity.getRegistryName(), projectileEntity.getRegistryName(), new ResourceLocation(soundLocation),
+		this.projectileTweak = new ProjectileAttackTweak(ForgeRegistries.ENTITY_TYPES.getKey(entity), ForgeRegistries.ENTITY_TYPES.getKey(projectileEntity), new ResourceLocation(soundLocation),
 				priority, attackDamage, velocity);
 	}
 

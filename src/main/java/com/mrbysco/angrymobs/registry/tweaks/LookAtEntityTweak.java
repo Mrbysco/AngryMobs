@@ -29,7 +29,7 @@ public class LookAtEntityTweak extends BaseTweak {
 				if (targetEntityLocation.toString().equals("minecraft:player")) {
 					mob.targetSelector.addGoal(goalPriority, new LookAtPlayerGoal(mob, Player.class, lookDistance));
 				} else {
-					Entity targetEntity = ForgeRegistries.ENTITIES.getValue(targetEntityLocation).create(entity.level);
+					Entity targetEntity = ForgeRegistries.ENTITY_TYPES.getValue(targetEntityLocation).create(entity.level);
 					if (targetEntity instanceof LivingEntity) {
 						Class<? extends LivingEntity> entityClass = ((LivingEntity) targetEntity).getClass();
 						mob.targetSelector.addGoal(goalPriority, new LookAtPlayerGoal(mob, entityClass, lookDistance));
@@ -53,7 +53,7 @@ public class LookAtEntityTweak extends BaseTweak {
 						return false;
 					}
 				} else {
-					Entity targetEntity = ForgeRegistries.ENTITIES.getValue(targetEntityLocation).create(mob.level);
+					Entity targetEntity = ForgeRegistries.ENTITY_TYPES.getValue(targetEntityLocation).create(mob.level);
 					if (targetEntity instanceof LivingEntity) {
 						Class<? extends LivingEntity> entityClass = ((LivingEntity) targetEntity).getClass();
 						if (lookAtPlayerGoal.lookAtType == entityClass) {

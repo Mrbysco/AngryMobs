@@ -7,6 +7,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class HurtByTargetTweak extends BaseTweak {
 	protected final int goalPriority;
@@ -19,7 +20,7 @@ public class HurtByTargetTweak extends BaseTweak {
 	}
 
 	public HurtByTargetTweak(EntityType<? extends Mob> entity, int priority, boolean callReinforcements) {
-		this(entity.getRegistryName(), priority, callReinforcements);
+		this(ForgeRegistries.ENTITY_TYPES.getKey(entity), priority, callReinforcements);
 	}
 
 	@Override

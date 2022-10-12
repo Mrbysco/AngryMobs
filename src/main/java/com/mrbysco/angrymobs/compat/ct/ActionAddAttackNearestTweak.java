@@ -4,12 +4,13 @@ import com.blamejared.crafttweaker.api.action.base.IRuntimeAction;
 import com.mrbysco.angrymobs.registry.AITweakRegistry;
 import com.mrbysco.angrymobs.registry.tweaks.AttackNearestTweak;
 import net.minecraft.world.entity.EntityType;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class ActionAddAttackNearestTweak implements IRuntimeAction {
 	public final AttackNearestTweak attackNearestTweak;
 
 	public ActionAddAttackNearestTweak(EntityType entity, EntityType targetEntity, int priority, boolean checkSight) {
-		this.attackNearestTweak = new AttackNearestTweak(entity.getRegistryName(), targetEntity.getRegistryName(), priority, checkSight);
+		this.attackNearestTweak = new AttackNearestTweak(ForgeRegistries.ENTITY_TYPES.getKey(entity), ForgeRegistries.ENTITY_TYPES.getKey(targetEntity), priority, checkSight);
 	}
 
 	@Override

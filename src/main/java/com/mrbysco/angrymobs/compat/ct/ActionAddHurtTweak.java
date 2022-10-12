@@ -4,12 +4,13 @@ import com.blamejared.crafttweaker.api.action.base.IRuntimeAction;
 import com.mrbysco.angrymobs.registry.AITweakRegistry;
 import com.mrbysco.angrymobs.registry.tweaks.HurtByTargetTweak;
 import net.minecraft.world.entity.EntityType;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class ActionAddHurtTweak implements IRuntimeAction {
 	public final HurtByTargetTweak hurtByTargetTweak;
 
 	public ActionAddHurtTweak(EntityType entity, int priority, boolean callReinforcements) {
-		this.hurtByTargetTweak = new HurtByTargetTweak(entity.getRegistryName(), priority, callReinforcements);
+		this.hurtByTargetTweak = new HurtByTargetTweak(ForgeRegistries.ENTITY_TYPES.getKey(entity), priority, callReinforcements);
 	}
 
 	@Override

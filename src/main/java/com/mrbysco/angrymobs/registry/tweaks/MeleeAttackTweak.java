@@ -8,6 +8,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.PanicGoal;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class MeleeAttackTweak extends BaseTweak {
 	protected final int goalPriority;
@@ -24,13 +25,12 @@ public class MeleeAttackTweak extends BaseTweak {
 	}
 
 	public MeleeAttackTweak(EntityType<? extends Mob> entity, int priority, double speedIn, float damage, boolean useLongMemory) {
-		this(entity.getRegistryName(), priority, speedIn, damage, useLongMemory);
+		this(ForgeRegistries.ENTITY_TYPES.getKey(entity), priority, speedIn, damage, useLongMemory);
 	}
 
 	@Override
 	public void adjust(Entity entity) {
 		if (entity instanceof Mob mob) {
-
 			mob.goalSelector.availableGoals.removeIf(goal -> goal.getGoal() instanceof PanicGoal);
 			mob.goalSelector.availableGoals.forEach(goal -> {
 				if (goal.getGoal() instanceof MeleeAttackGoal) {
