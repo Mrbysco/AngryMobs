@@ -38,7 +38,7 @@ public class MobMeleeAttackGoal extends Goal {
 	 * method as well.
 	 */
 	public boolean canUse() {
-		long i = this.attacker.level.getGameTime();
+		long i = this.attacker.level().getGameTime();
 		if (i - this.lastCanUseCheck < 20L) {
 			return false;
 		} else {

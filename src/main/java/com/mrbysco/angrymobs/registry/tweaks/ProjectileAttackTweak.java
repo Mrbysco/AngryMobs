@@ -37,7 +37,7 @@ public class ProjectileAttackTweak extends BaseTweak {
 		if (entity instanceof Mob mob) {
 			EntityType<?> type = ForgeRegistries.ENTITY_TYPES.getValue(projectileEntityLocation);
 			if (type != null) {
-				Entity foundEntity = type.create(entity.level);
+				Entity foundEntity = type.create(entity.level());
 				if (foundEntity instanceof Projectile throwable) {
 					mob.goalSelector.availableGoals.removeIf(goal -> goal.getGoal() instanceof PanicGoal);
 

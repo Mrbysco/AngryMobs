@@ -97,7 +97,7 @@ public class ThrowableAttackGoal extends Goal {
 						}
 
 						for (int i = 0; i < 1; ++i) {
-							Projectile projectileEntity = projectile.create(this.mob.level);
+							Projectile projectileEntity = projectile.create(this.mob.level());
 							if (projectileEntity != null) {
 								projectileEntity.setOwner(this.mob);
 								projectileEntity.setYRot(this.mob.getYRot() % 360.0F);
@@ -108,9 +108,9 @@ public class ThrowableAttackGoal extends Goal {
 								double projY = livingentity.getY(0.3333333333333333D) - projectileEntity.getY();
 								double projZ = livingentity.getZ() - this.mob.getZ();
 								double projD3 = Math.sqrt(projX * projX + projZ * projZ);
-								projectileEntity.shoot(projX, projY + projD3 * (double) 0.2F, projZ, this.velocity, (float) (14 - this.mob.level.getDifficulty().getId() * 4));
+								projectileEntity.shoot(projX, projY + projD3 * (double) 0.2F, projZ, this.velocity, (float) (14 - this.mob.level().getDifficulty().getId() * 4));
 
-								this.mob.level.addFreshEntity(projectileEntity);
+								this.mob.level().addFreshEntity(projectileEntity);
 							}
 						}
 					}
