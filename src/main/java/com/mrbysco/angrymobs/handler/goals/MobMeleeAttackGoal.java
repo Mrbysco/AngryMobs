@@ -1,7 +1,6 @@
 package com.mrbysco.angrymobs.handler.goals;
 
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -157,7 +156,7 @@ public class MobMeleeAttackGoal extends Goal {
 		if (distToEnemySqr <= d0 && this.getTicksUntilNextAttack() <= 0) {
 			this.resetAttackCooldown();
 			this.attacker.swing(InteractionHand.MAIN_HAND);
-			enemy.hurt(DamageSource.mobAttack(this.attacker), ATTACK_DAMAGE);
+			enemy.hurt(enemy.damageSources().mobAttack(this.attacker), ATTACK_DAMAGE);
 		}
 	}
 

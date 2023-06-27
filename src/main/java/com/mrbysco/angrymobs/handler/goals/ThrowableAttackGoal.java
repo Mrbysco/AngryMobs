@@ -1,7 +1,6 @@
 package com.mrbysco.angrymobs.handler.goals;
 
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -76,7 +75,7 @@ public class ThrowableAttackGoal extends Goal {
 
 				if (this.attackTime <= 0) {
 					this.attackTime = 20;
-					livingentity.hurt(DamageSource.mobAttack(this.mob), ATTACK_DAMAGE);
+					livingentity.hurt(livingentity.damageSources().mobAttack(this.mob), ATTACK_DAMAGE);
 				}
 
 				this.mob.getMoveControl().setWantedPosition(livingentity.getX(), livingentity.getY(), livingentity.getZ(), 1.0D);
