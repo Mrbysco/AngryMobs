@@ -4,13 +4,14 @@ import com.blamejared.crafttweaker.api.action.base.IRuntimeAction;
 import com.mrbysco.angrymobs.registry.AITweakRegistry;
 import com.mrbysco.angrymobs.registry.tweaks.ProjectileAttackTweak;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class ActionAddProjectileAttackTweak implements IRuntimeAction {
 	public final ProjectileAttackTweak projectileTweak;
 
-	public ActionAddProjectileAttackTweak(EntityType entity, EntityType projectileEntity, String soundLocation, int priority, float attackDamage, float velocity) {
+	public ActionAddProjectileAttackTweak(EntityType<Entity> entity, EntityType<Entity> projectileEntity, String soundLocation, int priority, float attackDamage, float velocity) {
 		this.projectileTweak = new ProjectileAttackTweak(ForgeRegistries.ENTITY_TYPES.getKey(entity), ForgeRegistries.ENTITY_TYPES.getKey(projectileEntity), new ResourceLocation(soundLocation),
 				priority, attackDamage, velocity);
 	}
@@ -23,5 +24,10 @@ public class ActionAddProjectileAttackTweak implements IRuntimeAction {
 	@Override
 	public String describe() {
 		return String.format("Added %s tweak for Entity %s", projectileTweak.getName(), projectileTweak.getEntityLocation());
+	}
+
+	@Override
+	public String systemName() {
+		return "AngryMobs";
 	}
 }

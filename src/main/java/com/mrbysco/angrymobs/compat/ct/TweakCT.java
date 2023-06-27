@@ -2,6 +2,7 @@ package com.mrbysco.angrymobs.compat.ct;
 
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import org.openzen.zencode.java.ZenCodeType.Method;
 import org.openzen.zencode.java.ZenCodeType.Name;
@@ -10,37 +11,37 @@ import org.openzen.zencode.java.ZenCodeType.Name;
 @Name("mods.angrymobs.AITweaks")
 public class TweakCT {
 	@Method
-	public static void addMeleeAttackTweak(EntityType entity, int priority, double speedIn, float attackDamage, boolean useLongMemory) {
+	public static void addMeleeAttackTweak(EntityType<Entity> entity, int priority, double speedIn, float attackDamage, boolean useLongMemory) {
 		CraftTweakerAPI.apply(new ActionAddMeleeTweak(entity, priority, speedIn, attackDamage, useLongMemory));
 	}
 
 	@Method
-	public static void addProjectileAttackTweak(EntityType entity, EntityType projectileEntity, String soundLocation, int priority, float attackDamage, float velocity) {
+	public static void addProjectileAttackTweak(EntityType<Entity> entity, EntityType<Entity> projectileEntity, String soundLocation, int priority, float attackDamage, float velocity) {
 		CraftTweakerAPI.apply(new ActionAddProjectileAttackTweak(entity, projectileEntity, soundLocation, priority, attackDamage, velocity));
 	}
 
 	@Method
-	public static void addHurtByTargetTweak(EntityType entity, int priority, boolean callReinforcements) {
+	public static void addHurtByTargetTweak(EntityType<Entity> entity, int priority, boolean callReinforcements) {
 		CraftTweakerAPI.apply(new ActionAddHurtTweak(entity, priority, callReinforcements));
 	}
 
 	@Method
-	public static void addLeapTweak(EntityType entity, int priority, float leapMotion) {
+	public static void addLeapTweak(EntityType<Entity> entity, int priority, float leapMotion) {
 		CraftTweakerAPI.apply(new ActionAddLeapTweak(entity, priority, leapMotion));
 	}
 
 	@Method
-	public static void addAttackNearestTweak(EntityType entity, EntityType targetEntity, int priority, boolean checkSight) {
+	public static void addAttackNearestTweak(EntityType<Entity> entity, EntityType<Entity> targetEntity, int priority, boolean checkSight) {
 		CraftTweakerAPI.apply(new ActionAddAttackNearestTweak(entity, targetEntity, priority, checkSight));
 	}
 
 	@Method
-	public static void addAvoidEntityTweak(EntityType entity, EntityType targetEntity, int priority, float maxDistance, double walkSpeedModifier, double sprintSpeedModifier) {
+	public static void addAvoidEntityTweak(EntityType<Entity> entity, EntityType<Entity> targetEntity, int priority, float maxDistance, double walkSpeedModifier, double sprintSpeedModifier) {
 		CraftTweakerAPI.apply(new ActionAvoidEntityTweak(entity, targetEntity, priority, maxDistance, walkSpeedModifier, sprintSpeedModifier));
 	}
 
 	@Method
-	public static void addLookAtEntityTweak(EntityType entity, EntityType targetEntity, int priority, float lookDistance) {
+	public static void addLookAtEntityTweak(EntityType<Entity> entity, EntityType<Entity> targetEntity, int priority, float lookDistance) {
 		CraftTweakerAPI.apply(new ActionLookAtEntityTweak(entity, targetEntity, priority, lookDistance));
 	}
 
