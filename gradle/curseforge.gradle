@@ -13,6 +13,10 @@ if (System.getenv().CURSEFORGE_KEY) {
             mainArtifact(jar)
             changelog = file("$project.rootDir/changelog.md")
             changelogType = 'markdown'
+
+            relations {
+                optionalDependency "crafttweaker"
+            }
         }
     }
 }
