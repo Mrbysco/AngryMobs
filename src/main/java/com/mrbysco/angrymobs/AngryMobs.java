@@ -3,6 +3,7 @@ package com.mrbysco.angrymobs;
 import com.mojang.logging.LogUtils;
 import com.mrbysco.angrymobs.config.AngryConfig;
 import com.mrbysco.angrymobs.handler.AIHandler;
+import com.mrbysco.angrymobs.handler.AttributeHandler;
 import com.mrbysco.angrymobs.registry.TweakReloadManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -21,6 +22,8 @@ public class AngryMobs {
 		IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AngryConfig.commonSpec);
 		eventBus.register(AngryConfig.class);
+
+		eventBus.addListener(AttributeHandler::addEntityAttributes);
 
 		MinecraftForge.EVENT_BUS.register(new TweakReloadManager());
 		MinecraftForge.EVENT_BUS.register(new AIHandler());
