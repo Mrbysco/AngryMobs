@@ -10,8 +10,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ActionAddMeleeTweak implements IRuntimeAction {
 	public final MeleeAttackTweak meleeTweak;
 
-	public ActionAddMeleeTweak(EntityType<Entity> entity, int priority, double speedIn, float damage, boolean useLongMemory) {
-		this.meleeTweak = new MeleeAttackTweak(ForgeRegistries.ENTITY_TYPES.getKey(entity), priority, speedIn, damage, useLongMemory);
+	public ActionAddMeleeTweak(EntityType<Entity> entity, int priority, double speedIn, float damage, float knockback, boolean useLongMemory) {
+		this.meleeTweak = new MeleeAttackTweak(ForgeRegistries.ENTITY_TYPES.getKey(entity), priority, speedIn, damage, knockback, useLongMemory);
 	}
 
 	@Override

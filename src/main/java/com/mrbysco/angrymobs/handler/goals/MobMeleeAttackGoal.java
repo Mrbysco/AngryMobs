@@ -1,11 +1,18 @@
 package com.mrbysco.angrymobs.handler.goals;
 
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.pathfinder.Path;
 
 import java.util.EnumSet;
@@ -23,14 +30,19 @@ public class MobMeleeAttackGoal extends Goal {
 	private long lastCanUseCheck;
 	private int failedPathFindingPenalty = 0;
 	private boolean canPenalize = false;
-	private final float ATTACK_DAMAGE;
+	private final float attackDamage, knockback;
 
-	public MobMeleeAttackGoal(Mob creature, double speedIn, float damage, boolean useLongMemory) {
+	public MobMeleeAttackGoal(Mob creature, double speedIn, float damage, float knockback, boolean useLongMemory) {
 		this.attacker = creature;
 		this.speedTowardsTarget = speedIn;
-		this.ATTACK_DAMAGE = damage;
+		this.attackDamage = damage;
+		this.knockback = knockback;
 		this.longMemory = useLongMemory;
 		this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+	}
+
+	public MobMeleeAttackGoal(Mob creature, double speedIn, float damage, boolean useLongMemory) {
+		this(creature, speedIn, damage, 0.0F, useLongMemory);
 	}
 
 	/**
@@ -153,10 +165,58 @@ public class MobMeleeAttackGoal extends Goal {
 
 	protected void checkAndPerformAttack(LivingEntity enemy, double distToEnemySqr) {
 		double d0 = this.getAttackReachSqr(enemy);
-		if (distToEnemySqr <= d0 && this.getTicksUntilNextAttack() <= 0) {
+		if (distToEnemySqr <= d0 && this.isTimeToAttack()) {
 			this.resetAttackCooldown();
 			this.attacker.swing(InteractionHand.MAIN_HAND);
-			enemy.hurt(enemy.damageSources().mobAttack(this.attacker), ATTACK_DAMAGE);
+			this.doHurtTarget(enemy);
+		}
+	}
+
+	//Adjusted from Mob#doHurtTarget to not use Attributes
+	public boolean doHurtTarget(Entity entity) {
+		float f = attackDamage;
+		float f1 = knockback;
+//		if (this.attacker.getAttributes().hasAttribute(Attributes.ATTACK_DAMAGE)) {
+//			f += (float) this.attacker.getAttributes().getValue(Attributes.ATTACK_DAMAGE);
+//		}
+//		if (this.attacker.getAttributes().hasAttribute(Attributes.KNOCKBACK_RESISTANCE)) {
+//			f += (float) this.attacker.getAttributes().getValue(Attributes.ATTACK_DAMAGE);
+//		}
+		if (entity instanceof LivingEntity livingEntity) {
+			f += EnchantmentHelper.getDamageBonus(this.attacker.getMainHandItem(), livingEntity.getMobType());
+			f1 += (float) EnchantmentHelper.getKnockbackBonus(this.attacker);
+		}
+
+		int i = EnchantmentHelper.getFireAspect(this.attacker);
+		if (i > 0) {
+			entity.setSecondsOnFire(i * 4);
+		}
+
+		boolean flag = entity.hurt(this.attacker.damageSources().mobAttack(this.attacker), f);
+		if (flag) {
+			if (f1 > 0.0F && entity instanceof LivingEntity livingEntity) {
+				livingEntity.knockback((double) (f1 * 0.5F), (double) Mth.sin(this.attacker.getYRot() * ((float) Math.PI / 180F)), (double) (-Mth.cos(this.attacker.getYRot() * ((float) Math.PI / 180F))));
+				this.attacker.setDeltaMovement(this.attacker.getDeltaMovement().multiply(0.6D, 1.0D, 0.6D));
+			}
+
+			if (entity instanceof Player player) {
+				maybeDisableShield(player, this.attacker.getMainHandItem(), player.isUsingItem() ? player.getUseItem() : ItemStack.EMPTY);
+			}
+
+			this.attacker.doEnchantDamageEffects(this.attacker, entity);
+			this.attacker.setLastHurtMob(entity);
+		}
+
+		return flag;
+	}
+
+	private void maybeDisableShield(Player player, ItemStack mobItemStack, ItemStack playerItemStack) {
+		if (!mobItemStack.isEmpty() && !playerItemStack.isEmpty() && mobItemStack.getItem() instanceof AxeItem && playerItemStack.is(Items.SHIELD)) {
+			float f = 0.25F + (float) EnchantmentHelper.getBlockEfficiency(this.attacker) * 0.05F;
+			if (this.attacker.getRandom().nextFloat() < f) {
+				player.getCooldowns().addCooldown(Items.SHIELD, 100);
+				this.attacker.level().broadcastEntityEvent(player, (byte) 30);
+			}
 		}
 	}
 

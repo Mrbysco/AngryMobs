@@ -12,7 +12,12 @@ import org.openzen.zencode.java.ZenCodeType.Name;
 public class TweakCT {
 	@Method
 	public static void addMeleeAttackTweak(EntityType<Entity> entity, int priority, double speedIn, float attackDamage, boolean useLongMemory) {
-		CraftTweakerAPI.apply(new ActionAddMeleeTweak(entity, priority, speedIn, attackDamage, useLongMemory));
+		CraftTweakerAPI.apply(new ActionAddMeleeTweak(entity, priority, speedIn, attackDamage, 0.0F, useLongMemory));
+	}
+
+	@Method
+	public static void addMeleeAttackTweak(EntityType<Entity> entity, int priority, double speedIn, float attackDamage, float knockback, boolean useLongMemory) {
+		CraftTweakerAPI.apply(new ActionAddMeleeTweak(entity, priority, speedIn, attackDamage, knockback, useLongMemory));
 	}
 
 	@Method
