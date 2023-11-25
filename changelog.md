@@ -1,1 +1,1 @@
-* Initial update to 1.20
+* Make the Custom Melee goal do the same damage checks the regular Melee goal does to increase damage when using weapons
