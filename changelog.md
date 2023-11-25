@@ -1,1 +1,1 @@
-* Make the Custom Melee goal do the same damage checks the regular Melee goal does to increase damage when using weapons
+* Add config `useAttributes` to add the attribute values on top of the specified melee values **(Note: This can only add the values of attributes that exist on the mob)**
