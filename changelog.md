@@ -1,1 +1,1 @@
-* Add config `useAttributes` to add the attribute values on top of the specified melee values **(Note: This can only add the values of attributes that exist on the mob)**
+* Add a config system that allows adding attributes to mobs that don't have the specified attribute (For example adding `generic.attack_damage` to animals)
