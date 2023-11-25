@@ -19,7 +19,7 @@ public class AngryMobs {
 
 	public AngryMobs() {
 		IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
-		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AngryConfig.serverSpec);
+		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AngryConfig.commonSpec);
 		eventBus.register(AngryConfig.class);
 
 		MinecraftForge.EVENT_BUS.register(new TweakReloadManager());

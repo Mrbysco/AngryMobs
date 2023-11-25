@@ -29,7 +29,7 @@ public class AITweakRegistry {
 
 	public void initializeTweaks() {
 		tweakMap.clear();
-		if (AngryConfig.SERVER.angryAnimals.get() || AngryConfig.SERVER.aggressiveAnimals.get()) {
+		if (AngryConfig.COMMON.angryAnimals.get() || AngryConfig.COMMON.aggressiveAnimals.get()) {
 			registerTweak(new MeleeAttackTweak(EntityType.CHICKEN, 1, 0.95D, 1.0F, false));
 			registerTweak(new LeapAtTargetTweak(EntityType.CHICKEN, 4, 0.3F));
 			registerTweak(new MeleeAttackTweak(EntityType.COW, 1, 1.0D, 2.0F, false));
@@ -41,8 +41,8 @@ public class AITweakRegistry {
 			registerTweak(new MeleeAttackTweak(EntityType.RABBIT, 1, 1.4D, 1.0F, false));
 			registerTweak(new MeleeAttackTweak(EntityType.SHEEP, 1, 1.0D, 2.0F, false));
 
-			if (AngryConfig.SERVER.angryAnimals.get()) {
-				boolean reinforcements = AngryConfig.SERVER.angryReinforcements.get();
+			if (AngryConfig.COMMON.angryAnimals.get()) {
+				boolean reinforcements = AngryConfig.COMMON.angryReinforcements.get();
 
 				registerTweak(new HurtByTargetTweak(EntityType.CHICKEN, 1, reinforcements));
 				registerTweak(new HurtByTargetTweak(EntityType.COW, 1, reinforcements));
@@ -54,7 +54,7 @@ public class AITweakRegistry {
 				registerTweak(new HurtByTargetTweak(EntityType.RABBIT, 1, reinforcements));
 				registerTweak(new HurtByTargetTweak(EntityType.SHEEP, 1, reinforcements));
 			}
-			if (AngryConfig.SERVER.aggressiveAnimals.get()) {
+			if (AngryConfig.COMMON.aggressiveAnimals.get()) {
 				registerTweak(new AttackNearestTweak(EntityType.CAT, EntityType.PLAYER, 2, true));
 				registerTweak(new AttackNearestTweak(EntityType.CHICKEN, EntityType.PLAYER, 2, true));
 				registerTweak(new AttackNearestTweak(EntityType.COW, EntityType.PLAYER, 2, true));

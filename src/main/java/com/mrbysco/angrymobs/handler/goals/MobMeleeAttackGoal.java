@@ -1,5 +1,6 @@
 package com.mrbysco.angrymobs.handler.goals;
 
+import com.mrbysco.angrymobs.config.AngryConfig;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
@@ -176,12 +177,17 @@ public class MobMeleeAttackGoal extends Goal {
 	public boolean doHurtTarget(Entity entity) {
 		float f = attackDamage;
 		float f1 = knockback;
-//		if (this.attacker.getAttributes().hasAttribute(Attributes.ATTACK_DAMAGE)) {
-//			f += (float) this.attacker.getAttributes().getValue(Attributes.ATTACK_DAMAGE);
-//		}
-//		if (this.attacker.getAttributes().hasAttribute(Attributes.KNOCKBACK_RESISTANCE)) {
-//			f += (float) this.attacker.getAttributes().getValue(Attributes.ATTACK_DAMAGE);
-//		}
+
+		//Add the attribute values to the damage and knockback
+		if (AngryConfig.COMMON.useAttributes.get()) {
+			//Only add the attribute values if the entity has the attribute
+			if (this.attacker.getAttributes().hasAttribute(Attributes.ATTACK_DAMAGE)) {
+				f += (float) this.attacker.getAttributes().getValue(Attributes.ATTACK_DAMAGE);
+			}
+			if (this.attacker.getAttributes().hasAttribute(Attributes.KNOCKBACK_RESISTANCE)) {
+				f1 += (float) this.attacker.getAttributes().getValue(Attributes.KNOCKBACK_RESISTANCE);
+			}
+		}
 		if (entity instanceof LivingEntity livingEntity) {
 			f += EnchantmentHelper.getDamageBonus(this.attacker.getMainHandItem(), livingEntity.getMobType());
 			f1 += (float) EnchantmentHelper.getKnockbackBonus(this.attacker);

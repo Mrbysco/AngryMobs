@@ -8,12 +8,13 @@ import net.minecraftforge.fml.event.config.ModConfigEvent;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class AngryConfig {
-	public static class Server {
+	public static class Common {
 		public final BooleanValue angryAnimals;
 		public final BooleanValue angryReinforcements;
 		public final BooleanValue aggressiveAnimals;
+		public final BooleanValue useAttributes;
 
-		Server(ForgeConfigSpec.Builder builder) {
+		Common(ForgeConfigSpec.Builder builder) {
 			builder.comment("Common settings")
 					.push("Common");
 
@@ -29,17 +30,21 @@ public class AngryConfig {
 					.comment("When true makes all vanilla animals attack you on sight")
 					.define("aggressiveAnimals", false);
 
+			useAttributes = builder
+					.comment("When true makes the melee goals add the mobs attack damage and knockback onto the specified values")
+					.define("useAttributes", true);
+
 			builder.pop();
 		}
 	}
 
-	public static final ForgeConfigSpec serverSpec;
-	public static final AngryConfig.Server SERVER;
+	public static final ForgeConfigSpec commonSpec;
+	public static final Common COMMON;
 
 	static {
-		final Pair<Server, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(AngryConfig.Server::new);
-		serverSpec = specPair.getRight();
-		SERVER = specPair.getLeft();
+		final Pair<Common, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Common::new);
+		commonSpec = specPair.getRight();
+		COMMON = specPair.getLeft();
 	}
 
 	@SubscribeEvent
