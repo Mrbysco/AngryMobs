@@ -24,9 +24,13 @@ public class AttributeHandler {
 					ResourceLocation attributeLocation = ResourceLocation.tryParse(values.attribute());
 					if (attributeLocation != null) {
 						Attribute attribute = ForgeRegistries.ATTRIBUTES.getValue(attributeLocation);
-						if (attribute != null && !event.has(entityType, attribute)) {
-							AngryMobs.LOGGER.info("Adding attribute: {} with value: {} to entity: {}", attributeLocation, values.value(), entityLocation);
-							event.add(entityType, attribute, values.value());
+						if (attribute != null) {
+							if (!event.has(entityType, attribute)) {
+								AngryMobs.LOGGER.info("Adding attribute: {} with value: {} to entity: {}", attributeLocation, values.value(), entityLocation);
+								event.add(entityType, attribute, values.value());
+							} else {
+								AngryMobs.LOGGER.error("Attribute: {} already exists for entity: {}, ignoring entry!", attributeLocation, entityLocation);
+							}
 						} else {
 							AngryMobs.LOGGER.error("Attribute: {} does not exist!", attributeLocation);
 						}
