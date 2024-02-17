@@ -2,12 +2,12 @@ package com.mrbysco.angrymobs.handler;
 
 import com.mrbysco.angrymobs.AngryMobs;
 import com.mrbysco.angrymobs.config.attributes.AttributeConfigHandler;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.event.entity.EntityAttributeModificationEvent;
 
 public class AttributeHandler {
 	public static void addEntityAttributes(EntityAttributeModificationEvent event) {
@@ -17,13 +17,13 @@ public class AttributeHandler {
 		if (AttributeConfigHandler.additionMap.isEmpty()) return;
 
 		for (EntityType<? extends LivingEntity> entityType : event.getTypes()) {
-			ResourceLocation entityLocation = ForgeRegistries.ENTITY_TYPES.getKey(entityType);
+			ResourceLocation entityLocation = BuiltInRegistries.ENTITY_TYPE.getKey(entityType);
 			if (entityLocation != null) {
 				var values = AttributeConfigHandler.additionMap.getOrDefault(entityLocation.toString(), null);
 				if (values != null) {
 					ResourceLocation attributeLocation = ResourceLocation.tryParse(values.attribute());
 					if (attributeLocation != null) {
-						Attribute attribute = ForgeRegistries.ATTRIBUTES.getValue(attributeLocation);
+						Attribute attribute = BuiltInRegistries.ATTRIBUTE.get(attributeLocation);
 						if (attribute != null) {
 							if (!event.has(entityType, attribute)) {
 								AngryMobs.LOGGER.info("Adding attribute: {} with value: {} to entity: {}", attributeLocation, values.value(), entityLocation);

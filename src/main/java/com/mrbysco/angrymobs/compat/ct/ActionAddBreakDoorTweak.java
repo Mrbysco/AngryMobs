@@ -3,15 +3,15 @@ package com.mrbysco.angrymobs.compat.ct;
 import com.blamejared.crafttweaker.api.action.base.IRuntimeAction;
 import com.mrbysco.angrymobs.registry.AITweakRegistry;
 import com.mrbysco.angrymobs.registry.tweaks.BreakDoorTweak;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class ActionAddBreakDoorTweak implements IRuntimeAction {
 	public final BreakDoorTweak breakDoorTweak;
 
 	public ActionAddBreakDoorTweak(EntityType<Entity> entity, int priority, int difficulty) {
-		this.breakDoorTweak = new BreakDoorTweak(ForgeRegistries.ENTITY_TYPES.getKey(entity), priority, difficulty);
+		this.breakDoorTweak = new BreakDoorTweak(BuiltInRegistries.ENTITY_TYPE.getKey(entity), priority, difficulty);
 	}
 
 	@Override

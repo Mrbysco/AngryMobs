@@ -1,6 +1,7 @@
 package com.mrbysco.angrymobs.registry.tweaks;
 
 import com.mrbysco.angrymobs.AngryMobs;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -9,7 +10,6 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class AttackNearestTweak extends BaseTweak {
 	protected final ResourceLocation targetEntityLocation;
@@ -24,7 +24,7 @@ public class AttackNearestTweak extends BaseTweak {
 	}
 
 	public AttackNearestTweak(EntityType<? extends Mob> entity, EntityType<? extends LivingEntity> target, int priority, boolean checkSight) {
-		this(ForgeRegistries.ENTITY_TYPES.getKey(entity), ForgeRegistries.ENTITY_TYPES.getKey(target), priority, checkSight);
+		this(BuiltInRegistries.ENTITY_TYPE.getKey(entity), BuiltInRegistries.ENTITY_TYPE.getKey(target), priority, checkSight);
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class AttackNearestTweak extends BaseTweak {
 				if (targetEntityLocation.toString().equals("minecraft:player")) {
 					mob.targetSelector.addGoal(goalPriority, new NearestAttackableTargetGoal<>(mob, Player.class, checkSight));
 				} else {
-					Entity targetEntity = ForgeRegistries.ENTITY_TYPES.getValue(targetEntityLocation).create(entity.level());
+					Entity targetEntity = BuiltInRegistries.ENTITY_TYPE.get(targetEntityLocation).create(entity.level());
 					if (targetEntity instanceof LivingEntity) {
 						Class<? extends LivingEntity> entityClass = ((LivingEntity) targetEntity).getClass();
 						mob.targetSelector.addGoal(goalPriority, new NearestAttackableTargetGoal<>(mob, entityClass, checkSight));
@@ -58,7 +58,7 @@ public class AttackNearestTweak extends BaseTweak {
 						return false;
 					}
 				} else {
-					Entity targetEntity = ForgeRegistries.ENTITY_TYPES.getValue(targetEntityLocation).create(mob.level());
+					Entity targetEntity = BuiltInRegistries.ENTITY_TYPE.get(targetEntityLocation).create(mob.level());
 					if (targetEntity instanceof LivingEntity) {
 						Class<? extends LivingEntity> entityClass = ((LivingEntity) targetEntity).getClass();
 						if (nearestAttackable.targetType == entityClass) {

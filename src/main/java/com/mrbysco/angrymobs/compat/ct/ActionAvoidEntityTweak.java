@@ -3,15 +3,15 @@ package com.mrbysco.angrymobs.compat.ct;
 import com.blamejared.crafttweaker.api.action.base.IRuntimeAction;
 import com.mrbysco.angrymobs.registry.AITweakRegistry;
 import com.mrbysco.angrymobs.registry.tweaks.AvoidEntityTweak;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class ActionAvoidEntityTweak implements IRuntimeAction {
 	public final AvoidEntityTweak attackNearestTweak;
 
 	public ActionAvoidEntityTweak(EntityType<Entity> entity, EntityType<Entity> targetEntity, int priority, float maxDistance, double walkSpeedModifier, double sprintSpeedModifier) {
-		this.attackNearestTweak = new AvoidEntityTweak(ForgeRegistries.ENTITY_TYPES.getKey(entity), ForgeRegistries.ENTITY_TYPES.getKey(targetEntity), priority, maxDistance, walkSpeedModifier, sprintSpeedModifier);
+		this.attackNearestTweak = new AvoidEntityTweak(BuiltInRegistries.ENTITY_TYPE.getKey(entity), BuiltInRegistries.ENTITY_TYPE.getKey(targetEntity), priority, maxDistance, walkSpeedModifier, sprintSpeedModifier);
 	}
 
 	@Override

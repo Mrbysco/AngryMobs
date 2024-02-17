@@ -1,6 +1,7 @@
 package com.mrbysco.angrymobs.registry.tweaks;
 
 import com.mrbysco.angrymobs.AngryMobs;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -8,7 +9,6 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class LookAtEntityTweak extends BaseTweak {
 	protected final ResourceLocation targetEntityLocation;
@@ -29,7 +29,7 @@ public class LookAtEntityTweak extends BaseTweak {
 				if (targetEntityLocation.toString().equals("minecraft:player")) {
 					mob.targetSelector.addGoal(goalPriority, new LookAtPlayerGoal(mob, Player.class, lookDistance));
 				} else {
-					Entity targetEntity = ForgeRegistries.ENTITY_TYPES.getValue(targetEntityLocation).create(entity.level());
+					Entity targetEntity = BuiltInRegistries.ENTITY_TYPE.get(targetEntityLocation).create(entity.level());
 					if (targetEntity instanceof LivingEntity) {
 						Class<? extends LivingEntity> entityClass = ((LivingEntity) targetEntity).getClass();
 						mob.targetSelector.addGoal(goalPriority, new LookAtPlayerGoal(mob, entityClass, lookDistance));
@@ -53,7 +53,7 @@ public class LookAtEntityTweak extends BaseTweak {
 						return false;
 					}
 				} else {
-					Entity targetEntity = ForgeRegistries.ENTITY_TYPES.getValue(targetEntityLocation).create(mob.level());
+					Entity targetEntity = BuiltInRegistries.ENTITY_TYPE.get(targetEntityLocation).create(mob.level());
 					if (targetEntity instanceof LivingEntity) {
 						Class<? extends LivingEntity> entityClass = ((LivingEntity) targetEntity).getClass();
 						if (lookAtPlayerGoal.lookAtType == entityClass) {

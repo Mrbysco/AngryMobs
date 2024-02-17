@@ -2,6 +2,7 @@ package com.mrbysco.angrymobs.registry.tweaks;
 
 import com.mrbysco.angrymobs.AngryMobs;
 import com.mrbysco.angrymobs.handler.goals.ThrowableAttackGoal;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
@@ -10,7 +11,6 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.PanicGoal;
 import net.minecraft.world.entity.ai.goal.RangedBowAttackGoal;
 import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class ProjectileAttackTweak extends BaseTweak {
 	protected final ResourceLocation projectileEntityLocation;
@@ -29,13 +29,13 @@ public class ProjectileAttackTweak extends BaseTweak {
 	}
 
 	public ProjectileAttackTweak(EntityType<? extends Mob> entity, EntityType<? extends Projectile> throwableType, SoundEvent soundEvent, int priority, float attackDamage, float velocity) {
-		this(ForgeRegistries.ENTITY_TYPES.getKey(entity), ForgeRegistries.ENTITY_TYPES.getKey(throwableType), ForgeRegistries.SOUND_EVENTS.getKey(soundEvent), priority, attackDamage, velocity);
+		this(BuiltInRegistries.ENTITY_TYPE.getKey(entity), BuiltInRegistries.ENTITY_TYPE.getKey(throwableType), BuiltInRegistries.SOUND_EVENT.getKey(soundEvent), priority, attackDamage, velocity);
 	}
 
 	@Override
 	public void adjust(Entity entity) {
 		if (entity instanceof Mob mob) {
-			EntityType<?> type = ForgeRegistries.ENTITY_TYPES.getValue(projectileEntityLocation);
+			EntityType<?> type = BuiltInRegistries.ENTITY_TYPE.get(projectileEntityLocation);
 			if (type != null) {
 				Entity foundEntity = type.create(entity.level());
 				if (foundEntity instanceof Projectile throwable) {
@@ -48,7 +48,7 @@ public class ProjectileAttackTweak extends BaseTweak {
 					});
 					mob.goalSelector.availableGoals.removeIf(goal -> goal.getGoal() instanceof RangedBowAttackGoal);
 
-					SoundEvent sound = ForgeRegistries.SOUND_EVENTS.getValue(soundLocation);
+					SoundEvent sound = BuiltInRegistries.SOUND_EVENT.get(soundLocation);
 					mob.targetSelector.addGoal(goalPriority, new ThrowableAttackGoal(mob, (EntityType<? extends Projectile>) throwable.getType(), () -> sound, attackDamage, velocity));
 					foundEntity.discard();
 				} else {

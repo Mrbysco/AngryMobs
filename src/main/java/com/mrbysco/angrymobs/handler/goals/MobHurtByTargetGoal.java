@@ -89,7 +89,7 @@ public class MobHurtByTargetGoal extends TargetGoal {
 				}
 
 				mobentity = iterator.next();
-				if (this.mob != mobentity && mobentity.getTarget() == null && (!(this.mob instanceof TamableAnimal) || ((TamableAnimal) this.mob).getOwner() == ((TamableAnimal) mobentity).getOwner()) && !mobentity.isAlliedTo(this.mob.getLastHurtByMob())) {
+				if (this.mob != mobentity && mobentity.getTarget() == null && (!(this.mob instanceof TamableAnimal) || ((TamableAnimal) this.mob).getOwner() == ((TamableAnimal) mobentity).getOwner()) && (this.mob.getLastHurtByMob() == null || !mobentity.isAlliedTo(this.mob.getLastHurtByMob()))) {
 					if (this.reinforcementTypes == null) {
 						break;
 					}

@@ -2,12 +2,12 @@ package com.mrbysco.angrymobs.registry.tweaks;
 
 import com.mrbysco.angrymobs.AngryMobs;
 import com.mrbysco.angrymobs.handler.goals.MobHurtByTargetGoal;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class HurtByTargetTweak extends BaseTweak {
 	protected final int goalPriority;
@@ -20,7 +20,7 @@ public class HurtByTargetTweak extends BaseTweak {
 	}
 
 	public HurtByTargetTweak(EntityType<? extends Mob> entity, int priority, boolean callReinforcements) {
-		this(ForgeRegistries.ENTITY_TYPES.getKey(entity), priority, callReinforcements);
+		this(BuiltInRegistries.ENTITY_TYPE.getKey(entity), priority, callReinforcements);
 	}
 
 	@Override

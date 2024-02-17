@@ -2,10 +2,10 @@ package com.mrbysco.angrymobs.handler;
 
 import com.mrbysco.angrymobs.registry.AITweakRegistry;
 import com.mrbysco.angrymobs.registry.tweaks.ITweak;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public class AIHandler {
 	public void onEntityCreation(EntityJoinLevelEvent event) {
 		if (!event.getLevel().isClientSide()) {
 			AITweakRegistry tweakRegistry = AITweakRegistry.instance();
-			ResourceLocation registryName = ForgeRegistries.ENTITY_TYPES.getKey(event.getEntity().getType());
+			ResourceLocation registryName = BuiltInRegistries.ENTITY_TYPE.getKey(event.getEntity().getType());
 			if (tweakRegistry.containsEntity(registryName)) {
 				final List<ITweak> tweakList = tweakRegistry.getTweaksFromType(registryName);
 				for (ITweak tweak : tweakList) {

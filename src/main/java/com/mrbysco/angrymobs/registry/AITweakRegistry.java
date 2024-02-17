@@ -6,10 +6,10 @@ import com.mrbysco.angrymobs.registry.tweaks.HurtByTargetTweak;
 import com.mrbysco.angrymobs.registry.tweaks.ITweak;
 import com.mrbysco.angrymobs.registry.tweaks.LeapAtTargetTweak;
 import com.mrbysco.angrymobs.registry.tweaks.MeleeAttackTweak;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -84,7 +84,7 @@ public class AITweakRegistry {
 	}
 
 	public boolean containsEntity(EntityType<? extends PathfinderMob> entityType) {
-		return tweakMap.containsKey(ForgeRegistries.ENTITY_TYPES.getKey(entityType));
+		return tweakMap.containsKey(BuiltInRegistries.ENTITY_TYPE.getKey(entityType));
 	}
 
 	public boolean containsEntity(ResourceLocation entityLocation) {
@@ -92,7 +92,7 @@ public class AITweakRegistry {
 	}
 
 	public List<ITweak> getTweaksFromType(EntityType<? extends PathfinderMob> entityType) {
-		return tweakMap.containsKey(ForgeRegistries.ENTITY_TYPES.getKey(entityType)) ? tweakMap.get(ForgeRegistries.ENTITY_TYPES.getKey(entityType)) : new ArrayList<>();
+		return tweakMap.containsKey(BuiltInRegistries.ENTITY_TYPE.getKey(entityType)) ? tweakMap.get(BuiltInRegistries.ENTITY_TYPE.getKey(entityType)) : new ArrayList<>();
 	}
 
 	public List<ITweak> getTweaksFromType(ResourceLocation entityLocation) {
