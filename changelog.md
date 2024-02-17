@@ -1,1 +1,1 @@
-* Add a config system that allows adding attributes to mobs that don't have the specified attribute (For example adding `generic.attack_damage` to animals)
+* Initial update to 1.20.4 NeoForge
