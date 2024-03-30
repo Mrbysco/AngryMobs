@@ -9,13 +9,19 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class AttributeHandler {
+	private static Map<ResourceLocation, Attribute> cachedAttributeMap = new HashMap<>();
+
 	public static void addEntityAttributes(EntityAttributeModificationEvent event) {
 		//Load config
 		AttributeConfigHandler.loadConfig();
 
 		if (AttributeConfigHandler.additionMap.isEmpty()) return;
 
+		cachedAttributeMap.clear();
 		for (EntityType<? extends LivingEntity> entityType : event.getTypes()) {
 			ResourceLocation entityLocation = ForgeRegistries.ENTITY_TYPES.getKey(entityType);
 			if (entityLocation != null) {
@@ -23,8 +29,9 @@ public class AttributeHandler {
 				if (values != null) {
 					ResourceLocation attributeLocation = ResourceLocation.tryParse(values.attribute());
 					if (attributeLocation != null) {
-						Attribute attribute = ForgeRegistries.ATTRIBUTES.getValue(attributeLocation);
+						Attribute attribute = cachedAttributeMap.getOrDefault(attributeLocation, ForgeRegistries.ATTRIBUTES.getValue(attributeLocation));
 						if (attribute != null) {
+							if (!cachedAttributeMap.containsKey(attributeLocation)) cachedAttributeMap.put(attributeLocation, attribute);
 							if (!event.has(entityType, attribute)) {
 								AngryMobs.LOGGER.info("Adding attribute: {} with value: {} to entity: {}", attributeLocation, values.value(), entityLocation);
 								event.add(entityType, attribute, values.value());
@@ -40,5 +47,6 @@ public class AttributeHandler {
 				}
 			}
 		}
+		cachedAttributeMap.clear();
 	}
 }
