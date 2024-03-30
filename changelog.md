@@ -1,1 +1,1 @@
-* Add a config system that allows adding attributes to mobs that don't have the specified attribute (For example adding `generic.attack_damage` to animals)
+* Add some caching to the attribute handler, to avoid calling the Attribute registry for every attribute modification attempt.
