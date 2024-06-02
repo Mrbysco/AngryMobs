@@ -1,1 +1,1 @@
-* Initial update to 1.20.4 NeoForge
+* Overhaul how the tweaks get registered, they can now be added through data packs and are no longer restricted to using CraftTweaker.
