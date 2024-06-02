@@ -1,8 +1,9 @@
 package com.mrbysco.angrymobs.compat.ct;
 
 import com.blamejared.crafttweaker.api.action.base.IRuntimeAction;
-import com.mrbysco.angrymobs.registry.AITweakRegistry;
-import com.mrbysco.angrymobs.registry.tweaks.LookAtEntityTweak;
+import com.mrbysco.angrymobs.registry.TweakRegistry;
+import com.mrbysco.angrymobs.tweaks.LookAtEntityTweak;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -16,12 +17,12 @@ public class ActionLookAtEntityTweak implements IRuntimeAction {
 
 	@Override
 	public void apply() {
-		AITweakRegistry.instance().registerTweak(lookAtPlayerTweak);
+		TweakRegistry.addTweak(Holder.direct(lookAtPlayerTweak));
 	}
 
 	@Override
 	public String describe() {
-		return String.format("Added %s tweak for Entity %s", lookAtPlayerTweak.getName(), lookAtPlayerTweak.getEntityLocation());
+		return String.format("Added %s tweak for Entity %s", lookAtPlayerTweak.generateId(), lookAtPlayerTweak.entity());
 	}
 
 	@Override

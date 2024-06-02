@@ -10,7 +10,6 @@ import org.apache.commons.lang3.tuple.Pair;
 public class AngryConfig {
 	public static class Common {
 		public final BooleanValue angryAnimals;
-		public final BooleanValue angryReinforcements;
 		public final BooleanValue aggressiveAnimals;
 		public final BooleanValue useAttributes;
 
@@ -21,10 +20,6 @@ public class AngryConfig {
 			angryAnimals = builder
 					.comment("When true makes all vanilla animals attack you if you hurt them")
 					.define("angryAnimals", false);
-
-			angryReinforcements = builder
-					.comment("When true makes all vanilla animals call for reinforcement when you hurt them")
-					.define("angryReinforcements", false);
 
 			aggressiveAnimals = builder
 					.comment("When true makes all vanilla animals attack you on sight")
@@ -49,11 +44,11 @@ public class AngryConfig {
 
 	@SubscribeEvent
 	public static void onLoad(final ModConfigEvent.Loading configEvent) {
-		AngryMobs.LOGGER.debug("Loaded Angry Mobs' config file {}", configEvent.getConfig().getFileName());
+		AngryMobs.LOGGER.debug("Loaded Angry Mobs' configs file {}", configEvent.getConfig().getFileName());
 	}
 
 	@SubscribeEvent
 	public static void onFileChange(final ModConfigEvent.Reloading configEvent) {
-		AngryMobs.LOGGER.warn("Angry Mobs' config just got changed on the file system!");
+		AngryMobs.LOGGER.warn("Angry Mobs' configs just got changed on the file system!");
 	}
 }

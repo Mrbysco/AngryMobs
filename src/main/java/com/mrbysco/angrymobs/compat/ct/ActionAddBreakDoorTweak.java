@@ -1,8 +1,9 @@
 package com.mrbysco.angrymobs.compat.ct;
 
 import com.blamejared.crafttweaker.api.action.base.IRuntimeAction;
-import com.mrbysco.angrymobs.registry.AITweakRegistry;
-import com.mrbysco.angrymobs.registry.tweaks.BreakDoorTweak;
+import com.mrbysco.angrymobs.registry.TweakRegistry;
+import com.mrbysco.angrymobs.tweaks.BreakDoorTweak;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -16,12 +17,12 @@ public class ActionAddBreakDoorTweak implements IRuntimeAction {
 
 	@Override
 	public void apply() {
-		AITweakRegistry.instance().registerTweak(breakDoorTweak);
+		TweakRegistry.addTweak(Holder.direct(breakDoorTweak));
 	}
 
 	@Override
 	public String describe() {
-		return String.format("Added %s tweak for Entity %s", breakDoorTweak.getName(), breakDoorTweak.getEntityLocation());
+		return String.format("Added %s tweak for Entity %s", breakDoorTweak.generateId(), breakDoorTweak.entity());
 	}
 
 	@Override

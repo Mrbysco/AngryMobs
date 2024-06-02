@@ -1,0 +1,13 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "angrymobs:config_enabled",
+      "config": [
+        "angry_animals"
+      ]
+    }
+  ],
+  "callReinforcements": false,
+  "entity": "minecraft:sheep",
+  "goalPriority": 1
+}

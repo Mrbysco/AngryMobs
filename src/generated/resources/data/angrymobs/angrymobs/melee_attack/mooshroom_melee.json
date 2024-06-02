@@ -1,0 +1,16 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "angrymobs:config_enabled",
+      "config": [
+        "angry_animals",
+        "aggressive_animals"
+      ]
+    }
+  ],
+  "attackDamage": 2.0,
+  "entity": "minecraft:mooshroom",
+  "goalPriority": 1,
+  "speedModifier": 1.0,
+  "useLongMemory": false
+}

@@ -1,0 +1,115 @@
+package com.mrbysco.angrymobs.tweaks;
+
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.mrbysco.angrymobs.AngryMobs;
+import com.mrbysco.angrymobs.handler.goals.ThrowableAttackGoal;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.goal.PanicGoal;
+import net.minecraft.world.entity.ai.goal.RangedBowAttackGoal;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.neoforged.neoforge.common.conditions.ConditionalOps;
+import net.neoforged.neoforge.common.conditions.WithConditions;
+
+import java.util.Optional;
+
+public class ProjectileAttackTweak implements ITweak {
+	public static final ResourceKey<Registry<ProjectileAttackTweak>> REGISTRY_KEY = ResourceKey.createRegistryKey(
+			new ResourceLocation(AngryMobs.MOD_ID, "throw_projectile"));
+	public static final Codec<ProjectileAttackTweak> DIRECT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
+					ResourceLocation.CODEC.fieldOf("entity").forGetter(ProjectileAttackTweak::entity),
+					ResourceLocation.CODEC.fieldOf("projectile").forGetter(ProjectileAttackTweak::projectile),
+					SoundEvent.DIRECT_CODEC.fieldOf("sound").forGetter(ProjectileAttackTweak::sound),
+					Codec.INT.fieldOf("goalPriority").forGetter(ProjectileAttackTweak::goalPriority),
+					Codec.FLOAT.fieldOf("attackDamage").forGetter(ProjectileAttackTweak::attackDamage),
+					Codec.FLOAT.fieldOf("velocity").forGetter(ProjectileAttackTweak::velocity))
+			.apply(inst, ProjectileAttackTweak::new));
+
+	public static final Codec<Optional<WithConditions<ProjectileAttackTweak>>> CONDITIONAL_CODEC = ConditionalOps.createConditionalCodecWithConditions(DIRECT_CODEC);
+
+	protected final ResourceLocation entity;
+	protected final ResourceLocation projectile;
+	protected final SoundEvent sound;
+	protected final int goalPriority;
+	protected final float attackDamage;
+	protected final float velocity;
+
+	public ProjectileAttackTweak(ResourceLocation entity, ResourceLocation projectile, SoundEvent soundEvent, int priority, float attackDamage, float velocity) {
+		this.entity = entity;
+		this.projectile = projectile;
+		this.sound = soundEvent;
+		this.goalPriority = priority;
+		this.attackDamage = attackDamage;
+		this.velocity = velocity;
+	}
+
+	@Override
+	public String generateId() {
+		return entity.getPath() + "_throwing_" + projectile.getNamespace() + "_" + projectile.getPath();
+	}
+
+	public ProjectileAttackTweak(EntityType<? extends Mob> entity, EntityType<? extends Projectile> throwableType, SoundEvent soundEvent, int priority, float attackDamage, float velocity) {
+		this(BuiltInRegistries.ENTITY_TYPE.getKey(entity), BuiltInRegistries.ENTITY_TYPE.getKey(throwableType), soundEvent, priority, attackDamage, velocity);
+	}
+
+	@Override
+	public void adjust(Entity entity, String id) {
+		if (entity instanceof Mob mob) {
+			EntityType<?> type = BuiltInRegistries.ENTITY_TYPE.get(projectile);
+			if (type != null) {
+				Entity foundEntity = type.create(entity.level());
+				if (foundEntity instanceof Projectile throwable) {
+					mob.goalSelector.availableGoals.removeIf(goal -> goal.getGoal() instanceof PanicGoal);
+
+					mob.goalSelector.availableGoals.forEach(goal -> {
+						if (goal.getGoal() instanceof RangedBowAttackGoal) {
+							AngryMobs.LOGGER.info(String.format("Removing existing AI to apply the AI tweak of ID %s for entity %s", entity(), id));
+						}
+					});
+					mob.goalSelector.availableGoals.removeIf(goal -> goal.getGoal() instanceof RangedBowAttackGoal);
+
+					mob.targetSelector.addGoal(goalPriority, new ThrowableAttackGoal(mob, (EntityType<? extends Projectile>) throwable.getType(), () -> sound, attackDamage, velocity));
+					foundEntity.discard();
+				} else {
+					AngryMobs.LOGGER.error(String.format("Can't apply AI tweak of ID %s for entity %s. Projectile entity isn't valid for the tweak", id, entity()));
+				}
+			} else {
+				AngryMobs.LOGGER.error(String.format("Can't apply AI tweak of ID %s for entity %s. Projectile entity could not be found", id, entity()));
+			}
+		} else {
+			AngryMobs.LOGGER.error(String.format("Can't apply AI tweak of ID %s for entity %s. Entity isn't valid for the tweak", id, entity()));
+		}
+	}
+
+	@Override
+	public ResourceLocation entity() {
+		return entity;
+	}
+
+	public ResourceLocation projectile() {
+		return projectile;
+	}
+
+	public SoundEvent sound() {
+		return sound;
+	}
+
+	public int goalPriority() {
+		return goalPriority;
+	}
+
+	public float attackDamage() {
+		return attackDamage;
+	}
+
+	public float velocity() {
+		return velocity;
+	}
+}

@@ -1,4 +1,4 @@
-package com.mrbysco.angrymobs.registry.tweaks;
+package com.mrbysco.angrymobs.tweaks;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -7,15 +7,16 @@ public interface ITweak {
 	/*
 	 * What action happens when the event is triggered
 	 */
-	void adjust(Entity entity);
+	void adjust(Entity entity, String id);
 
 	/*
-	 * @return Unique name for the AI Tweak
+	 * @return Generate a unique ID for the tweak if needed
+	 * This is to allow code based tweaks to be added to the registry
 	 */
-	String getName();
+	String generateId();
 
 	/*
 	 * @return ResourceLocation of the entity being tweaked
 	 */
-	ResourceLocation getEntityLocation();
+	ResourceLocation entity();
 }

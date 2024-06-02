@@ -4,7 +4,7 @@ import com.mojang.logging.LogUtils;
 import com.mrbysco.angrymobs.config.AngryConfig;
 import com.mrbysco.angrymobs.handler.AIHandler;
 import com.mrbysco.angrymobs.handler.AttributeHandler;
-import com.mrbysco.angrymobs.registry.TweakReloadManager;
+import com.mrbysco.angrymobs.registry.TweakTypeRegistry;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
@@ -21,9 +21,11 @@ public class AngryMobs {
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AngryConfig.commonSpec);
 		eventBus.register(AngryConfig.class);
 
+		TweakTypeRegistry.CONDITION_CODECS.register(eventBus);
+
+		eventBus.addListener(TweakTypeRegistry::onNewRegistry);
 		eventBus.addListener(AttributeHandler::addEntityAttributes);
 
-		NeoForge.EVENT_BUS.register(new TweakReloadManager());
 		NeoForge.EVENT_BUS.register(new AIHandler());
 	}
 }

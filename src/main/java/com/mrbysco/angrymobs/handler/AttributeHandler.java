@@ -11,7 +11,7 @@ import net.neoforged.neoforge.event.entity.EntityAttributeModificationEvent;
 
 public class AttributeHandler {
 	public static void addEntityAttributes(EntityAttributeModificationEvent event) {
-		//Load config
+		//Load configs
 		AttributeConfigHandler.loadConfig();
 
 		if (AttributeConfigHandler.additionMap.isEmpty()) return;

@@ -30,7 +30,7 @@ public class AttributeConfigHandler {
 				GSON.toJson(attributeConfig, writer);
 				writer.flush();
 			} catch (IOException e) {
-				e.printStackTrace();
+				AngryMobs.LOGGER.trace("Could not create Angry Mobs' attribute config file.", e);
 			}
 		}
 	}
@@ -38,7 +38,7 @@ public class AttributeConfigHandler {
 	public static void loadConfig() {
 		initializeConfig();
 
-		//Only load the config once (Just to be safe)
+		//Only load the configs once (Just to be safe)
 		if (!isLoaded) {
 			isLoaded = true;
 
@@ -54,7 +54,7 @@ public class AttributeConfigHandler {
 						additionMap.put(addition.entity(), new AdditionValues(addition.attribute(), addition.value()));
 					}
 				} else {
-					AngryMobs.LOGGER.error("Could not load Angry Mobs' attribute config from {}.", fileName);
+					AngryMobs.LOGGER.error("Could not load Angry Mobs' attribute configs from {}.", fileName);
 				}
 			} catch (final Exception e) {
 				AngryMobs.LOGGER.error("Unable to load file {}. Please make sure it's a valid json.", fileName);
@@ -63,6 +63,6 @@ public class AttributeConfigHandler {
 		}
 	}
 
-	public static record AdditionValues(String attribute, double value) {
+	public record AdditionValues(String attribute, double value) {
 	}
 }

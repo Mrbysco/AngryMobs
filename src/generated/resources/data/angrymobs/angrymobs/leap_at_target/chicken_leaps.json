@@ -1,0 +1,14 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "angrymobs:config_enabled",
+      "config": [
+        "angry_animals",
+        "aggressive_animals"
+      ]
+    }
+  ],
+  "entity": "minecraft:chicken",
+  "goalPriority": 4,
+  "leapMotion": 0.3
+}

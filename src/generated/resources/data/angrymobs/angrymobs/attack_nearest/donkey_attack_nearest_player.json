@@ -1,0 +1,14 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "angrymobs:config_enabled",
+      "config": [
+        "angry_animals"
+      ]
+    }
+  ],
+  "checkSight": true,
+  "entity": "minecraft:donkey",
+  "goalPriority": 2,
+  "target": "minecraft:player"
+}
