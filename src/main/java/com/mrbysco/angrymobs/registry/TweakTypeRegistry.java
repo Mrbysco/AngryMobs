@@ -1,6 +1,6 @@
 package com.mrbysco.angrymobs.registry;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mrbysco.angrymobs.AngryMobs;
 import com.mrbysco.angrymobs.registry.condition.ConfigEnabledCondition;
 import com.mrbysco.angrymobs.tweaks.AttackNearestTweak;
@@ -31,7 +31,7 @@ public class TweakTypeRegistry {
 		AngryMobs.LOGGER.info("Registered Tweak registries");
 	}
 
-	public static final DeferredRegister<Codec<? extends ICondition>> CONDITION_CODECS = DeferredRegister.create(NeoForgeRegistries.Keys.CONDITION_CODECS, AngryMobs.MOD_ID);
-	public static final DeferredHolder<Codec<? extends ICondition>, Codec<ConfigEnabledCondition>> CONFIG_ENABLED = CONDITION_CODECS.register("config_enabled", () -> ConfigEnabledCondition.CODEC);
+	public static final DeferredRegister<MapCodec<? extends ICondition>> CONDITION_CODECS = DeferredRegister.create(NeoForgeRegistries.Keys.CONDITION_CODECS, AngryMobs.MOD_ID);
+	public static final DeferredHolder<MapCodec<? extends ICondition>, MapCodec<ConfigEnabledCondition>> CONFIG_ENABLED = CONDITION_CODECS.register("config_enabled", () -> ConfigEnabledCondition.CODEC);
 
 }

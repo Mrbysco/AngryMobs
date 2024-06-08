@@ -2,6 +2,7 @@ package com.mrbysco.angrymobs.handler;
 
 import com.mrbysco.angrymobs.AngryMobs;
 import com.mrbysco.angrymobs.config.attributes.AttributeConfigHandler;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -23,7 +24,7 @@ public class AttributeHandler {
 				if (values != null) {
 					ResourceLocation attributeLocation = ResourceLocation.tryParse(values.attribute());
 					if (attributeLocation != null) {
-						Attribute attribute = BuiltInRegistries.ATTRIBUTE.get(attributeLocation);
+						Holder.Reference<Attribute> attribute = BuiltInRegistries.ATTRIBUTE.getHolder(attributeLocation).orElse(null);
 						if (attribute != null) {
 							if (!event.has(entityType, attribute)) {
 								AngryMobs.LOGGER.info("Adding attribute: {} with value: {} to entity: {}", attributeLocation, values.value(), entityLocation);

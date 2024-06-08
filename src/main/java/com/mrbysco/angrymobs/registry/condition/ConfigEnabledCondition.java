@@ -1,6 +1,6 @@
 package com.mrbysco.angrymobs.registry.condition;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.mrbysco.angrymobs.registry.TweakTypeRegistry;
 import net.neoforged.neoforge.common.conditions.ICondition;
@@ -14,7 +14,7 @@ import java.util.List;
  */
 public record ConfigEnabledCondition(List<ConfigDefault> configs) implements ICondition {
 
-	public static final Codec<ConfigEnabledCondition> CODEC = RecordCodecBuilder.create(
+	public static final MapCodec<ConfigEnabledCondition> CODEC = RecordCodecBuilder.mapCodec(
 			builder -> builder
 					.group(
 							ConfigDefault.CODEC.listOf().fieldOf("config").forGetter(ConfigEnabledCondition::configs))
@@ -31,7 +31,7 @@ public record ConfigEnabledCondition(List<ConfigDefault> configs) implements ICo
 	}
 
 	@Override
-	public Codec<? extends ICondition> codec() {
+	public MapCodec<? extends ICondition> codec() {
 		return TweakTypeRegistry.CONFIG_ENABLED.get();
 	}
 

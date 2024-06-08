@@ -5,8 +5,9 @@ import com.mrbysco.angrymobs.config.AngryConfig;
 import com.mrbysco.angrymobs.handler.AIHandler;
 import com.mrbysco.angrymobs.handler.AttributeHandler;
 import com.mrbysco.angrymobs.registry.TweakTypeRegistry;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.common.NeoForge;
@@ -17,8 +18,8 @@ public class AngryMobs {
 	public static final String MOD_ID = "angrymobs";
 	public static final Logger LOGGER = LogUtils.getLogger();
 
-	public AngryMobs(IEventBus eventBus) {
-		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AngryConfig.commonSpec);
+	public AngryMobs(IEventBus eventBus, ModContainer container, Dist dist) {
+		container.registerConfig(ModConfig.Type.COMMON, AngryConfig.commonSpec);
 		eventBus.register(AngryConfig.class);
 
 		TweakTypeRegistry.CONDITION_CODECS.register(eventBus);

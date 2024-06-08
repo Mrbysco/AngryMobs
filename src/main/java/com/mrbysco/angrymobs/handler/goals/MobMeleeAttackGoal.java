@@ -189,13 +189,13 @@ public class MobMeleeAttackGoal extends Goal {
 			}
 		}
 		if (entity instanceof LivingEntity livingEntity) {
-			f += EnchantmentHelper.getDamageBonus(this.attacker.getMainHandItem(), livingEntity.getMobType());
+			f += EnchantmentHelper.getDamageBonus(this.attacker.getMainHandItem(), livingEntity.getType());
 			f1 += (float) EnchantmentHelper.getKnockbackBonus(this.attacker);
 		}
 
 		int i = EnchantmentHelper.getFireAspect(this.attacker);
 		if (i > 0) {
-			entity.setSecondsOnFire(i * 4);
+			entity.igniteForSeconds(i * 4);
 		}
 
 		boolean flag = entity.hurt(this.attacker.damageSources().mobAttack(this.attacker), f);

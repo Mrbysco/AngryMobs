@@ -18,7 +18,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-@Mod.EventBusSubscriber(modid = AngryMobs.MOD_ID)
+@EventBusSubscriber(modid = AngryMobs.MOD_ID)
 public class TweakRegistry {
 	private static final Map<ResourceLocation, List<Holder<? extends ITweak>>> tweakMap = new LinkedHashMap<>();
 

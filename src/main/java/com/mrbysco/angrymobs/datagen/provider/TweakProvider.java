@@ -1,8 +1,7 @@
 package com.mrbysco.angrymobs.datagen.provider;
 
 import com.google.common.collect.ImmutableList;
-import com.google.gson.JsonElement;
-import com.mojang.serialization.JsonOps;
+import com.mojang.serialization.Codec;
 import com.mrbysco.angrymobs.AngryMobs;
 import com.mrbysco.angrymobs.tweaks.AttackNearestTweak;
 import com.mrbysco.angrymobs.tweaks.AvoidEntityTweak;
@@ -12,7 +11,6 @@ import com.mrbysco.angrymobs.tweaks.LeapAtTargetTweak;
 import com.mrbysco.angrymobs.tweaks.LookAtEntityTweak;
 import com.mrbysco.angrymobs.tweaks.MeleeAttackTweak;
 import com.mrbysco.angrymobs.tweaks.ProjectileAttackTweak;
-import cpw.mods.modlauncher.api.LamdbaExceptionUtils;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
@@ -29,55 +27,63 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public abstract class TweakProvider implements DataProvider {
+	private final CompletableFuture<HolderLookup.Provider> registries;
 	private final PackOutput output;
 	private final String modid;
 
-	private final Map<String, JsonElement> toSerializeaddAttackNearestTweak = new HashMap<>();
-	private final Map<String, JsonElement> toSerializeaddBreakDoorTweak = new HashMap<>();
-	private final Map<String, JsonElement> toSerializeaddHurtTweak = new HashMap<>();
-	private final Map<String, JsonElement> toSerializeaddLeapTweak = new HashMap<>();
-	private final Map<String, JsonElement> toSerializeaddMeleeTweak = new HashMap<>();
-	private final Map<String, JsonElement> toSerializeaddProjectileAttackTweak = new HashMap<>();
-	private final Map<String, JsonElement> toSerializeavoidEntityTweak = new HashMap<>();
-	private final Map<String, JsonElement> toSerializelookAtEntityTweak = new HashMap<>();
+	private final Map<String, WithConditions<AttackNearestTweak>> toSerializeAddAttackNearestTweak = new HashMap<>();
+	private final Map<String, WithConditions<BreakDoorTweak>> toSerializeAddBreakDoorTweak = new HashMap<>();
+	private final Map<String, WithConditions<HurtByTargetTweak>> toSerializeAddHurtTweak = new HashMap<>();
+	private final Map<String, WithConditions<LeapAtTargetTweak>> toSerializeAddLeapTweak = new HashMap<>();
+	private final Map<String, WithConditions<MeleeAttackTweak>> toSerializeAddMeleeTweak = new HashMap<>();
+	private final Map<String, WithConditions<ProjectileAttackTweak>> toSerializeAddProjectileAttackTweak = new HashMap<>();
+	private final Map<String, WithConditions<AvoidEntityTweak>> toSerializeAvoidEntityTweak = new HashMap<>();
+	private final Map<String, WithConditions<LookAtEntityTweak>> toSerializeLookAtEntityTweak = new HashMap<>();
 
 
-	public TweakProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, String modid) {
+	public TweakProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> registries, String modid) {
 		this.output = packOutput;
 		this.modid = modid;
+		this.registries = registries;
 	}
 
-	public CompletableFuture<?> run(CachedOutput cache) {
+	@Override
+	public final CompletableFuture<?> run(CachedOutput cache) {
+		return this.registries.thenCompose(registries -> this.run(cache, registries));
+	}
+
+	public CompletableFuture<?> run(CachedOutput cache, HolderLookup.Provider registries) {
 		start();
 
 		ImmutableList.Builder<CompletableFuture<?>> futuresBuilder = new ImmutableList.Builder<>();
 
-		saveTweaks(cache, futuresBuilder, toSerializeaddAttackNearestTweak, AttackNearestTweak.REGISTRY_KEY.location().getPath());
-		saveTweaks(cache, futuresBuilder, toSerializeaddBreakDoorTweak, BreakDoorTweak.REGISTRY_KEY.location().getPath());
-		saveTweaks(cache, futuresBuilder, toSerializeaddHurtTweak, HurtByTargetTweak.REGISTRY_KEY.location().getPath());
-		saveTweaks(cache, futuresBuilder, toSerializeaddLeapTweak, LeapAtTargetTweak.REGISTRY_KEY.location().getPath());
-		saveTweaks(cache, futuresBuilder, toSerializeaddMeleeTweak, MeleeAttackTweak.REGISTRY_KEY.location().getPath());
-		saveTweaks(cache, futuresBuilder, toSerializeaddProjectileAttackTweak, ProjectileAttackTweak.REGISTRY_KEY.location().getPath());
-		saveTweaks(cache, futuresBuilder, toSerializeavoidEntityTweak, AvoidEntityTweak.REGISTRY_KEY.location().getPath());
-		saveTweaks(cache, futuresBuilder, toSerializelookAtEntityTweak, LookAtEntityTweak.REGISTRY_KEY.location().getPath());
+		saveTweaks(cache, registries, futuresBuilder, toSerializeAddAttackNearestTweak, AttackNearestTweak.CONDITIONAL_CODEC, AttackNearestTweak.REGISTRY_KEY.location().getPath());
+		saveTweaks(cache, registries, futuresBuilder, toSerializeAddBreakDoorTweak, BreakDoorTweak.CONDITIONAL_CODEC, BreakDoorTweak.REGISTRY_KEY.location().getPath());
+		saveTweaks(cache, registries, futuresBuilder, toSerializeAddHurtTweak, HurtByTargetTweak.CONDITIONAL_CODEC, HurtByTargetTweak.REGISTRY_KEY.location().getPath());
+		saveTweaks(cache, registries, futuresBuilder, toSerializeAddLeapTweak, LeapAtTargetTweak.CONDITIONAL_CODEC, LeapAtTargetTweak.REGISTRY_KEY.location().getPath());
+		saveTweaks(cache, registries, futuresBuilder, toSerializeAddMeleeTweak, MeleeAttackTweak.CONDITIONAL_CODEC, MeleeAttackTweak.REGISTRY_KEY.location().getPath());
+		saveTweaks(cache, registries, futuresBuilder, toSerializeAddProjectileAttackTweak, ProjectileAttackTweak.CONDITIONAL_CODEC, ProjectileAttackTweak.REGISTRY_KEY.location().getPath());
+		saveTweaks(cache, registries, futuresBuilder, toSerializeAvoidEntityTweak, AvoidEntityTweak.CONDITIONAL_CODEC, AvoidEntityTweak.REGISTRY_KEY.location().getPath());
+		saveTweaks(cache, registries, futuresBuilder, toSerializeLookAtEntityTweak, LookAtEntityTweak.CONDITIONAL_CODEC, LookAtEntityTweak.REGISTRY_KEY.location().getPath());
 
 		return CompletableFuture.allOf(futuresBuilder.build().toArray(CompletableFuture[]::new));
 	}
 
-	private void saveTweaks(CachedOutput cache, ImmutableList.Builder<CompletableFuture<?>> futuresBuilder, Map<String, JsonElement> tweakMap, String folderName) {
+	private <T> void saveTweaks(CachedOutput cache, HolderLookup.Provider registries,
+	                            ImmutableList.Builder<CompletableFuture<?>> futuresBuilder,
+	                            Map<String, WithConditions<T>> tweakMap,
+	                            Codec<Optional<WithConditions<T>>> codec, String folderName) {
 		Path folderPath = this.output.getOutputFolder(PackOutput.Target.DATA_PACK).resolve(this.modid).resolve(AngryMobs.MOD_ID).resolve(folderName);
-		tweakMap.forEach(LamdbaExceptionUtils.rethrowBiConsumer((name, json) -> {
+		tweakMap.forEach((name, tweak) -> {
 			Path modifierPath = folderPath.resolve(name + ".json");
-			futuresBuilder.add(DataProvider.saveStable(cache, json, modifierPath));
-		}));
+			futuresBuilder.add(DataProvider.saveStable(cache, registries, codec, Optional.of(tweak), modifierPath));
+		});
 	}
 
 	protected abstract void start();
 
 	public <T extends AttackNearestTweak> void addAttackNearestTweak(String tweakId, T instance, List<ICondition> conditions) {
-		JsonElement json = AttackNearestTweak.CONDITIONAL_CODEC.encodeStart(JsonOps.INSTANCE, Optional.of(new WithConditions<>(conditions, instance))).getOrThrow(false, s -> {
-		});
-		this.toSerializeaddAttackNearestTweak.put(tweakId, json);
+		this.toSerializeAddAttackNearestTweak.put(tweakId, new WithConditions<>(conditions, instance));
 	}
 
 	public <T extends AttackNearestTweak> void addAttackNearestTweak(String placeID, T instance, ICondition... conditions) {
@@ -85,9 +91,7 @@ public abstract class TweakProvider implements DataProvider {
 	}
 
 	public <T extends AvoidEntityTweak> void addAvoidEntityTweak(String tweakId, T instance, List<ICondition> conditions) {
-		JsonElement json = AvoidEntityTweak.CONDITIONAL_CODEC.encodeStart(JsonOps.INSTANCE, Optional.of(new WithConditions<>(conditions, instance))).getOrThrow(false, s -> {
-		});
-		this.toSerializeavoidEntityTweak.put(tweakId, json);
+		this.toSerializeAvoidEntityTweak.put(tweakId, new WithConditions<>(conditions, instance));
 	}
 
 	public <T extends AvoidEntityTweak> void addAvoidEntityTweak(String placeID, T instance, ICondition... conditions) {
@@ -95,9 +99,7 @@ public abstract class TweakProvider implements DataProvider {
 	}
 
 	public <T extends BreakDoorTweak> void addBreakDoorTweak(String tweakId, T instance, List<ICondition> conditions) {
-		JsonElement json = BreakDoorTweak.CONDITIONAL_CODEC.encodeStart(JsonOps.INSTANCE, Optional.of(new WithConditions<>(conditions, instance))).getOrThrow(false, s -> {
-		});
-		this.toSerializeaddBreakDoorTweak.put(tweakId, json);
+		this.toSerializeAddBreakDoorTweak.put(tweakId, new WithConditions<>(conditions, instance));
 	}
 
 	public <T extends BreakDoorTweak> void addBreakDoorTweak(String placeID, T instance, ICondition... conditions) {
@@ -105,9 +107,7 @@ public abstract class TweakProvider implements DataProvider {
 	}
 
 	public <T extends HurtByTargetTweak> void addHurtByTargetTweak(String tweakId, T instance, List<ICondition> conditions) {
-		JsonElement json = HurtByTargetTweak.CONDITIONAL_CODEC.encodeStart(JsonOps.INSTANCE, Optional.of(new WithConditions<>(conditions, instance))).getOrThrow(false, s -> {
-		});
-		this.toSerializeaddHurtTweak.put(tweakId, json);
+		this.toSerializeAddHurtTweak.put(tweakId, new WithConditions<>(conditions, instance));
 	}
 
 	public <T extends HurtByTargetTweak> void addHurtByTargetTweak(String placeID, T instance, ICondition... conditions) {
@@ -115,9 +115,7 @@ public abstract class TweakProvider implements DataProvider {
 	}
 
 	public <T extends LeapAtTargetTweak> void addLeapAtTargetTweak(String tweakId, T instance, List<ICondition> conditions) {
-		JsonElement json = LeapAtTargetTweak.CONDITIONAL_CODEC.encodeStart(JsonOps.INSTANCE, Optional.of(new WithConditions<>(conditions, instance))).getOrThrow(false, s -> {
-		});
-		this.toSerializeaddLeapTweak.put(tweakId, json);
+		this.toSerializeAddLeapTweak.put(tweakId, new WithConditions<>(conditions, instance));
 	}
 
 	public <T extends LeapAtTargetTweak> void addLeapAtTargetTweak(String placeID, T instance, ICondition... conditions) {
@@ -125,9 +123,7 @@ public abstract class TweakProvider implements DataProvider {
 	}
 
 	public <T extends MeleeAttackTweak> void addMeleeAttackTweak(String tweakId, T instance, List<ICondition> conditions) {
-		JsonElement json = MeleeAttackTweak.CONDITIONAL_CODEC.encodeStart(JsonOps.INSTANCE, Optional.of(new WithConditions<>(conditions, instance))).getOrThrow(false, s -> {
-		});
-		this.toSerializeaddMeleeTweak.put(tweakId, json);
+		this.toSerializeAddMeleeTweak.put(tweakId, new WithConditions<>(conditions, instance));
 	}
 
 	public <T extends MeleeAttackTweak> void addMeleeAttackTweak(String placeID, T instance, ICondition... conditions) {
@@ -135,9 +131,7 @@ public abstract class TweakProvider implements DataProvider {
 	}
 
 	public <T extends ProjectileAttackTweak> void addProjectileAttackTweak(String tweakId, T instance, List<ICondition> conditions) {
-		JsonElement json = ProjectileAttackTweak.CONDITIONAL_CODEC.encodeStart(JsonOps.INSTANCE, Optional.of(new WithConditions<>(conditions, instance))).getOrThrow(false, s -> {
-		});
-		this.toSerializeaddProjectileAttackTweak.put(tweakId, json);
+		this.toSerializeAddProjectileAttackTweak.put(tweakId, new WithConditions<>(conditions, instance));
 	}
 
 	public <T extends ProjectileAttackTweak> void addProjectileAttackTweak(String placeID, T instance, ICondition... conditions) {
@@ -145,9 +139,7 @@ public abstract class TweakProvider implements DataProvider {
 	}
 
 	public <T extends LookAtEntityTweak> void addLookAtEntityTweak(String tweakId, T instance, List<ICondition> conditions) {
-		JsonElement json = LookAtEntityTweak.CONDITIONAL_CODEC.encodeStart(JsonOps.INSTANCE, Optional.of(new WithConditions<>(conditions, instance))).getOrThrow(false, s -> {
-		});
-		this.toSerializelookAtEntityTweak.put(tweakId, json);
+		this.toSerializeLookAtEntityTweak.put(tweakId, new WithConditions<>(conditions, instance));
 	}
 
 	public <T extends LookAtEntityTweak> void addLookAtEntityTweak(String placeID, T instance, ICondition... conditions) {
