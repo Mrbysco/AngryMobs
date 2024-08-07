@@ -13,7 +13,7 @@ public class ActionAddProjectileAttackTweak implements IRuntimeAction {
 	public final ProjectileAttackTweak projectileTweak;
 
 	public ActionAddProjectileAttackTweak(EntityType<Entity> entity, EntityType<Entity> projectileEntity, String soundLocation, int priority, float attackDamage, float velocity) {
-		this.projectileTweak = new ProjectileAttackTweak(BuiltInRegistries.ENTITY_TYPE.getKey(entity), BuiltInRegistries.ENTITY_TYPE.getKey(projectileEntity), BuiltInRegistries.SOUND_EVENT.get(new ResourceLocation(soundLocation)),
+		this.projectileTweak = new ProjectileAttackTweak(BuiltInRegistries.ENTITY_TYPE.getKey(entity), BuiltInRegistries.ENTITY_TYPE.getKey(projectileEntity), BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.tryParse(soundLocation)),
 				priority, attackDamage, velocity);
 	}
 

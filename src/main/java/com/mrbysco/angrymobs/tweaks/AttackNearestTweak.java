@@ -21,7 +21,7 @@ import java.util.Optional;
 
 public class AttackNearestTweak implements ITweak {
 	public static final ResourceKey<Registry<AttackNearestTweak>> REGISTRY_KEY = ResourceKey.createRegistryKey(
-			new ResourceLocation(AngryMobs.MOD_ID, "attack_nearest"));
+			AngryMobs.modLoc("attack_nearest"));
 	public static final Codec<AttackNearestTweak> DIRECT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
 					ResourceLocation.CODEC.fieldOf("entity").forGetter(AttackNearestTweak::entity),
 					ResourceLocation.CODEC.fieldOf("target").forGetter(AttackNearestTweak::target),

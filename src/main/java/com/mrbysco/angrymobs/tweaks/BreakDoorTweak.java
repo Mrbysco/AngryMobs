@@ -20,7 +20,7 @@ import java.util.function.Predicate;
 
 public class BreakDoorTweak implements ITweak {
 	public static final ResourceKey<Registry<BreakDoorTweak>> REGISTRY_KEY = ResourceKey.createRegistryKey(
-			new ResourceLocation(AngryMobs.MOD_ID, "break_door"));
+			AngryMobs.modLoc("break_door"));
 	public static final Codec<BreakDoorTweak> DIRECT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
 					ResourceLocation.CODEC.fieldOf("entity").forGetter(BreakDoorTweak::entity),
 					Codec.INT.fieldOf("goalPriority").forGetter(BreakDoorTweak::goalPriority),

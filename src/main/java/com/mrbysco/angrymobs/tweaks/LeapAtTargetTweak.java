@@ -19,7 +19,7 @@ import java.util.Optional;
 
 public class LeapAtTargetTweak implements ITweak {
 	public static final ResourceKey<Registry<LeapAtTargetTweak>> REGISTRY_KEY = ResourceKey.createRegistryKey(
-			new ResourceLocation(AngryMobs.MOD_ID, "leap_at_target"));
+			AngryMobs.modLoc("leap_at_target"));
 	public static final Codec<LeapAtTargetTweak> DIRECT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
 					ResourceLocation.CODEC.fieldOf("entity").forGetter(LeapAtTargetTweak::entity),
 					Codec.INT.fieldOf("goalPriority").forGetter(LeapAtTargetTweak::goalPriority),

@@ -15,7 +15,9 @@ import net.minecraft.world.entity.EntityType;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.common.data.LanguageProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -31,6 +33,34 @@ public class AngryDatagen {
 
 		if (event.includeClient()) {
 			generator.addProvider(event.includeClient(), new AngryTweaks(packOutput, event.getLookupProvider()));
+		}
+	}
+
+	public static class AngryLanguageProvider extends LanguageProvider {
+		public AngryLanguageProvider(PackOutput packOutput) {
+			super(packOutput, AngryMobs.MOD_ID, "en_us");
+		}
+
+		@Override
+		protected void addTranslations() {
+			addConfig("title", "Angry Mobs Config", null);
+			addConfig("Common", "Common settings", null);
+			addConfig("angryAnimals", "Angry Animals", "When true makes all vanilla animals attack you if you hurt them");
+			addConfig("aggressiveAnimals", "Aggressive Animals", "When true makes all vanilla animals attack you on sight");
+			addConfig("useAttributes", "Use Attributes", "When true makes the melee goals add the mobs attack damage and knockback onto the specified values");
+		}
+
+		/**
+		 * Add the translation for a config entry
+		 *
+		 * @param path        The path of the config entry
+		 * @param name        The name of the config entry
+		 * @param description The description of the config entry (optional in case of targeting "title" or similar entries that have no tooltip)
+		 */
+		private void addConfig(String path, String name, @Nullable String description) {
+			this.add("angrymobs.configuration." + path, name);
+			if (description != null && !description.isEmpty())
+				this.add("angrymobs.configuration." + path + ".tooltip", description);
 		}
 	}
 

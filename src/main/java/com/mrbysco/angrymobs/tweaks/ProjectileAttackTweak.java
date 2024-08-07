@@ -22,7 +22,7 @@ import java.util.Optional;
 
 public class ProjectileAttackTweak implements ITweak {
 	public static final ResourceKey<Registry<ProjectileAttackTweak>> REGISTRY_KEY = ResourceKey.createRegistryKey(
-			new ResourceLocation(AngryMobs.MOD_ID, "throw_projectile"));
+			AngryMobs.modLoc("throw_projectile"));
 	public static final Codec<ProjectileAttackTweak> DIRECT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
 					ResourceLocation.CODEC.fieldOf("entity").forGetter(ProjectileAttackTweak::entity),
 					ResourceLocation.CODEC.fieldOf("projectile").forGetter(ProjectileAttackTweak::projectile),

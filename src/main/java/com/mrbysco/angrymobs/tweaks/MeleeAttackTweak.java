@@ -20,7 +20,7 @@ import java.util.Optional;
 
 public class MeleeAttackTweak implements ITweak {
 	public static final ResourceKey<Registry<MeleeAttackTweak>> REGISTRY_KEY = ResourceKey.createRegistryKey(
-			new ResourceLocation(AngryMobs.MOD_ID, "melee_attack"));
+			AngryMobs.modLoc("melee_attack"));
 	public static final Codec<MeleeAttackTweak> DIRECT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
 					ResourceLocation.CODEC.fieldOf("entity").forGetter(MeleeAttackTweak::entity),
 					Codec.INT.fieldOf("goalPriority").forGetter(MeleeAttackTweak::goalPriority),

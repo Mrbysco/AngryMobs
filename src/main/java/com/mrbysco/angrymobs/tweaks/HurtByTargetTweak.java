@@ -19,7 +19,7 @@ import java.util.Optional;
 
 public class HurtByTargetTweak implements ITweak {
 	public static final ResourceKey<Registry<HurtByTargetTweak>> REGISTRY_KEY = ResourceKey.createRegistryKey(
-			new ResourceLocation(AngryMobs.MOD_ID, "hurt_by_target"));
+			AngryMobs.modLoc("hurt_by_target"));
 	public static final Codec<HurtByTargetTweak> DIRECT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
 					ResourceLocation.CODEC.fieldOf("entity").forGetter(HurtByTargetTweak::entity),
 					Codec.INT.fieldOf("goalPriority").forGetter(HurtByTargetTweak::goalPriority),

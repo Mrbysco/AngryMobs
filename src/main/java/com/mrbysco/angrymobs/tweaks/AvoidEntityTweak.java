@@ -20,7 +20,7 @@ import java.util.Optional;
 
 public class AvoidEntityTweak implements ITweak {
 	public static final ResourceKey<Registry<AvoidEntityTweak>> REGISTRY_KEY = ResourceKey.createRegistryKey(
-			new ResourceLocation(AngryMobs.MOD_ID, "avoid_entity"));
+			AngryMobs.modLoc("avoid_entity"));
 	public static final Codec<AvoidEntityTweak> DIRECT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
 					ResourceLocation.CODEC.fieldOf("entity").forGetter(AvoidEntityTweak::entity),
 					ResourceLocation.CODEC.fieldOf("target").forGetter(AvoidEntityTweak::target),

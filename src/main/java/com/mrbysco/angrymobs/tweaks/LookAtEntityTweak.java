@@ -20,7 +20,7 @@ import java.util.Optional;
 
 public class LookAtEntityTweak implements ITweak {
 	public static final ResourceKey<Registry<LookAtEntityTweak>> REGISTRY_KEY = ResourceKey.createRegistryKey(
-			new ResourceLocation(AngryMobs.MOD_ID, "look_at_entity"));
+			AngryMobs.modLoc("look_at_entity"));
 	public static final Codec<LookAtEntityTweak> DIRECT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
 					ResourceLocation.CODEC.fieldOf("entity").forGetter(LookAtEntityTweak::entity),
 					ResourceLocation.CODEC.fieldOf("target").forGetter(LookAtEntityTweak::target),

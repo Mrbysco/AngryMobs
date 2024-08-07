@@ -1,18 +1,15 @@
 package com.mrbysco.angrymobs.handler.goals;
 
-import com.mrbysco.angrymobs.config.AngryConfig;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.AxeItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.pathfinder.Path;
 
@@ -178,52 +175,31 @@ public class MobMeleeAttackGoal extends Goal {
 		float f = attackDamage;
 		float f1 = knockback;
 
-		//Add the attribute values to the damage and knockback
-		if (AngryConfig.COMMON.useAttributes.get()) {
-			//Only add the attribute values if the entity has the attribute
-			if (this.attacker.getAttributes().hasAttribute(Attributes.ATTACK_DAMAGE)) {
-				f += (float) this.attacker.getAttributes().getValue(Attributes.ATTACK_DAMAGE);
-			}
-			if (this.attacker.getAttributes().hasAttribute(Attributes.KNOCKBACK_RESISTANCE)) {
-				f1 += (float) this.attacker.getAttributes().getValue(Attributes.KNOCKBACK_RESISTANCE);
-			}
-		}
-		if (entity instanceof LivingEntity livingEntity) {
-			f += EnchantmentHelper.getDamageBonus(this.attacker.getMainHandItem(), livingEntity.getType());
-			f1 += (float) EnchantmentHelper.getKnockbackBonus(this.attacker);
+		DamageSource damagesource = attacker.damageSources().mobAttack(attacker);
+		if (attacker.level() instanceof ServerLevel serverlevel) {
+			f = EnchantmentHelper.modifyDamage(serverlevel, attacker.getWeaponItem(), entity, damagesource, f);
 		}
 
-		int i = EnchantmentHelper.getFireAspect(this.attacker);
-		if (i > 0) {
-			entity.igniteForSeconds(i * 4);
-		}
-
-		boolean flag = entity.hurt(this.attacker.damageSources().mobAttack(this.attacker), f);
+		boolean flag = entity.hurt(damagesource, f);
 		if (flag) {
-			if (f1 > 0.0F && entity instanceof LivingEntity livingEntity) {
-				livingEntity.knockback((double) (f1 * 0.5F), (double) Mth.sin(this.attacker.getYRot() * ((float) Math.PI / 180F)), (double) (-Mth.cos(this.attacker.getYRot() * ((float) Math.PI / 180F))));
-				this.attacker.setDeltaMovement(this.attacker.getDeltaMovement().multiply(0.6D, 1.0D, 0.6D));
+			if (f1 > 0.0F && entity instanceof LivingEntity livingentity) {
+				livingentity.knockback(
+						(double)(f1 * 0.5F),
+						(double)Mth.sin(attacker.getYRot() * (float) (Math.PI / 180.0)),
+						(double)(-Mth.cos(attacker.getYRot() * (float) (Math.PI / 180.0)))
+				);
+				attacker.setDeltaMovement(attacker.getDeltaMovement().multiply(0.6, 1.0, 0.6));
 			}
 
-			if (entity instanceof Player player) {
-				maybeDisableShield(player, this.attacker.getMainHandItem(), player.isUsingItem() ? player.getUseItem() : ItemStack.EMPTY);
+			if (attacker.level() instanceof ServerLevel serverlevel1) {
+				EnchantmentHelper.doPostAttackEffects(serverlevel1, entity, damagesource);
 			}
 
-			this.attacker.doEnchantDamageEffects(this.attacker, entity);
-			this.attacker.setLastHurtMob(entity);
+			attacker.setLastHurtMob(entity);
+//			attacker.playAttackSound();
 		}
 
 		return flag;
-	}
-
-	private void maybeDisableShield(Player player, ItemStack mobItemStack, ItemStack playerItemStack) {
-		if (!mobItemStack.isEmpty() && !playerItemStack.isEmpty() && mobItemStack.getItem() instanceof AxeItem && playerItemStack.is(Items.SHIELD)) {
-			float f = 0.25F + (float) EnchantmentHelper.getBlockEfficiency(this.attacker) * 0.05F;
-			if (this.attacker.getRandom().nextFloat() < f) {
-				player.getCooldowns().addCooldown(Items.SHIELD, 100);
-				this.attacker.level().broadcastEntityEvent(player, (byte) 30);
-			}
-		}
 	}
 
 	protected void resetAttackCooldown() {
