@@ -51,7 +51,7 @@ public class TweakCT {
 	}
 
 	@Method
-	public static void addBreakDoorTweak(EntityType entity, int priority, int difficulty) {
+	public static void addBreakDoorTweak(EntityType<Entity> entity, int priority, int difficulty) {
 		CraftTweakerAPI.apply(new ActionAddBreakDoorTweak(entity, priority, difficulty));
 	}
 }
