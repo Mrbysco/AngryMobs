@@ -58,7 +58,7 @@ public class AttributeConfigHandler {
 				}
 			} catch (final Exception e) {
 				AngryMobs.LOGGER.error("Unable to load file {}. Please make sure it's a valid json.", fileName);
-				AngryMobs.LOGGER.trace("Exception: ", e);
+				AngryMobs.LOGGER.error("Exception: ", e);
 			}
 		}
 	}
