@@ -32,7 +32,10 @@ public class AngryDatagen {
 		ExistingFileHelper helper = event.getExistingFileHelper();
 
 		if (event.includeClient()) {
-			generator.addProvider(event.includeClient(), new AngryTweaks(packOutput, event.getLookupProvider()));
+			generator.addProvider(event.includeClient(), new AngryLanguageProvider(packOutput));
+		}
+		if (event.includeServer()) {
+			generator.addProvider(event.includeServer(), new AngryTweaks(packOutput, event.getLookupProvider()));
 		}
 	}
 
