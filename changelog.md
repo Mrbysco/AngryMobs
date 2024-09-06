@@ -1,1 +1,2 @@
-* Initial update to 1.21
+* Fix `aggressiveAnimals` not being used correctly
+* Add translations for the built-in config
