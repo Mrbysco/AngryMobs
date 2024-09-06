@@ -3,7 +3,7 @@
     {
       "type": "angrymobs:config_enabled",
       "config": [
-        "angry_animals"
+        "aggressive_animals"
       ]
     }
   ],

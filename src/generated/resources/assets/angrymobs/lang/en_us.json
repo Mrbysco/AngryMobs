@@ -1,0 +1,10 @@
+{
+  "angrymobs.configuration.Common": "Common settings",
+  "angrymobs.configuration.aggressiveAnimals": "Aggressive Animals",
+  "angrymobs.configuration.aggressiveAnimals.tooltip": "When true makes all vanilla animals attack you on sight",
+  "angrymobs.configuration.angryAnimals": "Angry Animals",
+  "angrymobs.configuration.angryAnimals.tooltip": "When true makes all vanilla animals attack you if you hurt them",
+  "angrymobs.configuration.title": "Angry Mobs Config",
+  "angrymobs.configuration.useAttributes": "Use Attributes",
+  "angrymobs.configuration.useAttributes.tooltip": "When true makes the melee goals add the mobs attack damage and knockback onto the specified values"
+}
