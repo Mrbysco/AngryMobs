@@ -70,7 +70,7 @@ public class ProjectileAttackTweak implements ITweak {
 
 					mob.goalSelector.availableGoals.forEach(goal -> {
 						if (goal.getGoal() instanceof RangedBowAttackGoal) {
-							AngryMobs.LOGGER.info(String.format("Removing existing AI to apply the AI tweak of ID %s for entity %s", entity(), id));
+							AngryMobs.LOGGER.info("Removing existing AI to apply the AI tweak of ID {} for entity {}", entity(), id);
 						}
 					});
 					mob.goalSelector.availableGoals.removeIf(goal -> goal.getGoal() instanceof RangedBowAttackGoal);
@@ -78,13 +78,13 @@ public class ProjectileAttackTweak implements ITweak {
 					mob.targetSelector.addGoal(goalPriority, new ThrowableAttackGoal(mob, (EntityType<? extends Projectile>) throwable.getType(), () -> sound, attackDamage, velocity));
 					foundEntity.discard();
 				} else {
-					AngryMobs.LOGGER.error(String.format("Can't apply AI tweak of ID %s for entity %s. Projectile entity isn't valid for the tweak", id, entity()));
+					AngryMobs.LOGGER.error("Can't apply AI tweak of ID {} for entity {}. Projectile entity isn't valid for the tweak", id, entity());
 				}
 			} else {
-				AngryMobs.LOGGER.error(String.format("Can't apply AI tweak of ID %s for entity %s. Projectile entity could not be found", id, entity()));
+				AngryMobs.LOGGER.error("Can't apply AI tweak of ID {} for entity {}. Projectile entity could not be found", id, entity());
 			}
 		} else {
-			AngryMobs.LOGGER.error(String.format("Can't apply AI tweak of ID %s for entity %s. Entity isn't valid for the tweak", id, entity()));
+			AngryMobs.LOGGER.error("Can't apply AI tweak of ID {} for entity {}. Entity isn't valid for the tweak", id, entity());
 		}
 	}
 

@@ -64,12 +64,12 @@ public class AttackNearestTweak implements ITweak {
 						mob.targetSelector.addGoal(goalPriority, new NearestAttackableTargetGoal<>(mob, entityClass, checkSight));
 						targetEntity.discard();
 					} else {
-						AngryMobs.LOGGER.error(String.format("Can't apply AI tweak of ID %s for entity %s. Target entity isn't valid for the tweak", id, entity()));
+						AngryMobs.LOGGER.error("Can't apply AI tweak of ID {} for entity {}. Target entity isn't valid for the tweak", id, entity());
 					}
 				}
 			}
 		} else {
-			AngryMobs.LOGGER.error(String.format("Can't apply AI tweak of ID %s for entity %s. Entity isn't valid for the tweak", id, entity()));
+			AngryMobs.LOGGER.error("Can't apply AI tweak of ID {} for entity {}. Entity isn't valid for the tweak", id, entity());
 		}
 	}
 
@@ -78,7 +78,7 @@ public class AttackNearestTweak implements ITweak {
 			if (goal instanceof NearestAttackableTargetGoal nearestAttackable) {
 				if (target.toString().equals("minecraft:player")) {
 					if (nearestAttackable.targetType == Player.class) {
-						AngryMobs.LOGGER.error(String.format("Can't apply AI tweak of ID %s for entity %s. Entity already has given AI goal", id, entity()));
+						AngryMobs.LOGGER.error("Can't apply AI tweak of ID {} for entity {}. Entity already has given AI goal", id, entity());
 						return false;
 					}
 				} else {
@@ -86,7 +86,7 @@ public class AttackNearestTweak implements ITweak {
 					if (targetEntity instanceof LivingEntity) {
 						Class<? extends LivingEntity> entityClass = ((LivingEntity) targetEntity).getClass();
 						if (nearestAttackable.targetType == entityClass) {
-							AngryMobs.LOGGER.error(String.format("Can't apply AI tweak of ID %s for entity %s. Entity already has given AI goal", id, entity()));
+							AngryMobs.LOGGER.error("Can't apply AI tweak of ID {} for entity {}. Entity already has given AI goal", id, entity());
 							targetEntity.discard();
 							return false;
 						}

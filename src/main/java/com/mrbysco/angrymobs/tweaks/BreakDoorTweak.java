@@ -56,14 +56,14 @@ public class BreakDoorTweak implements ITweak {
 		if (entity instanceof Mob mob && difficulty != null) {
 			mob.goalSelector.availableGoals.forEach(goal -> {
 				if (goal.getGoal() instanceof BreakDoorGoal) {
-					AngryMobs.LOGGER.info(String.format("Overriding existing AI goal for entity %s using tweak ID %s", entity(), id));
+					AngryMobs.LOGGER.info("Overriding existing AI goal for entity {} using tweak ID {}", entity(), id);
 				}
 			});
 			mob.goalSelector.availableGoals.removeIf(goal -> goal.getGoal() instanceof BreakDoorGoal);
 			Predicate<Difficulty> DOOR_BREAKING_PREDICATE = (dif) -> dif == difficulty;
 			mob.goalSelector.addGoal(goalPriority, new BreakDoorGoal(mob, DOOR_BREAKING_PREDICATE));
 		} else {
-			AngryMobs.LOGGER.error(String.format("Can't apply AI tweak of ID %s for entity %s. Entity isn't valid for the tweak", id, entity()));
+			AngryMobs.LOGGER.error("Can't apply AI tweak of ID {} for entity {}. Entity isn't valid for the tweak", id, entity());
 		}
 	}
 

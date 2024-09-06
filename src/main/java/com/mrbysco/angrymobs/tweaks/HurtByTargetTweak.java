@@ -57,14 +57,14 @@ public class HurtByTargetTweak implements ITweak {
 				mob.targetSelector.addGoal(goalPriority, hurtGoal);
 			}
 		} else {
-			AngryMobs.LOGGER.error(String.format("Can't apply AI tweak of ID %s for entity %s. Entity isn't valid for the tweak", id, entity()));
+			AngryMobs.LOGGER.error("Can't apply AI tweak of ID {} for entity {}. Entity isn't valid for the tweak", id, entity());
 		}
 	}
 
 	public boolean canHaveGoal(Mob mob, String id) {
 		for (Goal goal : mob.goalSelector.availableGoals) {
 			if (goal instanceof MobHurtByTargetGoal) {
-				AngryMobs.LOGGER.error(String.format("Can't apply AI tweak of ID %s for entity %s. Entity already has given AI goal", id, entity()));
+				AngryMobs.LOGGER.error("Can't apply AI tweak of ID {} for entity {}. Entity already has given AI goal", id, entity());
 				return false;
 			}
 		}
