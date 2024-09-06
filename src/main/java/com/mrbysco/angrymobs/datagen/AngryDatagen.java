@@ -97,7 +97,7 @@ public class AngryDatagen {
 			addHurtByTargetTweak("rabbit_hurt_by_player", new HurtByTargetTweak(EntityType.RABBIT, 1, false), angryCondition);
 			addHurtByTargetTweak("sheep_hurt_by_player", new HurtByTargetTweak(EntityType.SHEEP, 1, false), angryCondition);
 
-			var aggressiveCondition = new ConfigEnabledCondition(List.of(ConfigDefault.ANGRY_ANIMALS));
+			var aggressiveCondition = new ConfigEnabledCondition(List.of(ConfigDefault.AGGRESSIVE_ANIMALS));
 			addAttackNearestTweak("cat_attack_nearest_player", new AttackNearestTweak(EntityType.CAT, EntityType.PLAYER, 2, true), aggressiveCondition);
 			addAttackNearestTweak("chicken_attack_nearest_player", new AttackNearestTweak(EntityType.CHICKEN, EntityType.PLAYER, 2, true), aggressiveCondition);
 			addAttackNearestTweak("cow_attack_nearest_player", new AttackNearestTweak(EntityType.COW, EntityType.PLAYER, 2, true), aggressiveCondition);
