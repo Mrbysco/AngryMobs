@@ -1,2 +1,2 @@
-* Fix `aggressiveAnimals` not being used correctly
-* Add translations for the built-in config
+* Fix CraftTweaker support
+* Fix projectile goal shooting 3 times in a row
