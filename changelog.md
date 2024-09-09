@@ -1,1 +1,1 @@
-* Add some caching to the attribute handler, to avoid calling the Attribute registry for every attribute modification attempt.
+* Fix Throwable Attack goal throwing 3 projectiles back to back
