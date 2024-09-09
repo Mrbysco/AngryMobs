@@ -36,6 +36,7 @@ public class TweakRegistry {
 		final RegistryAccess registryAccess = event.getPlayerList().getServer().registryAccess();
 
 		tweakMap.clear();
+		tweakMap.putAll(craftTweakerMap);
 
 		final Registry<AttackNearestTweak> attackNearestRegistry = registryAccess.registryOrThrow(AttackNearestTweak.REGISTRY_KEY);
 		attackNearestRegistry.holders().forEach(TweakRegistry::addTweak);
@@ -60,6 +61,8 @@ public class TweakRegistry {
 
 		final Registry<ProjectileAttackTweak> projectileAttackRegistry = registryAccess.registryOrThrow(ProjectileAttackTweak.REGISTRY_KEY);
 		projectileAttackRegistry.holders().forEach(TweakRegistry::addTweak);
+
+		craftTweakerMap.clear();
 	}
 
 	/**
@@ -69,11 +72,23 @@ public class TweakRegistry {
 	 */
 	public static void addTweak(Holder<? extends ITweak> tweak) {
 		ResourceLocation entityLocation = tweak.value().entity();
-		tweakMap.compute(entityLocation, (key, list) -> {
-			list = list == null ? new ArrayList<>() : new ArrayList<>(list);
-			list.add(tweak);
-			return list;
-		});
+		List<Holder<? extends ITweak>> list = tweakMap.getOrDefault(entityLocation, new ArrayList<>());
+		list.add(tweak);
+		tweakMap.put(entityLocation, list);
+	}
+
+	private static final Map<ResourceLocation, List<Holder<? extends ITweak>>> craftTweakerMap = new LinkedHashMap<>();
+
+	/**
+	 * Add tweak to the map based on the entity location
+	 *
+	 * @param tweak The tweak to add
+	 */
+	public static void addCTTweak(Holder<? extends ITweak> tweak) {
+		ResourceLocation entityLocation = tweak.value().entity();
+		List<Holder<? extends ITweak>> list = craftTweakerMap.getOrDefault(entityLocation, new ArrayList<>());
+		list.add(tweak);
+		craftTweakerMap.put(entityLocation, list);
 	}
 
 	/**

@@ -17,7 +17,7 @@ public class ActionLookAtEntityTweak implements IRuntimeAction {
 
 	@Override
 	public void apply() {
-		TweakRegistry.addTweak(Holder.direct(lookAtPlayerTweak));
+		TweakRegistry.addCTTweak(Holder.direct(lookAtPlayerTweak));
 	}
 
 	@Override

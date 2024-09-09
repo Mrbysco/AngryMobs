@@ -17,7 +17,7 @@ public class ActionAddAttackNearestTweak implements IRuntimeAction {
 
 	@Override
 	public void apply() {
-		TweakRegistry.addTweak(Holder.direct(attackNearestTweak));
+		TweakRegistry.addCTTweak(Holder.direct(attackNearestTweak));
 	}
 
 	@Override

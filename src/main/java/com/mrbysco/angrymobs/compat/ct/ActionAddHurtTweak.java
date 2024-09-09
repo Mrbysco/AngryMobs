@@ -17,7 +17,7 @@ public class ActionAddHurtTweak implements IRuntimeAction {
 
 	@Override
 	public void apply() {
-		TweakRegistry.addTweak(Holder.direct(hurtByTargetTweak));
+		TweakRegistry.addCTTweak(Holder.direct(hurtByTargetTweak));
 	}
 
 	@Override

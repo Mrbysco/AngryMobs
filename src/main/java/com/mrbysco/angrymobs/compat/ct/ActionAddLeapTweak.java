@@ -17,7 +17,7 @@ public class ActionAddLeapTweak implements IRuntimeAction {
 
 	@Override
 	public void apply() {
-		TweakRegistry.addTweak(Holder.direct(leapTweak));
+		TweakRegistry.addCTTweak(Holder.direct(leapTweak));
 	}
 
 	@Override

@@ -17,7 +17,7 @@ public class ActionAddMeleeTweak implements IRuntimeAction {
 
 	@Override
 	public void apply() {
-		TweakRegistry.addTweak(Holder.direct(meleeTweak));
+		TweakRegistry.addCTTweak(Holder.direct(meleeTweak));
 	}
 
 	@Override

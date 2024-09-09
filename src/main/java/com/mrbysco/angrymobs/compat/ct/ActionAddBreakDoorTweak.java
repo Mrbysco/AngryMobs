@@ -17,7 +17,7 @@ public class ActionAddBreakDoorTweak implements IRuntimeAction {
 
 	@Override
 	public void apply() {
-		TweakRegistry.addTweak(Holder.direct(breakDoorTweak));
+		TweakRegistry.addCTTweak(Holder.direct(breakDoorTweak));
 	}
 
 	@Override

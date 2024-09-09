@@ -19,7 +19,7 @@ public class ActionAddProjectileAttackTweak implements IRuntimeAction {
 
 	@Override
 	public void apply() {
-		TweakRegistry.addTweak(Holder.direct(projectileTweak));
+		TweakRegistry.addCTTweak(Holder.direct(projectileTweak));
 	}
 
 	@Override
