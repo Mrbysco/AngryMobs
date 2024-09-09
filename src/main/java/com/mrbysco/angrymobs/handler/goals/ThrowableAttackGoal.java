@@ -81,38 +81,26 @@ public class ThrowableAttackGoal extends Goal {
 				this.mob.getMoveControl().setWantedPosition(livingentity.getX(), livingentity.getY(), livingentity.getZ(), 1.0D);
 			} else if (d0 < this.getFollowDistance() * this.getFollowDistance() && flag) {
 				if (this.attackTime <= 0) {
-					++this.attackStep;
-					if (this.attackStep == 1) {
-						this.attackTime = 60;
-					} else if (this.attackStep <= 4) {
-						this.attackTime = 6;
-					} else {
-						this.attackTime = 100;
-						this.attackStep = 0;
+					this.attackTime = 100;
+
+					if (soundEventSupplier.get() != null && !this.mob.isSilent()) {
+						this.mob.playSound(soundEventSupplier.get(), 1.0F, 1.0F + (this.mob.getRandom().nextFloat() - this.mob.getRandom().nextFloat()) * 0.4F);
 					}
 
-					if (this.attackStep > 1) {
-						if (soundEventSupplier.get() != null && !this.mob.isSilent()) {
-							this.mob.playSound(soundEventSupplier.get(), 1.0F, 1.0F + (this.mob.getRandom().nextFloat() - this.mob.getRandom().nextFloat()) * 0.4F);
-						}
+					Projectile projectileEntity = projectile.create(this.mob.level());
+					if (projectileEntity != null) {
+						projectileEntity.setOwner(this.mob);
+						projectileEntity.setYRot(this.mob.getYRot() % 360.0F);
+						projectileEntity.setXRot(this.mob.getXRot() % 360.0F);
+						projectileEntity.moveTo(this.mob.getX(), this.mob.getEyeY() - (double) 0.1F, this.mob.getZ(), this.mob.getYRot(), this.mob.getXRot());
 
-						for (int i = 0; i < 1; ++i) {
-							Projectile projectileEntity = projectile.create(this.mob.level());
-							if (projectileEntity != null) {
-								projectileEntity.setOwner(this.mob);
-								projectileEntity.setYRot(this.mob.getYRot() % 360.0F);
-								projectileEntity.setXRot(this.mob.getXRot() % 360.0F);
-								projectileEntity.moveTo(this.mob.getX(), this.mob.getEyeY() - (double) 0.1F, this.mob.getZ(), this.mob.getYRot(), this.mob.getXRot());
+						double projX = livingentity.getX() - this.mob.getX();
+						double projY = livingentity.getY(0.3333333333333333D) - projectileEntity.getY();
+						double projZ = livingentity.getZ() - this.mob.getZ();
+						double projD3 = Math.sqrt(projX * projX + projZ * projZ);
+						projectileEntity.shoot(projX, projY + projD3 * (double) 0.2F, projZ, this.velocity, (float) (14 - this.mob.level().getDifficulty().getId() * 4));
 
-								double projX = livingentity.getX() - this.mob.getX();
-								double projY = livingentity.getY(0.3333333333333333D) - projectileEntity.getY();
-								double projZ = livingentity.getZ() - this.mob.getZ();
-								double projD3 = Math.sqrt(projX * projX + projZ * projZ);
-								projectileEntity.shoot(projX, projY + projD3 * (double) 0.2F, projZ, this.velocity, (float) (14 - this.mob.level().getDifficulty().getId() * 4));
-
-								this.mob.level().addFreshEntity(projectileEntity);
-							}
-						}
+						this.mob.level().addFreshEntity(projectileEntity);
 					}
 				}
 
