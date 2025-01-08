@@ -22,7 +22,12 @@ public class TweakCT {
 
 	@Method
 	public static void addProjectileAttackTweak(EntityType<Entity> entity, EntityType<Entity> projectileEntity, String soundLocation, int priority, float attackDamage, float velocity) {
-		CraftTweakerAPI.apply(new ActionAddProjectileAttackTweak(entity, projectileEntity, soundLocation, priority, attackDamage, velocity));
+		CraftTweakerAPI.apply(new ActionAddProjectileAttackTweak(entity, projectileEntity, soundLocation, priority, attackDamage, velocity, ""));
+	}
+
+	@Method
+	public static void addProjectileAttackTweak(EntityType<Entity> entity, EntityType<Entity> projectileEntity, String soundLocation, int priority, float attackDamage, float velocity, String projectileData) {
+		CraftTweakerAPI.apply(new ActionAddProjectileAttackTweak(entity, projectileEntity, soundLocation, priority, attackDamage, velocity, projectileData));
 	}
 
 	@Method

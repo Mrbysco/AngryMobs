@@ -11,9 +11,11 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ActionAddProjectileAttackTweak implements IRuntimeAction {
 	public final ProjectileAttackTweak projectileTweak;
 
-	public ActionAddProjectileAttackTweak(EntityType<Entity> entity, EntityType<Entity> projectileEntity, String soundLocation, int priority, float attackDamage, float velocity) {
+	public ActionAddProjectileAttackTweak(EntityType<Entity> entity, EntityType<Entity> projectileEntity,
+	                                      String soundLocation, int priority, float attackDamage, float velocity,
+	                                      String projectileData) {
 		this.projectileTweak = new ProjectileAttackTweak(ForgeRegistries.ENTITY_TYPES.getKey(entity), ForgeRegistries.ENTITY_TYPES.getKey(projectileEntity), new ResourceLocation(soundLocation),
-				priority, attackDamage, velocity);
+				priority, attackDamage, velocity, projectileData);
 	}
 
 	@Override

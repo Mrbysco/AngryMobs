@@ -1,5 +1,6 @@
 package com.mrbysco.angrymobs.handler.goals;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -7,8 +8,10 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.projectile.Projectile;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
+import java.util.UUID;
 import java.util.function.Supplier;
 
 public class ThrowableAttackGoal extends Goal {
@@ -20,13 +23,17 @@ public class ThrowableAttackGoal extends Goal {
 	private final float ATTACK_DAMAGE;
 	private final float velocity;
 	private final Supplier<SoundEvent> soundEventSupplier;
+	@Nullable
+	private final CompoundTag projectileData;
 
-	public ThrowableAttackGoal(Mob mobEntity, EntityType<? extends Projectile> projectileType, Supplier<SoundEvent> soundEventSupplier, float attackDamage, float projectileVelocity) {
+	public ThrowableAttackGoal(Mob mobEntity, EntityType<? extends Projectile> projectileType, Supplier<SoundEvent> soundEventSupplier,
+	                           float attackDamage, float projectileVelocity, @Nullable CompoundTag projectileData) {
 		this.mob = mobEntity;
 		this.projectile = projectileType;
 		this.soundEventSupplier = soundEventSupplier;
 		this.ATTACK_DAMAGE = attackDamage;
 		this.velocity = projectileVelocity;
+		this.projectileData = projectileData;
 		this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
 	}
 
@@ -93,6 +100,7 @@ public class ThrowableAttackGoal extends Goal {
 						projectileEntity.setYRot(this.mob.getYRot() % 360.0F);
 						projectileEntity.setXRot(this.mob.getXRot() % 360.0F);
 						projectileEntity.moveTo(this.mob.getX(), this.mob.getEyeY() - (double) 0.1F, this.mob.getZ(), this.mob.getYRot(), this.mob.getXRot());
+						mergeData(projectileEntity);
 
 						double projX = livingentity.getX() - this.mob.getX();
 						double projY = livingentity.getY(0.3333333333333333D) - projectileEntity.getY();
@@ -110,6 +118,25 @@ public class ThrowableAttackGoal extends Goal {
 			}
 
 			super.tick();
+		}
+	}
+
+	/**
+	 * Merge the projectile data with the entity data if it exists
+	 *
+	 * @param projectile The projectile entity
+	 */
+	private void mergeData(Projectile projectile) {
+		if (projectileData == null) return;
+		
+		CompoundTag entityTag = projectile.saveWithoutId(new CompoundTag());
+		CompoundTag entityTagCopy = entityTag.copy();
+
+		if (!projectileData.isEmpty()) {
+			entityTagCopy.merge(projectileData);
+			UUID uuid = projectile.getUUID();
+			projectile.load(entityTagCopy);
+			projectile.setUUID(uuid);
 		}
 	}
 
