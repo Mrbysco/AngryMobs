@@ -1,1 +1,2 @@
-* Fix Throwable Attack goal throwing 3 projectiles back to back
+* Added an optional parameter to `addHurtByTargetTweak` so you can specify if the mob should be excluded. This will fix projectiles hitting the same mob type from causing the mob to attack its own kind
+* Added an optional parameter to `addProjectileAttackTweak` that allows specifying projectile nbt which then gets applied when the projectile is spawned
