@@ -12,24 +12,28 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class HurtByTargetTweak extends BaseTweak {
 	protected final int goalPriority;
 	protected final boolean callReinforcements;
+	protected final boolean excludeSelf;
 
-	public HurtByTargetTweak(ResourceLocation entity, int priority, boolean callReinforcements) {
+	public HurtByTargetTweak(ResourceLocation entity, int priority, boolean callReinforcements, boolean excludeSelf) {
 		super("hurt_by_target", entity);
 		this.goalPriority = priority;
 		this.callReinforcements = callReinforcements;
+		this.excludeSelf = excludeSelf;
 	}
 
-	public HurtByTargetTweak(EntityType<? extends Mob> entity, int priority, boolean callReinforcements) {
-		this(ForgeRegistries.ENTITY_TYPES.getKey(entity), priority, callReinforcements);
+	public HurtByTargetTweak(EntityType<? extends Mob> entity, int priority, boolean callReinforcements, boolean excludeSelf) {
+		this(ForgeRegistries.ENTITY_TYPES.getKey(entity), priority, callReinforcements, excludeSelf);
 	}
 
 	@Override
 	public void adjust(Entity entity) {
 		if (entity instanceof Mob mob) {
 			if (canHaveGoal(mob)) {
-				MobHurtByTargetGoal hurtGoal = new MobHurtByTargetGoal(mob);
+				MobHurtByTargetGoal hurtGoal = excludeSelf ?
+						new MobHurtByTargetGoal(mob, mob.getClass()) :
+						new MobHurtByTargetGoal(mob);
 				if (callReinforcements) {
-					hurtGoal.setCallsForHelp();
+					hurtGoal.setAlertOthers();
 				}
 				mob.targetSelector.addGoal(goalPriority, hurtGoal);
 			}

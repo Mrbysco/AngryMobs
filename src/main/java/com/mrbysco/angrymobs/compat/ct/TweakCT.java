@@ -27,7 +27,12 @@ public class TweakCT {
 
 	@Method
 	public static void addHurtByTargetTweak(EntityType<Entity> entity, int priority, boolean callReinforcements) {
-		CraftTweakerAPI.apply(new ActionAddHurtTweak(entity, priority, callReinforcements));
+		CraftTweakerAPI.apply(new ActionAddHurtTweak(entity, priority, callReinforcements, false));
+	}
+
+	@Method
+	public static void addHurtByTargetTweak(EntityType<Entity> entity, int priority, boolean callReinforcements, boolean excludeSelf) {
+		CraftTweakerAPI.apply(new ActionAddHurtTweak(entity, priority, callReinforcements, excludeSelf));
 	}
 
 	@Method

@@ -10,8 +10,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ActionAddHurtTweak implements IRuntimeAction {
 	public final HurtByTargetTweak hurtByTargetTweak;
 
-	public ActionAddHurtTweak(EntityType<Entity> entity, int priority, boolean callReinforcements) {
-		this.hurtByTargetTweak = new HurtByTargetTweak(ForgeRegistries.ENTITY_TYPES.getKey(entity), priority, callReinforcements);
+	public ActionAddHurtTweak(EntityType<Entity> entity, int priority, boolean callReinforcements, boolean excludeSelf) {
+		this.hurtByTargetTweak = new HurtByTargetTweak(ForgeRegistries.ENTITY_TYPES.getKey(entity), priority, callReinforcements, excludeSelf);
 	}
 
 	@Override

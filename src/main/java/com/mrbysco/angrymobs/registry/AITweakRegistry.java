@@ -44,15 +44,15 @@ public class AITweakRegistry {
 			if (AngryConfig.COMMON.angryAnimals.get()) {
 				boolean reinforcements = AngryConfig.COMMON.angryReinforcements.get();
 
-				registerTweak(new HurtByTargetTweak(EntityType.CHICKEN, 1, reinforcements));
-				registerTweak(new HurtByTargetTweak(EntityType.COW, 1, reinforcements));
-				registerTweak(new HurtByTargetTweak(EntityType.DONKEY, 1, reinforcements));
-				registerTweak(new HurtByTargetTweak(EntityType.HORSE, 1, reinforcements));
-				registerTweak(new HurtByTargetTweak(EntityType.MOOSHROOM, 1, reinforcements));
-				registerTweak(new HurtByTargetTweak(EntityType.MULE, 1, reinforcements));
-				registerTweak(new HurtByTargetTweak(EntityType.PIG, 1, reinforcements));
-				registerTweak(new HurtByTargetTweak(EntityType.RABBIT, 1, reinforcements));
-				registerTweak(new HurtByTargetTweak(EntityType.SHEEP, 1, reinforcements));
+				registerTweak(new HurtByTargetTweak(EntityType.CHICKEN, 1, reinforcements, true));
+				registerTweak(new HurtByTargetTweak(EntityType.COW, 1, reinforcements, true));
+				registerTweak(new HurtByTargetTweak(EntityType.DONKEY, 1, reinforcements, true));
+				registerTweak(new HurtByTargetTweak(EntityType.HORSE, 1, reinforcements, true));
+				registerTweak(new HurtByTargetTweak(EntityType.MOOSHROOM, 1, reinforcements, true));
+				registerTweak(new HurtByTargetTweak(EntityType.MULE, 1, reinforcements, true));
+				registerTweak(new HurtByTargetTweak(EntityType.PIG, 1, reinforcements, true));
+				registerTweak(new HurtByTargetTweak(EntityType.RABBIT, 1, reinforcements, true));
+				registerTweak(new HurtByTargetTweak(EntityType.SHEEP, 1, reinforcements, true));
 			}
 			if (AngryConfig.COMMON.aggressiveAnimals.get()) {
 				registerTweak(new AttackNearestTweak(EntityType.CAT, EntityType.PLAYER, 2, true));
