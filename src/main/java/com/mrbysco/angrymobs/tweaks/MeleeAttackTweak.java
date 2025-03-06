@@ -3,6 +3,7 @@ package com.mrbysco.angrymobs.tweaks;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.mrbysco.angrymobs.AngryMobs;
+import com.mrbysco.angrymobs.config.AngryConfig;
 import com.mrbysco.angrymobs.handler.goals.MobMeleeAttackGoal;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -67,7 +68,9 @@ public class MeleeAttackTweak implements ITweak {
 			mob.goalSelector.availableGoals.removeIf(goal -> goal.getGoal() instanceof PanicGoal);
 			mob.goalSelector.availableGoals.forEach(goal -> {
 				if (goal.getGoal() instanceof MeleeAttackGoal) {
-					AngryMobs.LOGGER.info("Removing existing AI to apply the AI tweak of ID {} for entity {}", entity(), id);
+					if (AngryConfig.COMMON.enableInfoLog.getAsBoolean()) {
+						AngryMobs.LOGGER.info("Removing existing AI to apply the AI tweak of ID {} for entity {}", entity(), id);
+					}
 				}
 			});
 			mob.goalSelector.availableGoals.removeIf(goal -> goal.getGoal() instanceof MeleeAttackGoal);

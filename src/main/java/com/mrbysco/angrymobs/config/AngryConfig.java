@@ -12,6 +12,7 @@ public class AngryConfig {
 		public final BooleanValue angryAnimals;
 		public final BooleanValue aggressiveAnimals;
 		public final BooleanValue useAttributes;
+		public final BooleanValue enableInfoLog;
 
 		Common(ModConfigSpec.Builder builder) {
 			builder.comment("Common settings")
@@ -28,6 +29,10 @@ public class AngryConfig {
 			useAttributes = builder
 					.comment("When true makes the melee goals add the mobs attack damage and knockback onto the specified values")
 					.define("useAttributes", true);
+
+			enableInfoLog = builder
+					.comment("Enable info logs of this mod, warnings and errors will still be reported")
+					.define("enableInfoLog", false);
 
 			builder.pop();
 		}

@@ -2,6 +2,7 @@ package com.mrbysco.angrymobs.registry;
 
 import com.mojang.serialization.MapCodec;
 import com.mrbysco.angrymobs.AngryMobs;
+import com.mrbysco.angrymobs.config.AngryConfig;
 import com.mrbysco.angrymobs.registry.condition.ConfigEnabledCondition;
 import com.mrbysco.angrymobs.tweaks.AttackNearestTweak;
 import com.mrbysco.angrymobs.tweaks.AvoidEntityTweak;
@@ -27,7 +28,6 @@ public class TweakTypeRegistry {
 		event.dataPackRegistry(LookAtEntityTweak.REGISTRY_KEY, LookAtEntityTweak.DIRECT_CODEC, LookAtEntityTweak.DIRECT_CODEC);
 		event.dataPackRegistry(MeleeAttackTweak.REGISTRY_KEY, MeleeAttackTweak.DIRECT_CODEC, MeleeAttackTweak.DIRECT_CODEC);
 		event.dataPackRegistry(ProjectileAttackTweak.REGISTRY_KEY, ProjectileAttackTweak.DIRECT_CODEC, ProjectileAttackTweak.DIRECT_CODEC);
-
 		AngryMobs.LOGGER.info("Registered Tweak registries");
 	}
 

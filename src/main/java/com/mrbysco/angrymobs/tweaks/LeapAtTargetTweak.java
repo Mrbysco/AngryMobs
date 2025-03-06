@@ -3,6 +3,7 @@ package com.mrbysco.angrymobs.tweaks;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.mrbysco.angrymobs.AngryMobs;
+import com.mrbysco.angrymobs.config.AngryConfig;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
@@ -49,11 +50,13 @@ public class LeapAtTargetTweak implements ITweak {
 	@Override
 	public void adjust(Entity entity, String id) {
 		if (entity instanceof Mob mob) {
-			mob.goalSelector.availableGoals.forEach(goal -> {
-				if (goal.getGoal() instanceof LeapAtTargetGoal) {
-					AngryMobs.LOGGER.info("Overriding existing AI goal for entity {} using tweak ID {}", entity(), id);
-				}
-			});
+			if (AngryConfig.COMMON.enableInfoLog.getAsBoolean()){
+				mob.goalSelector.availableGoals.forEach(goal -> {
+					if (goal.getGoal() instanceof LeapAtTargetGoal) {
+						AngryMobs.LOGGER.info("Overriding existing AI goal for entity {} using tweak ID {}", entity(), id);
+					}
+				});
+			}
 			mob.goalSelector.availableGoals.removeIf(goal -> goal.getGoal() instanceof LeapAtTargetGoal);
 			mob.goalSelector.addGoal(goalPriority, new LeapAtTargetGoal(mob, leapMotion));
 		} else {
