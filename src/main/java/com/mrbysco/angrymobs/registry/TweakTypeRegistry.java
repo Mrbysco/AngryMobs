@@ -27,7 +27,7 @@ public class TweakTypeRegistry {
 		event.dataPackRegistry(LookAtEntityTweak.REGISTRY_KEY, LookAtEntityTweak.DIRECT_CODEC, LookAtEntityTweak.DIRECT_CODEC);
 		event.dataPackRegistry(MeleeAttackTweak.REGISTRY_KEY, MeleeAttackTweak.DIRECT_CODEC, MeleeAttackTweak.DIRECT_CODEC);
 		event.dataPackRegistry(ProjectileAttackTweak.REGISTRY_KEY, ProjectileAttackTweak.DIRECT_CODEC, ProjectileAttackTweak.DIRECT_CODEC);
-		
+
 		AngryMobs.LOGGER.info("Registered Tweak registries");
 	}
 

@@ -28,7 +28,7 @@ public class AttributeHandler {
 						Holder.Reference<Attribute> attribute = BuiltInRegistries.ATTRIBUTE.getHolder(attributeLocation).orElse(null);
 						if (attribute != null) {
 							if (!event.has(entityType, attribute)) {
-								if(AngryConfig.COMMON.enableInfoLog.getAsBoolean()) {
+								if (AngryConfig.COMMON.enableInfoLog.getAsBoolean()) {
 									AngryMobs.LOGGER.info("Adding attribute: {} with value: {} to entity: {}", attributeLocation, values.value(), entityLocation);
 								}
 								event.add(entityType, attribute, values.value());

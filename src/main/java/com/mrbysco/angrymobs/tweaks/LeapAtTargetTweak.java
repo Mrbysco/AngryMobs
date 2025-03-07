@@ -50,9 +50,9 @@ public class LeapAtTargetTweak implements ITweak {
 	@Override
 	public void adjust(Entity entity, String id) {
 		if (entity instanceof Mob mob) {
-				mob.goalSelector.availableGoals.forEach(goal -> {
-					if (goal.getGoal() instanceof LeapAtTargetGoal) {
-						if (AngryConfig.COMMON.enableInfoLog.getAsBoolean()){
+			mob.goalSelector.availableGoals.forEach(goal -> {
+				if (goal.getGoal() instanceof LeapAtTargetGoal) {
+					if (AngryConfig.COMMON.enableInfoLog.getAsBoolean()) {
 						AngryMobs.LOGGER.info("Overriding existing AI goal for entity {} using tweak ID {}", entity(), id);
 					}
 				}
