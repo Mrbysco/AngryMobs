@@ -3,6 +3,7 @@ package com.mrbysco.angrymobs.tweaks;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.mrbysco.angrymobs.AngryMobs;
+import com.mrbysco.angrymobs.config.AngryConfig;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
@@ -56,7 +57,9 @@ public class BreakDoorTweak implements ITweak {
 		if (entity instanceof Mob mob && difficulty != null) {
 			mob.goalSelector.availableGoals.forEach(goal -> {
 				if (goal.getGoal() instanceof BreakDoorGoal) {
-					AngryMobs.LOGGER.info("Overriding existing AI goal for entity {} using tweak ID {}", entity(), id);
+					if (AngryConfig.COMMON.enableInfoLog.getAsBoolean()) {
+						AngryMobs.LOGGER.info("Overriding existing AI goal for entity {} using tweak ID {}", entity(), id);
+					}
 				}
 			});
 			mob.goalSelector.availableGoals.removeIf(goal -> goal.getGoal() instanceof BreakDoorGoal);

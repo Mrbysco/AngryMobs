@@ -1,6 +1,7 @@
 package com.mrbysco.angrymobs.handler;
 
 import com.mrbysco.angrymobs.AngryMobs;
+import com.mrbysco.angrymobs.config.AngryConfig;
 import com.mrbysco.angrymobs.config.attributes.AttributeConfigHandler;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -27,7 +28,9 @@ public class AttributeHandler {
 						Holder.Reference<Attribute> attribute = BuiltInRegistries.ATTRIBUTE.getHolder(attributeLocation).orElse(null);
 						if (attribute != null) {
 							if (!event.has(entityType, attribute)) {
-								AngryMobs.LOGGER.info("Adding attribute: {} with value: {} to entity: {}", attributeLocation, values.value(), entityLocation);
+								if (AngryConfig.COMMON.enableInfoLog.getAsBoolean()) {
+									AngryMobs.LOGGER.info("Adding attribute: {} with value: {} to entity: {}", attributeLocation, values.value(), entityLocation);
+								}
 								event.add(entityType, attribute, values.value());
 							} else {
 								AngryMobs.LOGGER.error("Attribute: {} already exists for entity: {}, ignoring entry!", attributeLocation, entityLocation);
