@@ -1,2 +1,1 @@
-* Fix CraftTweaker support
-* Fix projectile goal shooting 3 times in a row
+* Add a config option to disable the AI replacing log messages by default. **(Courtesy of [DoodleSchrank](https://github.com/Mrbysco/AngryMobs/pull/6))**
