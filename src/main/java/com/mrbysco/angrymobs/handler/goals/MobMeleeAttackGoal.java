@@ -82,6 +82,7 @@ public class MobMeleeAttackGoal extends Goal {
 	 * Returns whether an in-progress EntityAIBase should continue executing
 	 */
 	public boolean canContinueToUse() {
+
 		LivingEntity livingentity = this.attacker.getTarget();
 		if (livingentity == null) {
 			return false;
@@ -89,7 +90,7 @@ public class MobMeleeAttackGoal extends Goal {
 			return false;
 		} else if (!this.longMemory) {
 			return !this.attacker.getNavigation().isDone();
-		} else if (!this.attacker.isWithinRestriction(livingentity.blockPosition())) {
+		} else if (!this.attacker.isWithinHome(livingentity.blockPosition())) {
 			return false;
 		} else {
 			return !(livingentity instanceof Player) || !livingentity.isSpectator() && !((Player) livingentity).isCreative();
