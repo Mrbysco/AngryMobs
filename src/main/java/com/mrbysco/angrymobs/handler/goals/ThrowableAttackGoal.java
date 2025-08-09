@@ -93,7 +93,7 @@ public class ThrowableAttackGoal extends Goal {
 						projectileEntity.setOwner(this.mob);
 						projectileEntity.setYRot(this.mob.getYRot() % 360.0F);
 						projectileEntity.setXRot(this.mob.getXRot() % 360.0F);
-						projectileEntity.moveTo(this.mob.getX(), this.mob.getEyeY() - (double) 0.1F, this.mob.getZ(), this.mob.getYRot(), this.mob.getXRot());
+						projectileEntity.snapTo(this.mob.getX(), this.mob.getEyeY() - (double) 0.1F, this.mob.getZ(), this.mob.getYRot(), this.mob.getXRot());
 
 						double projX = livingentity.getX() - this.mob.getX();
 						double projY = livingentity.getY(0.3333333333333333D) - projectileEntity.getY();
