@@ -1,1 +1,1 @@
-* Add a config option to disable the AI replacing log messages by default. **(Courtesy of [DoodleSchrank](https://github.com/Mrbysco/AngryMobs/pull/6))**
+* Update to 1.21.4
