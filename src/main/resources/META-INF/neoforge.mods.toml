@@ -16,12 +16,12 @@ Allows a pack developer to add additional AI goals to existing mobs
 [[dependencies.angrymobs]]
 modId="minecraft"
 type="required"
-versionRange="[1.21,1.22)"
+versionRange="[1.21.4,1.22)"
 ordering="NONE"
 side="BOTH"
 [[dependencies.angrymobs]]
 modId="neoforge"
 type="required"
-versionRange="[21.0.143,)"
+versionRange="[21.4.0-beta,)"
 ordering="NONE"
 side="BOTH"

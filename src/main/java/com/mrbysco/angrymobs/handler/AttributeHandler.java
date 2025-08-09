@@ -25,7 +25,7 @@ public class AttributeHandler {
 				if (values != null) {
 					ResourceLocation attributeLocation = ResourceLocation.tryParse(values.attribute());
 					if (attributeLocation != null) {
-						Holder.Reference<Attribute> attribute = BuiltInRegistries.ATTRIBUTE.getHolder(attributeLocation).orElse(null);
+						Holder.Reference<Attribute> attribute = BuiltInRegistries.ATTRIBUTE.get(attributeLocation).orElse(null);
 						if (attribute != null) {
 							if (!event.has(entityType, attribute)) {
 								if (AngryConfig.COMMON.enableInfoLog.getAsBoolean()) {

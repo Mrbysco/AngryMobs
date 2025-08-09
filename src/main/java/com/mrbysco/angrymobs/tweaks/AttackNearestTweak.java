@@ -8,6 +8,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -58,7 +59,7 @@ public class AttackNearestTweak implements ITweak {
 				if (target.toString().equals("minecraft:player")) {
 					mob.targetSelector.addGoal(goalPriority, new NearestAttackableTargetGoal<>(mob, Player.class, checkSight));
 				} else {
-					Entity targetEntity = BuiltInRegistries.ENTITY_TYPE.get(target).create(entity.level());
+					Entity targetEntity = BuiltInRegistries.ENTITY_TYPE.getValue(target).create(entity.level(), EntitySpawnReason.EVENT);
 					if (targetEntity instanceof LivingEntity) {
 						Class<? extends LivingEntity> entityClass = ((LivingEntity) targetEntity).getClass();
 						mob.targetSelector.addGoal(goalPriority, new NearestAttackableTargetGoal<>(mob, entityClass, checkSight));
@@ -82,7 +83,7 @@ public class AttackNearestTweak implements ITweak {
 						return false;
 					}
 				} else {
-					Entity targetEntity = BuiltInRegistries.ENTITY_TYPE.get(target).create(mob.level());
+					Entity targetEntity = BuiltInRegistries.ENTITY_TYPE.getValue(target).create(mob.level(), EntitySpawnReason.EVENT);
 					if (targetEntity instanceof LivingEntity) {
 						Class<? extends LivingEntity> entityClass = ((LivingEntity) targetEntity).getClass();
 						if (nearestAttackable.targetType == entityClass) {

@@ -8,6 +8,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
@@ -59,7 +60,7 @@ public class AvoidEntityTweak implements ITweak {
 				if (target.toString().equals("minecraft:player")) {
 					pathfinderMob.targetSelector.addGoal(goalPriority, new AvoidEntityGoal<>(pathfinderMob, Player.class, maxDistance, walkSpeedModifier, sprintSpeedModifier));
 				} else {
-					Entity targetEntity = BuiltInRegistries.ENTITY_TYPE.get(target).create(entity.level());
+					Entity targetEntity = BuiltInRegistries.ENTITY_TYPE.getValue(target).create(entity.level(), EntitySpawnReason.EVENT);
 					if (targetEntity instanceof LivingEntity) {
 						Class<? extends LivingEntity> entityClass = ((LivingEntity) targetEntity).getClass();
 						pathfinderMob.targetSelector.addGoal(goalPriority, new AvoidEntityGoal<>(pathfinderMob, entityClass, maxDistance, walkSpeedModifier, sprintSpeedModifier));
@@ -83,7 +84,7 @@ public class AvoidEntityTweak implements ITweak {
 						return false;
 					}
 				} else {
-					Entity targetEntity = BuiltInRegistries.ENTITY_TYPE.get(target).create(pathfinderMob.level());
+					Entity targetEntity = BuiltInRegistries.ENTITY_TYPE.getValue(target).create(pathfinderMob.level(), EntitySpawnReason.EVENT);
 					if (targetEntity instanceof LivingEntity) {
 						Class<? extends LivingEntity> entityClass = ((LivingEntity) targetEntity).getClass();
 						if (avoidEntity.avoidClass == entityClass) {

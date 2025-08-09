@@ -14,7 +14,6 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.world.entity.EntityType;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import org.jetbrains.annotations.Nullable;
@@ -26,17 +25,13 @@ import java.util.concurrent.CompletableFuture;
 public class AngryDatagen {
 
 	@SubscribeEvent
-	public static void gatherData(GatherDataEvent event) {
+	public static void gatherData(GatherDataEvent.Client event) {
 		DataGenerator generator = event.getGenerator();
 		PackOutput packOutput = generator.getPackOutput();
-		ExistingFileHelper helper = event.getExistingFileHelper();
 
-		if (event.includeClient()) {
-			generator.addProvider(event.includeClient(), new AngryLanguageProvider(packOutput));
-		}
-		if (event.includeServer()) {
-			generator.addProvider(event.includeServer(), new AngryTweaks(packOutput, event.getLookupProvider()));
-		}
+		generator.addProvider(true, new AngryLanguageProvider(packOutput));
+
+		generator.addProvider(true, new AngryTweaks(packOutput, event.getLookupProvider()));
 	}
 
 	public static class AngryLanguageProvider extends LanguageProvider {

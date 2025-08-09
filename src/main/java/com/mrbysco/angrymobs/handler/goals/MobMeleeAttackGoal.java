@@ -180,7 +180,7 @@ public class MobMeleeAttackGoal extends Goal {
 			f = EnchantmentHelper.modifyDamage(serverlevel, attacker.getWeaponItem(), entity, damagesource, f);
 		}
 
-		boolean flag = entity.hurt(damagesource, f);
+		boolean flag = entity.hurtServer(getServerLevel(entity), damagesource, f);
 		if (flag) {
 			if (f1 > 0.0F && entity instanceof LivingEntity livingentity) {
 				livingentity.knockback(

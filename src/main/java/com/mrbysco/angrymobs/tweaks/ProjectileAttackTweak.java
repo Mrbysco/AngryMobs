@@ -11,6 +11,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.PanicGoal;
@@ -63,9 +64,9 @@ public class ProjectileAttackTweak implements ITweak {
 	@Override
 	public void adjust(Entity entity, String id) {
 		if (entity instanceof Mob mob) {
-			EntityType<?> type = BuiltInRegistries.ENTITY_TYPE.get(projectile);
+			EntityType<?> type = BuiltInRegistries.ENTITY_TYPE.getValue(projectile);
 			if (type != null) {
-				Entity foundEntity = type.create(entity.level());
+				Entity foundEntity = type.create(entity.level(), EntitySpawnReason.EVENT);
 				if (foundEntity instanceof Projectile throwable) {
 					mob.goalSelector.availableGoals.removeIf(goal -> goal.getGoal() instanceof PanicGoal);
 

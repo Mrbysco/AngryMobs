@@ -38,7 +38,7 @@ public class MobHurtByTargetGoal extends TargetGoal {
 		int i = this.mob.getLastHurtByMobTimestamp();
 		LivingEntity livingentity = this.mob.getLastHurtByMob();
 		if (i != this.revengeTimerOld && livingentity != null) {
-			if (livingentity.getType() == EntityType.PLAYER && this.mob.level().getGameRules().getBoolean(GameRules.RULE_UNIVERSAL_ANGER)) {
+			if (livingentity.getType() == EntityType.PLAYER && getServerLevel(this.mob).getGameRules().getBoolean(GameRules.RULE_UNIVERSAL_ANGER)) {
 				return false;
 			} else {
 				for (Class<?> oclass : this.excludedReinforcementTypes) {

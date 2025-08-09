@@ -38,29 +38,29 @@ public class TweakRegistry {
 		tweakMap.clear();
 		tweakMap.putAll(craftTweakerMap);
 
-		final Registry<AttackNearestTweak> attackNearestRegistry = registryAccess.registryOrThrow(AttackNearestTweak.REGISTRY_KEY);
-		attackNearestRegistry.holders().forEach(TweakRegistry::addTweak);
+		final Registry<AttackNearestTweak> attackNearestRegistry = registryAccess.lookupOrThrow(AttackNearestTweak.REGISTRY_KEY);
+		attackNearestRegistry.asHolderIdMap().forEach(TweakRegistry::addTweak);
 
-		final Registry<AvoidEntityTweak> avoidEntityRegistry = registryAccess.registryOrThrow(AvoidEntityTweak.REGISTRY_KEY);
-		avoidEntityRegistry.holders().forEach(TweakRegistry::addTweak);
+		final Registry<AvoidEntityTweak> avoidEntityRegistry = registryAccess.lookupOrThrow(AvoidEntityTweak.REGISTRY_KEY);
+		avoidEntityRegistry.asHolderIdMap().forEach(TweakRegistry::addTweak);
 
-		final Registry<BreakDoorTweak> breakDoorRegistry = registryAccess.registryOrThrow(BreakDoorTweak.REGISTRY_KEY);
-		breakDoorRegistry.holders().forEach(TweakRegistry::addTweak);
+		final Registry<BreakDoorTweak> breakDoorRegistry = registryAccess.lookupOrThrow(BreakDoorTweak.REGISTRY_KEY);
+		breakDoorRegistry.asHolderIdMap().forEach(TweakRegistry::addTweak);
 
-		final Registry<HurtByTargetTweak> hurtByTargetRegistry = registryAccess.registryOrThrow(HurtByTargetTweak.REGISTRY_KEY);
-		hurtByTargetRegistry.holders().forEach(TweakRegistry::addTweak);
+		final Registry<HurtByTargetTweak> hurtByTargetRegistry = registryAccess.lookupOrThrow(HurtByTargetTweak.REGISTRY_KEY);
+		hurtByTargetRegistry.asHolderIdMap().forEach(TweakRegistry::addTweak);
 
-		final Registry<LeapAtTargetTweak> leapAtTargetRegistry = registryAccess.registryOrThrow(LeapAtTargetTweak.REGISTRY_KEY);
-		leapAtTargetRegistry.holders().forEach(TweakRegistry::addTweak);
+		final Registry<LeapAtTargetTweak> leapAtTargetRegistry = registryAccess.lookupOrThrow(LeapAtTargetTweak.REGISTRY_KEY);
+		leapAtTargetRegistry.asHolderIdMap().forEach(TweakRegistry::addTweak);
 
-		final Registry<LookAtEntityTweak> lookAtEntityRegistry = registryAccess.registryOrThrow(LookAtEntityTweak.REGISTRY_KEY);
-		lookAtEntityRegistry.holders().forEach(TweakRegistry::addTweak);
+		final Registry<LookAtEntityTweak> lookAtEntityRegistry = registryAccess.lookupOrThrow(LookAtEntityTweak.REGISTRY_KEY);
+		lookAtEntityRegistry.asHolderIdMap().forEach(TweakRegistry::addTweak);
 
-		final Registry<MeleeAttackTweak> meleeAttackRegistry = registryAccess.registryOrThrow(MeleeAttackTweak.REGISTRY_KEY);
-		meleeAttackRegistry.holders().forEach(TweakRegistry::addTweak);
+		final Registry<MeleeAttackTweak> meleeAttackRegistry = registryAccess.lookupOrThrow(MeleeAttackTweak.REGISTRY_KEY);
+		meleeAttackRegistry.asHolderIdMap().forEach(TweakRegistry::addTweak);
 
-		final Registry<ProjectileAttackTweak> projectileAttackRegistry = registryAccess.registryOrThrow(ProjectileAttackTweak.REGISTRY_KEY);
-		projectileAttackRegistry.holders().forEach(TweakRegistry::addTweak);
+		final Registry<ProjectileAttackTweak> projectileAttackRegistry = registryAccess.lookupOrThrow(ProjectileAttackTweak.REGISTRY_KEY);
+		projectileAttackRegistry.asHolderIdMap().forEach(TweakRegistry::addTweak);
 
 		craftTweakerMap.clear();
 	}

@@ -1,6 +1,7 @@
 package com.mrbysco.angrymobs.handler.goals;
 
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -75,7 +76,7 @@ public class ThrowableAttackGoal extends Goal {
 
 				if (this.attackTime <= 0) {
 					this.attackTime = 20;
-					livingentity.hurt(livingentity.damageSources().mobAttack(this.mob), ATTACK_DAMAGE);
+					livingentity.hurtServer(getServerLevel(livingentity), livingentity.damageSources().mobAttack(this.mob), ATTACK_DAMAGE);
 				}
 
 				this.mob.getMoveControl().setWantedPosition(livingentity.getX(), livingentity.getY(), livingentity.getZ(), 1.0D);
@@ -87,7 +88,7 @@ public class ThrowableAttackGoal extends Goal {
 						this.mob.playSound(soundEventSupplier.get(), 1.0F, 1.0F + (this.mob.getRandom().nextFloat() - this.mob.getRandom().nextFloat()) * 0.4F);
 					}
 
-					Projectile projectileEntity = projectile.create(this.mob.level());
+					Projectile projectileEntity = projectile.create(this.mob.level(), EntitySpawnReason.MOB_SUMMONED);
 					if (projectileEntity != null) {
 						projectileEntity.setOwner(this.mob);
 						projectileEntity.setYRot(this.mob.getYRot() % 360.0F);
