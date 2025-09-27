@@ -1,5 +1,6 @@
 package com.mrbysco.angrymobs.handler.goals;
 
+import com.mrbysco.angrymobs.config.AngryConfig;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -8,6 +9,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -175,6 +177,16 @@ public class MobMeleeAttackGoal extends Goal {
 	public boolean doHurtTarget(Entity entity) {
 		float f = attackDamage;
 		float f1 = knockback;
+
+		if (AngryConfig.COMMON.useAttributes.get()) {
+			//Only add the attribute values if the entity has the attribute
+			if (this.attacker.getAttributes().hasAttribute(Attributes.ATTACK_DAMAGE)) {
+				f += (float) this.attacker.getAttributes().getValue(Attributes.ATTACK_DAMAGE);
+			}
+			if (this.attacker.getAttributes().hasAttribute(Attributes.KNOCKBACK_RESISTANCE)) {
+				f1 += (float) this.attacker.getAttributes().getValue(Attributes.KNOCKBACK_RESISTANCE);
+			}
+		}
 
 		DamageSource damagesource = attacker.damageSources().mobAttack(attacker);
 		if (attacker.level() instanceof ServerLevel serverlevel) {
