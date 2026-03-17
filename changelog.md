@@ -1,1 +1,1 @@
-* Fix `useAttributes` config option not functioning
+* Update to 1.21.11
