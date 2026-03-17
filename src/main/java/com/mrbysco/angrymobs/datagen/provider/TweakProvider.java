@@ -57,14 +57,14 @@ public abstract class TweakProvider implements DataProvider {
 
 		ImmutableList.Builder<CompletableFuture<?>> futuresBuilder = new ImmutableList.Builder<>();
 
-		saveTweaks(cache, registries, futuresBuilder, toSerializeAddAttackNearestTweak, AttackNearestTweak.CONDITIONAL_CODEC, AttackNearestTweak.REGISTRY_KEY.location().getPath());
-		saveTweaks(cache, registries, futuresBuilder, toSerializeAddBreakDoorTweak, BreakDoorTweak.CONDITIONAL_CODEC, BreakDoorTweak.REGISTRY_KEY.location().getPath());
-		saveTweaks(cache, registries, futuresBuilder, toSerializeAddHurtTweak, HurtByTargetTweak.CONDITIONAL_CODEC, HurtByTargetTweak.REGISTRY_KEY.location().getPath());
-		saveTweaks(cache, registries, futuresBuilder, toSerializeAddLeapTweak, LeapAtTargetTweak.CONDITIONAL_CODEC, LeapAtTargetTweak.REGISTRY_KEY.location().getPath());
-		saveTweaks(cache, registries, futuresBuilder, toSerializeAddMeleeTweak, MeleeAttackTweak.CONDITIONAL_CODEC, MeleeAttackTweak.REGISTRY_KEY.location().getPath());
-		saveTweaks(cache, registries, futuresBuilder, toSerializeAddProjectileAttackTweak, ProjectileAttackTweak.CONDITIONAL_CODEC, ProjectileAttackTweak.REGISTRY_KEY.location().getPath());
-		saveTweaks(cache, registries, futuresBuilder, toSerializeAvoidEntityTweak, AvoidEntityTweak.CONDITIONAL_CODEC, AvoidEntityTweak.REGISTRY_KEY.location().getPath());
-		saveTweaks(cache, registries, futuresBuilder, toSerializeLookAtEntityTweak, LookAtEntityTweak.CONDITIONAL_CODEC, LookAtEntityTweak.REGISTRY_KEY.location().getPath());
+		saveTweaks(cache, registries, futuresBuilder, toSerializeAddAttackNearestTweak, AttackNearestTweak.CONDITIONAL_CODEC, AttackNearestTweak.REGISTRY_KEY.identifier().getPath());
+		saveTweaks(cache, registries, futuresBuilder, toSerializeAddBreakDoorTweak, BreakDoorTweak.CONDITIONAL_CODEC, BreakDoorTweak.REGISTRY_KEY.identifier().getPath());
+		saveTweaks(cache, registries, futuresBuilder, toSerializeAddHurtTweak, HurtByTargetTweak.CONDITIONAL_CODEC, HurtByTargetTweak.REGISTRY_KEY.identifier().getPath());
+		saveTweaks(cache, registries, futuresBuilder, toSerializeAddLeapTweak, LeapAtTargetTweak.CONDITIONAL_CODEC, LeapAtTargetTweak.REGISTRY_KEY.identifier().getPath());
+		saveTweaks(cache, registries, futuresBuilder, toSerializeAddMeleeTweak, MeleeAttackTweak.CONDITIONAL_CODEC, MeleeAttackTweak.REGISTRY_KEY.identifier().getPath());
+		saveTweaks(cache, registries, futuresBuilder, toSerializeAddProjectileAttackTweak, ProjectileAttackTweak.CONDITIONAL_CODEC, ProjectileAttackTweak.REGISTRY_KEY.identifier().getPath());
+		saveTweaks(cache, registries, futuresBuilder, toSerializeAvoidEntityTweak, AvoidEntityTweak.CONDITIONAL_CODEC, AvoidEntityTweak.REGISTRY_KEY.identifier().getPath());
+		saveTweaks(cache, registries, futuresBuilder, toSerializeLookAtEntityTweak, LookAtEntityTweak.CONDITIONAL_CODEC, LookAtEntityTweak.REGISTRY_KEY.identifier().getPath());
 
 		return CompletableFuture.allOf(futuresBuilder.build().toArray(CompletableFuture[]::new));
 	}

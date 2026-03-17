@@ -14,7 +14,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -29,7 +29,7 @@ import java.util.Map;
 
 @EventBusSubscriber(modid = AngryMobs.MOD_ID)
 public class TweakRegistry {
-	private static final Map<ResourceLocation, List<Holder<? extends ITweak>>> tweakMap = new LinkedHashMap<>();
+	private static final Map<Identifier, List<Holder<? extends ITweak>>> tweakMap = new LinkedHashMap<>();
 
 	@SubscribeEvent
 	public static void onTagsUpdated(OnDatapackSyncEvent event) {
@@ -71,13 +71,13 @@ public class TweakRegistry {
 	 * @param tweak The tweak to add
 	 */
 	public static void addTweak(Holder<? extends ITweak> tweak) {
-		ResourceLocation entityLocation = tweak.value().entity();
+		Identifier entityLocation = tweak.value().entity();
 		List<Holder<? extends ITweak>> list = tweakMap.getOrDefault(entityLocation, new ArrayList<>());
 		list.add(tweak);
 		tweakMap.put(entityLocation, list);
 	}
 
-	private static final Map<ResourceLocation, List<Holder<? extends ITweak>>> craftTweakerMap = new LinkedHashMap<>();
+	private static final Map<Identifier, List<Holder<? extends ITweak>>> craftTweakerMap = new LinkedHashMap<>();
 
 	/**
 	 * Add tweak to the map based on the entity location
@@ -85,7 +85,7 @@ public class TweakRegistry {
 	 * @param tweak The tweak to add
 	 */
 	public static void addCTTweak(Holder<? extends ITweak> tweak) {
-		ResourceLocation entityLocation = tweak.value().entity();
+		Identifier entityLocation = tweak.value().entity();
 		List<Holder<? extends ITweak>> list = craftTweakerMap.getOrDefault(entityLocation, new ArrayList<>());
 		list.add(tweak);
 		craftTweakerMap.put(entityLocation, list);
@@ -107,7 +107,7 @@ public class TweakRegistry {
 	 * @param entityLocation The entity location to check
 	 * @return If the entity is in the map
 	 */
-	public static boolean containsEntity(ResourceLocation entityLocation) {
+	public static boolean containsEntity(Identifier entityLocation) {
 		return tweakMap.containsKey(entityLocation);
 	}
 
@@ -127,7 +127,7 @@ public class TweakRegistry {
 	 * @param entityLocation The entity location to get the tweaks from
 	 * @return The list of tweaks
 	 */
-	public static List<Holder<? extends ITweak>> getTweaksFromType(ResourceLocation entityLocation) {
+	public static List<Holder<? extends ITweak>> getTweaksFromType(Identifier entityLocation) {
 		return tweakMap.containsKey(entityLocation) ? tweakMap.get(entityLocation) : new ArrayList<>();
 	}
 
@@ -136,7 +136,7 @@ public class TweakRegistry {
 	 *
 	 * @return The tweak map
 	 */
-	public static Map<ResourceLocation, List<Holder<? extends ITweak>>> getTweakMap() {
+	public static Map<Identifier, List<Holder<? extends ITweak>>> getTweakMap() {
 		return Collections.unmodifiableMap(tweakMap);
 	}
 }

@@ -6,8 +6,8 @@ import com.mrbysco.angrymobs.AngryMobs;
 import com.mrbysco.angrymobs.config.AngryConfig;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -23,17 +23,17 @@ public class BreakDoorTweak implements ITweak {
 	public static final ResourceKey<Registry<BreakDoorTweak>> REGISTRY_KEY = ResourceKey.createRegistryKey(
 			AngryMobs.modLoc("break_door"));
 	public static final Codec<BreakDoorTweak> DIRECT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
-					ResourceLocation.CODEC.fieldOf("entity").forGetter(BreakDoorTweak::entity),
+					Identifier.CODEC.fieldOf("entity").forGetter(BreakDoorTweak::entity),
 					Codec.INT.fieldOf("goalPriority").forGetter(BreakDoorTweak::goalPriority),
 					Difficulty.CODEC.fieldOf("difficulty").forGetter(BreakDoorTweak::difficulty))
 			.apply(inst, BreakDoorTweak::new));
 	public static final Codec<Optional<WithConditions<BreakDoorTweak>>> CONDITIONAL_CODEC = ConditionalOps.createConditionalCodecWithConditions(DIRECT_CODEC);
 
-	protected final ResourceLocation entity;
+	protected final Identifier entity;
 	protected final int goalPriority;
 	protected final Difficulty difficulty;
 
-	public BreakDoorTweak(ResourceLocation entity, int priority, Difficulty difficulty) {
+	public BreakDoorTweak(Identifier entity, int priority, Difficulty difficulty) {
 		this.entity = entity;
 		this.goalPriority = priority;
 		this.difficulty = difficulty;
@@ -44,7 +44,7 @@ public class BreakDoorTweak implements ITweak {
 		return entity.getNamespace() + "_" + entity.getPath() + "_break_door";
 	}
 
-	public BreakDoorTweak(ResourceLocation entity, int priority, int difficulty) {
+	public BreakDoorTweak(Identifier entity, int priority, int difficulty) {
 		this(entity, priority, Difficulty.byId(difficulty));
 	}
 
@@ -71,7 +71,7 @@ public class BreakDoorTweak implements ITweak {
 	}
 
 	@Override
-	public ResourceLocation entity() {
+	public Identifier entity() {
 		return entity;
 	}
 

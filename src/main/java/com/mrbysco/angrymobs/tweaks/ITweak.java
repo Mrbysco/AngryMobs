@@ -1,6 +1,6 @@
 package com.mrbysco.angrymobs.tweaks;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 
 public interface ITweak {
@@ -16,7 +16,7 @@ public interface ITweak {
 	String generateId();
 
 	/*
-	 * @return ResourceLocation of the entity being tweaked
+	 * @return Identifier of the entity being tweaked
 	 */
-	ResourceLocation entity();
+	Identifier entity();
 }

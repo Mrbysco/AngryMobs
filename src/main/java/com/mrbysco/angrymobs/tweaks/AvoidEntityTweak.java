@@ -5,8 +5,8 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.mrbysco.angrymobs.AngryMobs;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.LivingEntity;
@@ -23,8 +23,8 @@ public class AvoidEntityTweak implements ITweak {
 	public static final ResourceKey<Registry<AvoidEntityTweak>> REGISTRY_KEY = ResourceKey.createRegistryKey(
 			AngryMobs.modLoc("avoid_entity"));
 	public static final Codec<AvoidEntityTweak> DIRECT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
-					ResourceLocation.CODEC.fieldOf("entity").forGetter(AvoidEntityTweak::entity),
-					ResourceLocation.CODEC.fieldOf("target").forGetter(AvoidEntityTweak::target),
+					Identifier.CODEC.fieldOf("entity").forGetter(AvoidEntityTweak::entity),
+					Identifier.CODEC.fieldOf("target").forGetter(AvoidEntityTweak::target),
 					Codec.INT.fieldOf("goalPriority").forGetter(AvoidEntityTweak::goalPriority),
 					Codec.FLOAT.fieldOf("maxDistance").forGetter(AvoidEntityTweak::maxDistance),
 					Codec.DOUBLE.fieldOf("walkSpeedModifier").forGetter(AvoidEntityTweak::walkSpeedModifier),
@@ -32,14 +32,14 @@ public class AvoidEntityTweak implements ITweak {
 			.apply(inst, AvoidEntityTweak::new));
 	public static final Codec<Optional<WithConditions<AvoidEntityTweak>>> CONDITIONAL_CODEC = ConditionalOps.createConditionalCodecWithConditions(DIRECT_CODEC);
 
-	protected final ResourceLocation entity;
-	protected final ResourceLocation target;
+	protected final Identifier entity;
+	protected final Identifier target;
 	protected final int goalPriority;
 	protected final float maxDistance;
 	protected final double walkSpeedModifier;
 	protected final double sprintSpeedModifier;
 
-	public AvoidEntityTweak(ResourceLocation entity, ResourceLocation target, int priority, float maxDistance, double walkSpeedModifier, double sprintSpeedModifier) {
+	public AvoidEntityTweak(Identifier entity, Identifier target, int priority, float maxDistance, double walkSpeedModifier, double sprintSpeedModifier) {
 		this.entity = entity;
 		this.target = target;
 		this.goalPriority = priority;
@@ -100,11 +100,11 @@ public class AvoidEntityTweak implements ITweak {
 	}
 
 	@Override
-	public ResourceLocation entity() {
+	public Identifier entity() {
 		return entity;
 	}
 
-	public ResourceLocation target() {
+	public Identifier target() {
 		return target;
 	}
 

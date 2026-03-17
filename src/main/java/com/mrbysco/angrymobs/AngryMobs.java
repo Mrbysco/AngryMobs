@@ -5,7 +5,7 @@ import com.mrbysco.angrymobs.config.AngryConfig;
 import com.mrbysco.angrymobs.handler.AIHandler;
 import com.mrbysco.angrymobs.handler.AttributeHandler;
 import com.mrbysco.angrymobs.registry.TweakTypeRegistry;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -37,7 +37,7 @@ public class AngryMobs {
 		}
 	}
 
-	public static ResourceLocation modLoc(String path) {
-		return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
+	public static Identifier modLoc(String path) {
+		return Identifier.fromNamespaceAndPath(MOD_ID, path);
 	}
 }

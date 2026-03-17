@@ -7,7 +7,7 @@ import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.target.TargetGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.phys.AABB;
 
 import java.util.EnumSet;
@@ -38,7 +38,7 @@ public class MobHurtByTargetGoal extends TargetGoal {
 		int i = this.mob.getLastHurtByMobTimestamp();
 		LivingEntity livingentity = this.mob.getLastHurtByMob();
 		if (i != this.revengeTimerOld && livingentity != null) {
-			if (livingentity.getType() == EntityType.PLAYER && getServerLevel(this.mob).getGameRules().getBoolean(GameRules.RULE_UNIVERSAL_ANGER)) {
+			if (livingentity.getType() == EntityType.PLAYER && getServerLevel(this.mob).getGameRules().get(GameRules.UNIVERSAL_ANGER)) {
 				return false;
 			} else {
 				for (Class<?> oclass : this.excludedReinforcementTypes) {

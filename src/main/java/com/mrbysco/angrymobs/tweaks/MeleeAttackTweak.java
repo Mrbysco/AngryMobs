@@ -7,8 +7,8 @@ import com.mrbysco.angrymobs.config.AngryConfig;
 import com.mrbysco.angrymobs.handler.goals.MobMeleeAttackGoal;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -23,7 +23,7 @@ public class MeleeAttackTweak implements ITweak {
 	public static final ResourceKey<Registry<MeleeAttackTweak>> REGISTRY_KEY = ResourceKey.createRegistryKey(
 			AngryMobs.modLoc("melee_attack"));
 	public static final Codec<MeleeAttackTweak> DIRECT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
-					ResourceLocation.CODEC.fieldOf("entity").forGetter(MeleeAttackTweak::entity),
+					Identifier.CODEC.fieldOf("entity").forGetter(MeleeAttackTweak::entity),
 					Codec.INT.fieldOf("goalPriority").forGetter(MeleeAttackTweak::goalPriority),
 					Codec.DOUBLE.fieldOf("speedModifier").forGetter(MeleeAttackTweak::speed),
 					Codec.FLOAT.fieldOf("attackDamage").forGetter(MeleeAttackTweak::damage),
@@ -33,14 +33,14 @@ public class MeleeAttackTweak implements ITweak {
 
 	public static final Codec<Optional<WithConditions<MeleeAttackTweak>>> CONDITIONAL_CODEC = ConditionalOps.createConditionalCodecWithConditions(DIRECT_CODEC);
 
-	protected final ResourceLocation entity;
+	protected final Identifier entity;
 	protected final int goalPriority;
 	protected final double speedModifier;
 	protected final float attackDamage;
 	protected final float knockback;
 	protected final boolean useLongMemory;
 
-	public MeleeAttackTweak(ResourceLocation entity, int priority, double speedModifier, float damage, float knockback, boolean useLongMemory) {
+	public MeleeAttackTweak(Identifier entity, int priority, double speedModifier, float damage, float knockback, boolean useLongMemory) {
 		this.entity = entity;
 		this.goalPriority = priority;
 		this.speedModifier = speedModifier;
@@ -81,7 +81,7 @@ public class MeleeAttackTweak implements ITweak {
 	}
 
 	@Override
-	public ResourceLocation entity() {
+	public Identifier entity() {
 		return entity;
 	}
 

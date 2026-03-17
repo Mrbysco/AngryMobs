@@ -7,8 +7,8 @@ import com.mrbysco.angrymobs.config.AngryConfig;
 import com.mrbysco.angrymobs.handler.goals.ThrowableAttackGoal;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
@@ -26,8 +26,8 @@ public class ProjectileAttackTweak implements ITweak {
 	public static final ResourceKey<Registry<ProjectileAttackTweak>> REGISTRY_KEY = ResourceKey.createRegistryKey(
 			AngryMobs.modLoc("throw_projectile"));
 	public static final Codec<ProjectileAttackTweak> DIRECT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
-					ResourceLocation.CODEC.fieldOf("entity").forGetter(ProjectileAttackTweak::entity),
-					ResourceLocation.CODEC.fieldOf("projectile").forGetter(ProjectileAttackTweak::projectile),
+					Identifier.CODEC.fieldOf("entity").forGetter(ProjectileAttackTweak::entity),
+					Identifier.CODEC.fieldOf("projectile").forGetter(ProjectileAttackTweak::projectile),
 					SoundEvent.DIRECT_CODEC.fieldOf("sound").forGetter(ProjectileAttackTweak::sound),
 					Codec.INT.fieldOf("goalPriority").forGetter(ProjectileAttackTweak::goalPriority),
 					Codec.FLOAT.fieldOf("attackDamage").forGetter(ProjectileAttackTweak::attackDamage),
@@ -36,14 +36,14 @@ public class ProjectileAttackTweak implements ITweak {
 
 	public static final Codec<Optional<WithConditions<ProjectileAttackTweak>>> CONDITIONAL_CODEC = ConditionalOps.createConditionalCodecWithConditions(DIRECT_CODEC);
 
-	protected final ResourceLocation entity;
-	protected final ResourceLocation projectile;
+	protected final Identifier entity;
+	protected final Identifier projectile;
 	protected final SoundEvent sound;
 	protected final int goalPriority;
 	protected final float attackDamage;
 	protected final float velocity;
 
-	public ProjectileAttackTweak(ResourceLocation entity, ResourceLocation projectile, SoundEvent soundEvent, int priority, float attackDamage, float velocity) {
+	public ProjectileAttackTweak(Identifier entity, Identifier projectile, SoundEvent soundEvent, int priority, float attackDamage, float velocity) {
 		this.entity = entity;
 		this.projectile = projectile;
 		this.sound = soundEvent;
@@ -93,11 +93,11 @@ public class ProjectileAttackTweak implements ITweak {
 	}
 
 	@Override
-	public ResourceLocation entity() {
+	public Identifier entity() {
 		return entity;
 	}
 
-	public ResourceLocation projectile() {
+	public Identifier projectile() {
 		return projectile;
 	}
 

@@ -5,8 +5,8 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.mrbysco.angrymobs.AngryMobs;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
@@ -24,19 +24,19 @@ public class AttackNearestTweak implements ITweak {
 	public static final ResourceKey<Registry<AttackNearestTweak>> REGISTRY_KEY = ResourceKey.createRegistryKey(
 			AngryMobs.modLoc("attack_nearest"));
 	public static final Codec<AttackNearestTweak> DIRECT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
-					ResourceLocation.CODEC.fieldOf("entity").forGetter(AttackNearestTweak::entity),
-					ResourceLocation.CODEC.fieldOf("target").forGetter(AttackNearestTweak::target),
+					Identifier.CODEC.fieldOf("entity").forGetter(AttackNearestTweak::entity),
+					Identifier.CODEC.fieldOf("target").forGetter(AttackNearestTweak::target),
 					Codec.INT.fieldOf("goalPriority").forGetter(AttackNearestTweak::goalPriority),
 					Codec.BOOL.fieldOf("checkSight").forGetter(AttackNearestTweak::checkSight))
 			.apply(inst, AttackNearestTweak::new));
 	public static final Codec<Optional<WithConditions<AttackNearestTweak>>> CONDITIONAL_CODEC = ConditionalOps.createConditionalCodecWithConditions(DIRECT_CODEC);
 
-	protected final ResourceLocation entity;
-	protected final ResourceLocation target;
+	protected final Identifier entity;
+	protected final Identifier target;
 	protected final int goalPriority;
 	protected final boolean checkSight;
 
-	public AttackNearestTweak(ResourceLocation entity, ResourceLocation target, int priority, boolean checkSight) {
+	public AttackNearestTweak(Identifier entity, Identifier target, int priority, boolean checkSight) {
 		this.entity = entity;
 		this.target = target;
 		this.goalPriority = priority;
@@ -99,11 +99,11 @@ public class AttackNearestTweak implements ITweak {
 	}
 
 	@Override
-	public ResourceLocation entity() {
+	public Identifier entity() {
 		return entity;
 	}
 
-	public ResourceLocation target() {
+	public Identifier target() {
 		return target;
 	}
 

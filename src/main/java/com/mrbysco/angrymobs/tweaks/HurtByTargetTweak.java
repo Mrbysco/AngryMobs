@@ -6,8 +6,8 @@ import com.mrbysco.angrymobs.AngryMobs;
 import com.mrbysco.angrymobs.handler.goals.MobHurtByTargetGoal;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -21,17 +21,17 @@ public class HurtByTargetTweak implements ITweak {
 	public static final ResourceKey<Registry<HurtByTargetTweak>> REGISTRY_KEY = ResourceKey.createRegistryKey(
 			AngryMobs.modLoc("hurt_by_target"));
 	public static final Codec<HurtByTargetTweak> DIRECT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
-					ResourceLocation.CODEC.fieldOf("entity").forGetter(HurtByTargetTweak::entity),
+					Identifier.CODEC.fieldOf("entity").forGetter(HurtByTargetTweak::entity),
 					Codec.INT.fieldOf("goalPriority").forGetter(HurtByTargetTweak::goalPriority),
 					Codec.BOOL.fieldOf("callReinforcements").forGetter(HurtByTargetTweak::callReinforcements))
 			.apply(inst, HurtByTargetTweak::new));
 	public static final Codec<Optional<WithConditions<HurtByTargetTweak>>> CONDITIONAL_CODEC = ConditionalOps.createConditionalCodecWithConditions(DIRECT_CODEC);
 
-	protected final ResourceLocation entity;
+	protected final Identifier entity;
 	protected final int goalPriority;
 	protected final boolean callReinforcements;
 
-	public HurtByTargetTweak(ResourceLocation entity, int priority, boolean callReinforcements) {
+	public HurtByTargetTweak(Identifier entity, int priority, boolean callReinforcements) {
 		this.entity = entity;
 		this.goalPriority = priority;
 		this.callReinforcements = callReinforcements;
@@ -72,7 +72,7 @@ public class HurtByTargetTweak implements ITweak {
 	}
 
 	@Override
-	public ResourceLocation entity() {
+	public Identifier entity() {
 		return entity;
 	}
 

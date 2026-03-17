@@ -197,9 +197,9 @@ public class MobMeleeAttackGoal extends Goal {
 		if (flag) {
 			if (f1 > 0.0F && entity instanceof LivingEntity livingentity) {
 				livingentity.knockback(
-						(double)(f1 * 0.5F),
-						(double)Mth.sin(attacker.getYRot() * (float) (Math.PI / 180.0)),
-						(double)(-Mth.cos(attacker.getYRot() * (float) (Math.PI / 180.0)))
+						(double) (f1 * 0.5F),
+						(double) Mth.sin(attacker.getYRot() * (float) (Math.PI / 180.0)),
+						(double) (-Mth.cos(attacker.getYRot() * (float) (Math.PI / 180.0)))
 				);
 				attacker.setDeltaMovement(attacker.getDeltaMovement().multiply(0.6, 1.0, 0.6));
 			}

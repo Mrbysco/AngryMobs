@@ -6,8 +6,8 @@ import com.mrbysco.angrymobs.AngryMobs;
 import com.mrbysco.angrymobs.config.AngryConfig;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -22,17 +22,17 @@ public class LeapAtTargetTweak implements ITweak {
 	public static final ResourceKey<Registry<LeapAtTargetTweak>> REGISTRY_KEY = ResourceKey.createRegistryKey(
 			AngryMobs.modLoc("leap_at_target"));
 	public static final Codec<LeapAtTargetTweak> DIRECT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
-					ResourceLocation.CODEC.fieldOf("entity").forGetter(LeapAtTargetTweak::entity),
+					Identifier.CODEC.fieldOf("entity").forGetter(LeapAtTargetTweak::entity),
 					Codec.INT.fieldOf("goalPriority").forGetter(LeapAtTargetTweak::goalPriority),
 					Codec.FLOAT.fieldOf("leapMotion").forGetter(LeapAtTargetTweak::leapMotion))
 			.apply(inst, LeapAtTargetTweak::new));
 	public static final Codec<Optional<WithConditions<LeapAtTargetTweak>>> CONDITIONAL_CODEC = ConditionalOps.createConditionalCodecWithConditions(DIRECT_CODEC);
 
-	protected final ResourceLocation entity;
+	protected final Identifier entity;
 	protected final int goalPriority;
 	protected final float leapMotion;
 
-	public LeapAtTargetTweak(ResourceLocation entity, int priority, float leapMotion) {
+	public LeapAtTargetTweak(Identifier entity, int priority, float leapMotion) {
 		this.entity = entity;
 		this.goalPriority = priority;
 		this.leapMotion = leapMotion;
@@ -65,7 +65,7 @@ public class LeapAtTargetTweak implements ITweak {
 	}
 
 	@Override
-	public ResourceLocation entity() {
+	public Identifier entity() {
 		return entity;
 	}
 

@@ -5,7 +5,7 @@ import com.mrbysco.angrymobs.config.AngryConfig;
 import com.mrbysco.angrymobs.config.attributes.AttributeConfigHandler;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -19,11 +19,11 @@ public class AttributeHandler {
 		if (AttributeConfigHandler.additionMap.isEmpty()) return;
 
 		for (EntityType<? extends LivingEntity> entityType : event.getTypes()) {
-			ResourceLocation entityLocation = BuiltInRegistries.ENTITY_TYPE.getKey(entityType);
+			Identifier entityLocation = BuiltInRegistries.ENTITY_TYPE.getKey(entityType);
 			if (entityLocation != null) {
 				var values = AttributeConfigHandler.additionMap.getOrDefault(entityLocation.toString(), null);
 				if (values != null) {
-					ResourceLocation attributeLocation = ResourceLocation.tryParse(values.attribute());
+					Identifier attributeLocation = Identifier.tryParse(values.attribute());
 					if (attributeLocation != null) {
 						Holder.Reference<Attribute> attribute = BuiltInRegistries.ATTRIBUTE.get(attributeLocation).orElse(null);
 						if (attribute != null) {
