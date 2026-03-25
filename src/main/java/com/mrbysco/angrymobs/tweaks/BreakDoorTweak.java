@@ -19,7 +19,7 @@ import net.neoforged.neoforge.common.conditions.WithConditions;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-public class BreakDoorTweak implements ITweak {
+public record BreakDoorTweak(Identifier entity, int goalPriority, Difficulty difficulty) implements ITweak {
 	public static final ResourceKey<Registry<BreakDoorTweak>> REGISTRY_KEY = ResourceKey.createRegistryKey(
 			AngryMobs.modLoc("break_door"));
 	public static final Codec<BreakDoorTweak> DIRECT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
@@ -28,16 +28,6 @@ public class BreakDoorTweak implements ITweak {
 					Difficulty.CODEC.fieldOf("difficulty").forGetter(BreakDoorTweak::difficulty))
 			.apply(inst, BreakDoorTweak::new));
 	public static final Codec<Optional<WithConditions<BreakDoorTweak>>> CONDITIONAL_CODEC = ConditionalOps.createConditionalCodecWithConditions(DIRECT_CODEC);
-
-	protected final Identifier entity;
-	protected final int goalPriority;
-	protected final Difficulty difficulty;
-
-	public BreakDoorTweak(Identifier entity, int priority, Difficulty difficulty) {
-		this.entity = entity;
-		this.goalPriority = priority;
-		this.difficulty = difficulty;
-	}
 
 	@Override
 	public String generateId() {
@@ -70,16 +60,5 @@ public class BreakDoorTweak implements ITweak {
 		}
 	}
 
-	@Override
-	public Identifier entity() {
-		return entity;
-	}
 
-	public int goalPriority() {
-		return goalPriority;
-	}
-
-	public Difficulty difficulty() {
-		return difficulty;
-	}
 }

@@ -17,7 +17,7 @@ import net.neoforged.neoforge.common.conditions.WithConditions;
 
 import java.util.Optional;
 
-public class HurtByTargetTweak implements ITweak {
+public record HurtByTargetTweak(Identifier entity, int goalPriority, boolean callReinforcements) implements ITweak {
 	public static final ResourceKey<Registry<HurtByTargetTweak>> REGISTRY_KEY = ResourceKey.createRegistryKey(
 			AngryMobs.modLoc("hurt_by_target"));
 	public static final Codec<HurtByTargetTweak> DIRECT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
@@ -26,16 +26,6 @@ public class HurtByTargetTweak implements ITweak {
 					Codec.BOOL.fieldOf("callReinforcements").forGetter(HurtByTargetTweak::callReinforcements))
 			.apply(inst, HurtByTargetTweak::new));
 	public static final Codec<Optional<WithConditions<HurtByTargetTweak>>> CONDITIONAL_CODEC = ConditionalOps.createConditionalCodecWithConditions(DIRECT_CODEC);
-
-	protected final Identifier entity;
-	protected final int goalPriority;
-	protected final boolean callReinforcements;
-
-	public HurtByTargetTweak(Identifier entity, int priority, boolean callReinforcements) {
-		this.entity = entity;
-		this.goalPriority = priority;
-		this.callReinforcements = callReinforcements;
-	}
 
 	@Override
 	public String generateId() {
@@ -71,16 +61,5 @@ public class HurtByTargetTweak implements ITweak {
 		return true;
 	}
 
-	@Override
-	public Identifier entity() {
-		return entity;
-	}
 
-	public int goalPriority() {
-		return goalPriority;
-	}
-
-	public boolean callReinforcements() {
-		return callReinforcements;
-	}
 }

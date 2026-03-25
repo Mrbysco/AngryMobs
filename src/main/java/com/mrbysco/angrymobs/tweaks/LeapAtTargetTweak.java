@@ -18,7 +18,7 @@ import net.neoforged.neoforge.common.conditions.WithConditions;
 
 import java.util.Optional;
 
-public class LeapAtTargetTweak implements ITweak {
+public record LeapAtTargetTweak(Identifier entity, int goalPriority, float leapMotion) implements ITweak {
 	public static final ResourceKey<Registry<LeapAtTargetTweak>> REGISTRY_KEY = ResourceKey.createRegistryKey(
 			AngryMobs.modLoc("leap_at_target"));
 	public static final Codec<LeapAtTargetTweak> DIRECT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
@@ -27,16 +27,6 @@ public class LeapAtTargetTweak implements ITweak {
 					Codec.FLOAT.fieldOf("leapMotion").forGetter(LeapAtTargetTweak::leapMotion))
 			.apply(inst, LeapAtTargetTweak::new));
 	public static final Codec<Optional<WithConditions<LeapAtTargetTweak>>> CONDITIONAL_CODEC = ConditionalOps.createConditionalCodecWithConditions(DIRECT_CODEC);
-
-	protected final Identifier entity;
-	protected final int goalPriority;
-	protected final float leapMotion;
-
-	public LeapAtTargetTweak(Identifier entity, int priority, float leapMotion) {
-		this.entity = entity;
-		this.goalPriority = priority;
-		this.leapMotion = leapMotion;
-	}
 
 	@Override
 	public String generateId() {
@@ -64,16 +54,5 @@ public class LeapAtTargetTweak implements ITweak {
 		}
 	}
 
-	@Override
-	public Identifier entity() {
-		return entity;
-	}
 
-	public int goalPriority() {
-		return goalPriority;
-	}
-
-	public float leapMotion() {
-		return leapMotion;
-	}
 }

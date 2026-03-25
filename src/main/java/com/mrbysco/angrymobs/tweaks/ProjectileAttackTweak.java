@@ -22,7 +22,8 @@ import net.neoforged.neoforge.common.conditions.WithConditions;
 
 import java.util.Optional;
 
-public class ProjectileAttackTweak implements ITweak {
+public record ProjectileAttackTweak(Identifier entity, Identifier projectile, SoundEvent sound, int goalPriority,
+                                    float attackDamage, float velocity) implements ITweak {
 	public static final ResourceKey<Registry<ProjectileAttackTweak>> REGISTRY_KEY = ResourceKey.createRegistryKey(
 			AngryMobs.modLoc("throw_projectile"));
 	public static final Codec<ProjectileAttackTweak> DIRECT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
@@ -35,22 +36,6 @@ public class ProjectileAttackTweak implements ITweak {
 			.apply(inst, ProjectileAttackTweak::new));
 
 	public static final Codec<Optional<WithConditions<ProjectileAttackTweak>>> CONDITIONAL_CODEC = ConditionalOps.createConditionalCodecWithConditions(DIRECT_CODEC);
-
-	protected final Identifier entity;
-	protected final Identifier projectile;
-	protected final SoundEvent sound;
-	protected final int goalPriority;
-	protected final float attackDamage;
-	protected final float velocity;
-
-	public ProjectileAttackTweak(Identifier entity, Identifier projectile, SoundEvent soundEvent, int priority, float attackDamage, float velocity) {
-		this.entity = entity;
-		this.projectile = projectile;
-		this.sound = soundEvent;
-		this.goalPriority = priority;
-		this.attackDamage = attackDamage;
-		this.velocity = velocity;
-	}
 
 	@Override
 	public String generateId() {
@@ -92,28 +77,4 @@ public class ProjectileAttackTweak implements ITweak {
 		}
 	}
 
-	@Override
-	public Identifier entity() {
-		return entity;
-	}
-
-	public Identifier projectile() {
-		return projectile;
-	}
-
-	public SoundEvent sound() {
-		return sound;
-	}
-
-	public int goalPriority() {
-		return goalPriority;
-	}
-
-	public float attackDamage() {
-		return attackDamage;
-	}
-
-	public float velocity() {
-		return velocity;
-	}
 }

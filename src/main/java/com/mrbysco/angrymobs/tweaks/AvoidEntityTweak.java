@@ -19,7 +19,8 @@ import net.neoforged.neoforge.common.conditions.WithConditions;
 
 import java.util.Optional;
 
-public class AvoidEntityTweak implements ITweak {
+public record AvoidEntityTweak(Identifier entity, Identifier target, int goalPriority, float maxDistance,
+                               double walkSpeedModifier, double sprintSpeedModifier) implements ITweak {
 	public static final ResourceKey<Registry<AvoidEntityTweak>> REGISTRY_KEY = ResourceKey.createRegistryKey(
 			AngryMobs.modLoc("avoid_entity"));
 	public static final Codec<AvoidEntityTweak> DIRECT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
@@ -31,22 +32,6 @@ public class AvoidEntityTweak implements ITweak {
 					Codec.DOUBLE.fieldOf("sprintSpeedModifier").forGetter(AvoidEntityTweak::sprintSpeedModifier))
 			.apply(inst, AvoidEntityTweak::new));
 	public static final Codec<Optional<WithConditions<AvoidEntityTweak>>> CONDITIONAL_CODEC = ConditionalOps.createConditionalCodecWithConditions(DIRECT_CODEC);
-
-	protected final Identifier entity;
-	protected final Identifier target;
-	protected final int goalPriority;
-	protected final float maxDistance;
-	protected final double walkSpeedModifier;
-	protected final double sprintSpeedModifier;
-
-	public AvoidEntityTweak(Identifier entity, Identifier target, int priority, float maxDistance, double walkSpeedModifier, double sprintSpeedModifier) {
-		this.entity = entity;
-		this.target = target;
-		this.goalPriority = priority;
-		this.maxDistance = maxDistance;
-		this.walkSpeedModifier = walkSpeedModifier;
-		this.sprintSpeedModifier = sprintSpeedModifier;
-	}
 
 	@Override
 	public String generateId() {
@@ -99,28 +84,5 @@ public class AvoidEntityTweak implements ITweak {
 		return true;
 	}
 
-	@Override
-	public Identifier entity() {
-		return entity;
-	}
 
-	public Identifier target() {
-		return target;
-	}
-
-	public int goalPriority() {
-		return goalPriority;
-	}
-
-	public float maxDistance() {
-		return maxDistance;
-	}
-
-	public double walkSpeedModifier() {
-		return walkSpeedModifier;
-	}
-
-	public double sprintSpeedModifier() {
-		return sprintSpeedModifier;
-	}
 }

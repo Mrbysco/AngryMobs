@@ -19,7 +19,8 @@ import net.neoforged.neoforge.common.conditions.WithConditions;
 
 import java.util.Optional;
 
-public class LookAtEntityTweak implements ITweak {
+public record LookAtEntityTweak(Identifier entity, Identifier target, int goalPriority,
+                                float lookDistance) implements ITweak {
 	public static final ResourceKey<Registry<LookAtEntityTweak>> REGISTRY_KEY = ResourceKey.createRegistryKey(
 			AngryMobs.modLoc("look_at_entity"));
 	public static final Codec<LookAtEntityTweak> DIRECT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
@@ -30,18 +31,6 @@ public class LookAtEntityTweak implements ITweak {
 			.apply(inst, LookAtEntityTweak::new));
 	public static final Codec<Optional<WithConditions<LookAtEntityTweak>>> CONDITIONAL_CODEC = ConditionalOps.createConditionalCodecWithConditions(DIRECT_CODEC);
 
-
-	protected final Identifier entity;
-	protected final Identifier target;
-	protected final int goalPriority;
-	protected final float lookDistance;
-
-	public LookAtEntityTweak(Identifier entity, Identifier target, int priority, float lookDistance) {
-		this.entity = entity;
-		this.target = target;
-		this.goalPriority = priority;
-		this.lookDistance = lookDistance;
-	}
 
 	@Override
 	public String generateId() {
@@ -94,20 +83,5 @@ public class LookAtEntityTweak implements ITweak {
 		return true;
 	}
 
-	@Override
-	public Identifier entity() {
-		return entity;
-	}
 
-	public Identifier target() {
-		return target;
-	}
-
-	public int goalPriority() {
-		return goalPriority;
-	}
-
-	public float lookDistance() {
-		return lookDistance;
-	}
 }

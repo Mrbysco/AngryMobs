@@ -19,13 +19,14 @@ import net.neoforged.neoforge.common.conditions.WithConditions;
 
 import java.util.Optional;
 
-public class MeleeAttackTweak implements ITweak {
+public record MeleeAttackTweak(Identifier entity, int priority, double speedModifier, float damage, float knockback,
+                               boolean useLongMemory) implements ITweak {
 	public static final ResourceKey<Registry<MeleeAttackTweak>> REGISTRY_KEY = ResourceKey.createRegistryKey(
 			AngryMobs.modLoc("melee_attack"));
 	public static final Codec<MeleeAttackTweak> DIRECT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
 					Identifier.CODEC.fieldOf("entity").forGetter(MeleeAttackTweak::entity),
-					Codec.INT.fieldOf("goalPriority").forGetter(MeleeAttackTweak::goalPriority),
-					Codec.DOUBLE.fieldOf("speedModifier").forGetter(MeleeAttackTweak::speed),
+					Codec.INT.fieldOf("goalPriority").forGetter(MeleeAttackTweak::priority),
+					Codec.DOUBLE.fieldOf("speedModifier").forGetter(MeleeAttackTweak::speedModifier),
 					Codec.FLOAT.fieldOf("attackDamage").forGetter(MeleeAttackTweak::damage),
 					Codec.FLOAT.optionalFieldOf("knockback", 0.0F).forGetter(MeleeAttackTweak::knockback),
 					Codec.BOOL.fieldOf("useLongMemory").forGetter(MeleeAttackTweak::useLongMemory))
@@ -33,21 +34,6 @@ public class MeleeAttackTweak implements ITweak {
 
 	public static final Codec<Optional<WithConditions<MeleeAttackTweak>>> CONDITIONAL_CODEC = ConditionalOps.createConditionalCodecWithConditions(DIRECT_CODEC);
 
-	protected final Identifier entity;
-	protected final int goalPriority;
-	protected final double speedModifier;
-	protected final float attackDamage;
-	protected final float knockback;
-	protected final boolean useLongMemory;
-
-	public MeleeAttackTweak(Identifier entity, int priority, double speedModifier, float damage, float knockback, boolean useLongMemory) {
-		this.entity = entity;
-		this.goalPriority = priority;
-		this.speedModifier = speedModifier;
-		this.attackDamage = damage;
-		this.knockback = knockback;
-		this.useLongMemory = useLongMemory;
-	}
 
 	@Override
 	public String generateId() {
@@ -74,7 +60,7 @@ public class MeleeAttackTweak implements ITweak {
 				}
 			});
 			mob.goalSelector.availableGoals.removeIf(goal -> goal.getGoal() instanceof MeleeAttackGoal);
-			mob.goalSelector.addGoal(goalPriority, new MobMeleeAttackGoal(mob, speedModifier, attackDamage, knockback, useLongMemory));
+			mob.goalSelector.addGoal(priority, new MobMeleeAttackGoal(mob, speedModifier, damage, knockback, useLongMemory));
 		} else {
 			AngryMobs.LOGGER.error("Can't apply AI tweak of ID {} for entity {}. Entity isn't valid for the tweak", id, entity());
 		}
@@ -83,25 +69,5 @@ public class MeleeAttackTweak implements ITweak {
 	@Override
 	public Identifier entity() {
 		return entity;
-	}
-
-	public int goalPriority() {
-		return goalPriority;
-	}
-
-	public double speed() {
-		return speedModifier;
-	}
-
-	public float damage() {
-		return attackDamage;
-	}
-
-	public float knockback() {
-		return knockback;
-	}
-
-	public boolean useLongMemory() {
-		return useLongMemory;
 	}
 }
