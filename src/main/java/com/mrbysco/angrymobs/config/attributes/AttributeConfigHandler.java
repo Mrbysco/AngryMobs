@@ -25,7 +25,7 @@ public class AttributeConfigHandler {
 		if (!ANGRYMOBS_FOLDER.exists() || !ANGRY_FILE.exists()) {
 			ANGRYMOBS_FOLDER.mkdirs();
 
-			AttributeConfig attributeConfig = new AttributeConfig(List.of(new AttributeAddition("insert:mob_here", "generic.attack_damage", 1.0D)));
+			AttributeConfig attributeConfig = new AttributeConfig(List.of(new AttributeAddition("insert:mob_here", "attack_damage", 1.0D)));
 			try (FileWriter writer = new FileWriter(ANGRY_FILE)) {
 				GSON.toJson(attributeConfig, writer);
 				writer.flush();

@@ -1,6 +1,6 @@
 package com.mrbysco.angrymobs.handler.goals;
 
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.TamableAnimal;
@@ -38,7 +38,7 @@ public class MobHurtByTargetGoal extends TargetGoal {
 		int i = this.mob.getLastHurtByMobTimestamp();
 		LivingEntity livingentity = this.mob.getLastHurtByMob();
 		if (i != this.revengeTimerOld && livingentity != null) {
-			if (livingentity.getType() == EntityType.PLAYER && getServerLevel(this.mob).getGameRules().get(GameRules.UNIVERSAL_ANGER)) {
+			if (livingentity.getType() == EntityTypes.PLAYER && getServerLevel(this.mob).getGameRules().get(GameRules.UNIVERSAL_ANGER)) {
 				return false;
 			} else {
 				for (Class<?> oclass : this.excludedReinforcementTypes) {

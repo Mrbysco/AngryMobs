@@ -8,13 +8,13 @@ import net.neoforged.neoforge.common.ModConfigSpec.BooleanValue;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class AngryConfig {
-	public static class Common {
+	public static class Startup {
 		public final BooleanValue angryAnimals;
 		public final BooleanValue aggressiveAnimals;
 		public final BooleanValue useAttributes;
 		public final BooleanValue enableInfoLog;
 
-		Common(ModConfigSpec.Builder builder) {
+		Startup(ModConfigSpec.Builder builder) {
 			builder.comment("Common settings")
 					.push("Common");
 
@@ -38,13 +38,13 @@ public class AngryConfig {
 		}
 	}
 
-	public static final ModConfigSpec commonSpec;
-	public static final Common COMMON;
+	public static final ModConfigSpec startupSpec;
+	public static final Startup STARTUP;
 
 	static {
-		final Pair<Common, ModConfigSpec> specPair = new ModConfigSpec.Builder().configure(Common::new);
-		commonSpec = specPair.getRight();
-		COMMON = specPair.getLeft();
+		final Pair<Startup, ModConfigSpec> specPair = new ModConfigSpec.Builder().configure(Startup::new);
+		startupSpec = specPair.getRight();
+		STARTUP = specPair.getLeft();
 	}
 
 	@SubscribeEvent

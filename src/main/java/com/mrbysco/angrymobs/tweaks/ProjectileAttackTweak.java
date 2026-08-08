@@ -57,7 +57,7 @@ public record ProjectileAttackTweak(Identifier entity, Identifier projectile, So
 
 					mob.goalSelector.availableGoals.forEach(goal -> {
 						if (goal.getGoal() instanceof RangedBowAttackGoal) {
-							if (AngryConfig.COMMON.enableInfoLog.getAsBoolean()) {
+							if (AngryConfig.STARTUP.enableInfoLog.getAsBoolean()) {
 								AngryMobs.LOGGER.info("Removing existing AI to apply the AI tweak of ID {} for entity {}", entity(), id);
 							}
 						}

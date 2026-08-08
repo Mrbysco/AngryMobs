@@ -178,7 +178,7 @@ public class MobMeleeAttackGoal extends Goal {
 		float f = attackDamage;
 		float f1 = knockback;
 
-		if (AngryConfig.COMMON.useAttributes.get()) {
+		if (AngryConfig.STARTUP.useAttributes.get()) {
 			//Only add the attribute values if the entity has the attribute
 			if (this.attacker.getAttributes().hasAttribute(Attributes.ATTACK_DAMAGE)) {
 				f += (float) this.attacker.getAttributes().getValue(Attributes.ATTACK_DAMAGE);
@@ -196,7 +196,7 @@ public class MobMeleeAttackGoal extends Goal {
 		boolean flag = entity.hurtServer(getServerLevel(entity), damagesource, f);
 		if (flag) {
 			if (f1 > 0.0F && entity instanceof LivingEntity livingentity) {
-				livingentity.knockback(
+				livingentity.push(
 						(double) (f1 * 0.5F),
 						(double) Mth.sin(attacker.getYRot() * (float) (Math.PI / 180.0)),
 						(double) (-Mth.cos(attacker.getYRot() * (float) (Math.PI / 180.0)))

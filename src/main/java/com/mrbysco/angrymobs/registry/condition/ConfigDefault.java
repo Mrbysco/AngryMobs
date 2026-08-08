@@ -3,12 +3,13 @@ package com.mrbysco.angrymobs.registry.condition;
 import com.mojang.serialization.Codec;
 import com.mrbysco.angrymobs.config.AngryConfig;
 import net.minecraft.util.StringRepresentable;
+import org.jspecify.annotations.NonNull;
 
 import java.util.function.BooleanSupplier;
 
 public enum ConfigDefault implements StringRepresentable {
-	ANGRY_ANIMALS("angry_animals", AngryConfig.COMMON.angryAnimals::get),
-	AGGRESSIVE_ANIMALS("aggressive_animals", AngryConfig.COMMON.aggressiveAnimals::get);
+	ANGRY_ANIMALS("angry_animals", AngryConfig.STARTUP.angryAnimals::get),
+	AGGRESSIVE_ANIMALS("aggressive_animals", AngryConfig.STARTUP.aggressiveAnimals::get);
 
 	public static final Codec<ConfigDefault> CODEC = StringRepresentable.fromEnum(ConfigDefault::values);
 	private final String name;
@@ -24,7 +25,7 @@ public enum ConfigDefault implements StringRepresentable {
 	}
 
 	@Override
-	public String getSerializedName() {
+	public @NonNull String getSerializedName() {
 		return this.name;
 	}
 }

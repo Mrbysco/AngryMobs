@@ -54,7 +54,7 @@ public record MeleeAttackTweak(Identifier entity, int priority, double speedModi
 			mob.goalSelector.availableGoals.removeIf(goal -> goal.getGoal() instanceof PanicGoal);
 			mob.goalSelector.availableGoals.forEach(goal -> {
 				if (goal.getGoal() instanceof MeleeAttackGoal) {
-					if (AngryConfig.COMMON.enableInfoLog.getAsBoolean()) {
+					if (AngryConfig.STARTUP.enableInfoLog.getAsBoolean()) {
 						AngryMobs.LOGGER.info("Removing existing AI to apply the AI tweak of ID {} for entity {}", entity(), id);
 					}
 				}

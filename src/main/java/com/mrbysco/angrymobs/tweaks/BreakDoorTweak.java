@@ -47,7 +47,7 @@ public record BreakDoorTweak(Identifier entity, int goalPriority, Difficulty dif
 		if (entity instanceof Mob mob && difficulty != null) {
 			mob.goalSelector.availableGoals.forEach(goal -> {
 				if (goal.getGoal() instanceof BreakDoorGoal) {
-					if (AngryConfig.COMMON.enableInfoLog.getAsBoolean()) {
+					if (AngryConfig.STARTUP.enableInfoLog.getAsBoolean()) {
 						AngryMobs.LOGGER.info("Overriding existing AI goal for entity {} using tweak ID {}", entity(), id);
 					}
 				}

@@ -22,7 +22,7 @@ public class AngryMobs {
 	public static final Logger LOGGER = LogUtils.getLogger();
 
 	public AngryMobs(IEventBus eventBus, ModContainer container, Dist dist) {
-		container.registerConfig(ModConfig.Type.COMMON, AngryConfig.commonSpec);
+		container.registerConfig(ModConfig.Type.STARTUP, AngryConfig.startupSpec, "angrymobs-common.toml");
 		eventBus.register(AngryConfig.class);
 
 		TweakTypeRegistry.CONDITION_CODECS.register(eventBus);

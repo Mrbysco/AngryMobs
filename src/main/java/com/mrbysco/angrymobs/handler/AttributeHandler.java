@@ -28,12 +28,12 @@ public class AttributeHandler {
 						Holder.Reference<Attribute> attribute = BuiltInRegistries.ATTRIBUTE.get(attributeLocation).orElse(null);
 						if (attribute != null) {
 							if (!event.has(entityType, attribute)) {
-								if (AngryConfig.COMMON.enableInfoLog.getAsBoolean()) {
+								if (AngryConfig.STARTUP.enableInfoLog.getAsBoolean()) {
 									AngryMobs.LOGGER.info("Adding attribute: {} with value: {} to entity: {}", attributeLocation, values.value(), entityLocation);
 								}
 								event.add(entityType, attribute, values.value());
 							} else {
-								AngryMobs.LOGGER.error("Attribute: {} already exists for entity: {}, ignoring entry!", attributeLocation, entityLocation);
+								AngryMobs.LOGGER.warn("Attribute: {} already exists for entity: {}, ignoring entry!", attributeLocation, entityLocation);
 							}
 						} else {
 							AngryMobs.LOGGER.error("Attribute: {} does not exist!", attributeLocation);
