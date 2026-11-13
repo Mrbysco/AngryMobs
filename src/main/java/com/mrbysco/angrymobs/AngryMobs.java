@@ -3,7 +3,6 @@ package com.mrbysco.angrymobs;
 import com.mojang.logging.LogUtils;
 import com.mrbysco.angrymobs.config.AngryConfig;
 import com.mrbysco.angrymobs.handler.AIHandler;
-import com.mrbysco.angrymobs.handler.AttributeHandler;
 import com.mrbysco.angrymobs.registry.TweakTypeRegistry;
 import net.minecraft.resources.Identifier;
 import net.neoforged.api.distmarker.Dist;
@@ -26,9 +25,6 @@ public class AngryMobs {
 		eventBus.register(AngryConfig.class);
 
 		TweakTypeRegistry.CONDITION_CODECS.register(eventBus);
-
-		eventBus.addListener(TweakTypeRegistry::onNewRegistry);
-		eventBus.addListener(AttributeHandler::addEntityAttributes);
 
 		NeoForge.EVENT_BUS.register(new AIHandler());
 

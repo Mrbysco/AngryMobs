@@ -9,9 +9,13 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityAttributeModificationEvent;
 
+@EventBusSubscriber
 public class AttributeHandler {
+	@SubscribeEvent
 	public static void addEntityAttributes(EntityAttributeModificationEvent event) {
 		//Load configs
 		AttributeConfigHandler.loadConfig();

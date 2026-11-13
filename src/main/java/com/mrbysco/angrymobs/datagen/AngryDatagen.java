@@ -26,12 +26,8 @@ public class AngryDatagen {
 
 	@SubscribeEvent
 	public static void gatherData(GatherDataEvent.Client event) {
-		DataGenerator generator = event.getGenerator();
-		PackOutput packOutput = generator.getPackOutput();
-
-		generator.addProvider(true, new AngryLanguageProvider(packOutput));
-
-		generator.addProvider(true, new AngryTweaks(packOutput, event.getLookupProvider()));
+		event.createProvider(AngryLanguageProvider::new);
+		event.createProvider(AngryTweaks::new);
 	}
 
 	public static class AngryLanguageProvider extends LanguageProvider {

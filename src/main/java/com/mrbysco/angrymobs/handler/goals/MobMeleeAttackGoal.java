@@ -12,6 +12,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.component.SwingAnimation;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.pathfinder.Path;
 
@@ -168,7 +169,7 @@ public class MobMeleeAttackGoal extends Goal {
 		double d0 = this.getAttackReachSqr(enemy);
 		if (distToEnemySqr <= d0 && this.isTimeToAttack()) {
 			this.resetAttackCooldown();
-			this.attacker.swing(InteractionHand.MAIN_HAND);
+			this.attacker.swing(InteractionHand.MAIN_HAND, SwingAnimation.DEFAULT, true);
 			this.doHurtTarget(enemy);
 		}
 	}
